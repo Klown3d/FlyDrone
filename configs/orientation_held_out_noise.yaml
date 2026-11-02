@@ -1,0 +1,7 @@
+base_config: configs/orientation_closed_loop.yaml
+output: results/neural/orientation_held_out_noise
+gains: [0.02]
+delays_s: [0.15, 0.3]
+noise_std_deg: 3.0
+seeds: [786, 787, 788]
+evaluation_role: held_out_noise

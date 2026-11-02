@@ -1,0 +1,8 @@
+update_period_s: 0.02
+differencing_window_s: 0.20
+filter_time_constant_s: 0.25
+dropout_decay_time_constant_s: 0.60
+maximum_speed_m_s: 3.0
+source: windowed_difference_of_observed_position
+biological_status: engineering_sensor_abstraction_not_fly_physiology
+parameter_status: development_window_selected_after_combined_noise_diagnostic_requires_new_prospective_gate

@@ -1,0 +1,23 @@
+base_config: configs/quadrotor_benchmark.yaml
+plant_config: configs/quadrotor.yaml
+orientation_config: configs/orientation_candidate_v1.yaml
+phase_compass_config: configs/phase_compass_cross_compartment_v4.yaml
+travel_direction_drift_config: configs/travel_direction_drift.yaml
+travel_velocity_sensor_config: configs/travel_velocity_sensor.yaml
+travel_velocity_inertial_config: configs/travel_velocity_inertial_body.yaml
+output: results/simulation/quadrotor_matched_drift_readout_development
+manifest_key: quadrotor_matched_drift_readout_development
+duration_s: 35.0
+target_bearings_deg: [-145.0, -25.0, 95.0]
+initial_relative_headings_deg: [-115.0, 85.0]
+scenarios:
+  - {name: matched_moderate, seed: 20270310, crosswind_force_n: 0.63, wind_start_s: 3.0, wind_end_s: 15.2, position_noise_std_m: 0.024, sensor_delay_s: 0.11, heading_noise_std_deg: 4.9, angular_rate_noise_std_deg_s: 2.1, heading_dropout_start_s: 5.4, heading_dropout_end_s: 8.8, velocity_dropout_start_s: 9.0, velocity_dropout_end_s: 12.8, accelerometer_noise_std_m_s2: 0.11, accelerometer_bias_x_m_s2: 0.025, accelerometer_bias_y_m_s2: -0.015}
+  - {name: matched_strong, seed: 20270311, crosswind_force_n: 0.90, wind_start_s: 2.1, wind_end_s: 16.4, position_noise_std_m: 0.036, sensor_delay_s: 0.16, heading_noise_std_deg: 6.4, angular_rate_noise_std_deg_s: 3.2, heading_dropout_start_s: 3.8, heading_dropout_end_s: 9.4, velocity_dropout_start_s: 5.8, velocity_dropout_end_s: 10.8, accelerometer_noise_std_m_s2: 0.20, accelerometer_bias_x_m_s2: 0.055, accelerometer_bias_y_m_s2: -0.045}
+conditions:
+  - {name: flywire_hdelta, yaw_controller: neural, heading_mode: neural_compass, velocity_source: inertial_fusion, hdelta_enabled: true, drift_readout_mode: connectome, lateral_velocity_kd_per_s: 0.0}
+  - {name: direct_velocity_matched, yaw_controller: neural, heading_mode: neural_compass, velocity_source: inertial_fusion, hdelta_enabled: true, drift_readout_mode: direct_velocity, lateral_velocity_kd_per_s: 0.0}
+  - {name: conventional_navigation, yaw_controller: proportional, heading_mode: gyro_integrated, velocity_source: none, hdelta_enabled: false, lateral_velocity_kd_per_s: 2.0}
+divergence_threshold_deg: 30.0
+recovery_threshold_deg: 15.0
+sustained_duration_s: 0.20
+parameter_status: matched_non_neural_readout_development_not_confirmatory

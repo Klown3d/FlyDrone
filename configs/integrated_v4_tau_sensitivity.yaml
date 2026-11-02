@@ -1,0 +1,8 @@
+base_config: configs/quadrotor_integrated_v4_lateral_development.yaml
+output: results/simulation/integrated_v4_tau_sensitivity
+target_bearings_deg: [-139.0, 29.0]
+initial_relative_headings_deg: [-111.0]
+evaluation_role: diagnostic_reused_development_cases_not_confirmatory
+variants:
+  - {name: compass_tau080, parameter: compass_time_constant, multiplier: 0.8, compass_config: configs/sensitivity_compass_tau080.yaml}
+  - {name: compass_tau120, parameter: compass_time_constant, multiplier: 1.2, compass_config: configs/sensitivity_compass_tau120.yaml}

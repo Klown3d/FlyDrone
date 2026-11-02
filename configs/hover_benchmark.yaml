@@ -1,0 +1,13 @@
+desktop_config: configs/desktop.yaml
+output: results/simulation/hover_benchmark
+initial_altitudes_m: [0.7, 3.0]
+altitude_tolerance_m: 0.1
+scenarios:
+  - name: ideal
+    noise_std_deg: 0.0
+    delay_s: 0.0
+    seeds: [789]
+  - name: noisy_delayed
+    noise_std_deg: 3.0
+    delay_s: 0.3
+    seeds: [789, 790, 791]

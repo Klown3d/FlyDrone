@@ -1,0 +1,8 @@
+pfl2_model_config: configs/pfl2_model.yaml
+output: results/neural/pfl2_connectivity_nulls
+manifest_key: pfl2_connectivity_nulls
+null_seeds: [4101, 4102, 4103, 4104, 4105, 4106, 4107, 4108, 4109, 4110, 4111, 4112, 4113, 4114, 4115, 4116, 4117, 4118, 4119, 4120, 4121, 4122, 4123, 4124, 4125, 4126, 4127, 4128, 4129, 4130]
+goals_deg: [-157.5, -112.5, -67.5, -22.5, 22.5, 67.5, 112.5, 157.5]
+relative_errors_deg: [-180, -165, -150, -135, -120, -105, -90, -75, -60, -45, -30, -15, 0, 15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180]
+null_definition: independently_permute_presynaptic_phase_columns_for_delta7_and_fc2_preserving_each_contact_matrix_exactly
+parameter_status: post_prospective_attribution_control_no_parameter_search

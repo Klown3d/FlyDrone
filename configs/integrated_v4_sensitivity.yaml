@@ -1,0 +1,11 @@
+base_config: configs/quadrotor_integrated_v4_lateral_development.yaml
+output: results/simulation/integrated_v4_sensitivity
+target_bearings_deg: [-139.0, 29.0]
+initial_relative_headings_deg: [-111.0]
+evaluation_role: diagnostic_reused_development_cases_not_confirmatory
+variants:
+  - {name: nominal, parameter: none, multiplier: 1.0}
+  - {name: steering_080, parameter: steering_gain, multiplier: 0.8}
+  - {name: steering_120, parameter: steering_gain, multiplier: 1.2}
+  - {name: drift_080, parameter: drift_gain, multiplier: 0.8}
+  - {name: drift_120, parameter: drift_gain, multiplier: 1.2}

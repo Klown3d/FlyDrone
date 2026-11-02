@@ -1,0 +1,25 @@
+transfers: results/neural/phase_resolved_compass/transfers.npz
+output: results/neural/pen_phase_audit
+manifest_key: pen_phase_audit
+dt_s: 0.02
+time_constant_s: 0.1
+cue_duration_s: 1.0
+turn_duration_s: 1.0
+cue_concentration: 4.0
+cue_gain: 4.0
+activation_slope: 5.0
+excitation_gain: 6.0
+inhibition_gain: 4.0
+bias: -1.0
+shift_subtypes: [a, b, both]
+symmetric_offsets_columns: [-2, -1, 0, 1, 2]
+operators: [published_one_wedge, pen_a_difference, pen_b_difference, pen_combined_difference]
+velocity_gains: [0.5, 1.0, 1.5, 2.0, 3.0, 4.0, 8.0, 16.0]
+angular_signs: [-1.0, 1.0]
+development_headings_deg: [-125.0, -35.0, 55.0, 145.0]
+development_velocities_deg_s: [-90.0, -60.0, -30.0, 30.0, 60.0, 90.0]
+maximum_median_error_deg: 20.0
+maximum_p90_error_deg: 35.0
+minimum_resultant: 0.2
+minimum_velocity_monotonicity: 0.9
+status: development_only_pen_phase_index_audit

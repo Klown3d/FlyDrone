@@ -1,0 +1,6 @@
+prospective_config: configs/quadrotor_pfl2_prospective.yaml
+pfl2_steering_config: configs/pfl2_steering_analytic_control.yaml
+prospective_episodes: results/simulation/quadrotor_pfl2_steering_prospective/episodes.csv
+output: results/simulation/quadrotor_pfl2_analytic_control
+manifest_key: quadrotor_pfl2_analytic_control
+parameter_status: post_prospective_matched_gain_control_reuses_frozen_cases

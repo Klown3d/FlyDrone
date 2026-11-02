@@ -1,0 +1,38 @@
+plant_config: configs/desktop.yaml
+navigation_config: configs/navigation.yaml
+output: results/simulation/arrival_legacy_held_out
+case_seed: 796
+cases: 64
+initial_xy_range_m:
+- -3.0
+- 3.0
+target_distances_m:
+- 2.0
+- 5.0
+- 8.0
+duration_s: 30.0
+scenarios:
+- name: novel_ideal
+  position_noise_std_m: 0.0
+  position_bias_m: 0.0
+  heading_noise_std_deg: 0.0
+  delay_s: 0.0
+  seeds:
+  - 796
+- name: mild_position_noise
+  position_noise_std_m: 0.05
+  position_bias_m: 0.0
+  heading_noise_std_deg: 3.0
+  delay_s: 0.15
+  seeds:
+  - 796
+  - 797
+- name: position_bias_and_noise
+  position_noise_std_m: 0.15
+  position_bias_m: 0.2
+  heading_noise_std_deg: 3.0
+  delay_s: 0.3
+  seeds:
+  - 796
+  - 797
+manifest_key: arrival_legacy_held_out

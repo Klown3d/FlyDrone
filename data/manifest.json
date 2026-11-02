@@ -1,0 +1,1319 @@
+{
+  "schema_version": 1,
+  "project": "FlyDrone",
+  "phase": "3_computational_neural_model",
+  "status": "phase_convention_diagnostic_promising_pending_full_glomerular_validation",
+  "research_date": "2026-09-12",
+  "dataset": {
+    "project": "FlyWire",
+    "specimen_dataset": "FAFB",
+    "materialization_version": 783,
+    "connectivity_archive_version": "783.0",
+    "annotation_release": "v2.1.0",
+    "annotation_commit": "ebd66db2596fcc39c6950fb54ea3efa00f7fe8a0"
+  },
+  "selection_status": "anatomical_extraction_complete_functional_mapping_provisional",
+  "primary_circuit": [
+    "EPG",
+    "Delta7",
+    "FC2",
+    "PFL3"
+  ],
+  "cell_ids": [
+    "720575940604064958",
+    "720575940604709920",
+    "720575940604801993",
+    "720575940605640905",
+    "720575940605827761",
+    "720575940606137004",
+    "720575940608673860",
+    "720575940608722371",
+    "720575940608839800",
+    "720575940609924875",
+    "720575940610453427",
+    "720575940610634725",
+    "720575940610901930",
+    "720575940611216099",
+    "720575940611296790",
+    "720575940612627058",
+    "720575940612870952",
+    "720575940612936154",
+    "720575940613005937",
+    "720575940613348271",
+    "720575940613829900",
+    "720575940613836438",
+    "720575940614297640",
+    "720575940614442090",
+    "720575940614530098",
+    "720575940614738956",
+    "720575940614926475",
+    "720575940615326779",
+    "720575940615463825",
+    "720575940616502066",
+    "720575940616569601",
+    "720575940616616166",
+    "720575940616617245",
+    "720575940616654370",
+    "720575940616657989",
+    "720575940616769051",
+    "720575940616967508",
+    "720575940616968733",
+    "720575940616985030",
+    "720575940617296155",
+    "720575940617501533",
+    "720575940617600064",
+    "720575940617752537",
+    "720575940617769851",
+    "720575940617787550",
+    "720575940618133371",
+    "720575940618177739",
+    "720575940618388615",
+    "720575940618463960",
+    "720575940618612952",
+    "720575940618759361",
+    "720575940618792942",
+    "720575940619006087",
+    "720575940619006272",
+    "720575940619169518",
+    "720575940619196398",
+    "720575940619249088",
+    "720575940619296365",
+    "720575940619489857",
+    "720575940619578608",
+    "720575940619648116",
+    "720575940619802800",
+    "720575940619935152",
+    "720575940620014356",
+    "720575940620020694",
+    "720575940620156795",
+    "720575940620202266",
+    "720575940620282906",
+    "720575940620589082",
+    "720575940620664741",
+    "720575940621025037",
+    "720575940621193864",
+    "720575940621252735",
+    "720575940621361172",
+    "720575940621502157",
+    "720575940621671593",
+    "720575940622234326",
+    "720575940622364771",
+    "720575940622374783",
+    "720575940622406260",
+    "720575940622713638",
+    "720575940622727629",
+    "720575940622870666",
+    "720575940622942868",
+    "720575940622943731",
+    "720575940623046548",
+    "720575940623430621",
+    "720575940623712656",
+    "720575940623784231",
+    "720575940623815155",
+    "720575940623852873",
+    "720575940623880013",
+    "720575940624006327",
+    "720575940624096234",
+    "720575940624114712",
+    "720575940624126183",
+    "720575940624295096",
+    "720575940624320318",
+    "720575940624611018",
+    "720575940624669733",
+    "720575940624784280",
+    "720575940625308162",
+    "720575940625351354",
+    "720575940625390153",
+    "720575940625508500",
+    "720575940625579141",
+    "720575940625637562",
+    "720575940625678650",
+    "720575940625816212",
+    "720575940626137895",
+    "720575940626315207",
+    "720575940626356648",
+    "720575940626449082",
+    "720575940626533714",
+    "720575940626721835",
+    "720575940627126787",
+    "720575940627140551",
+    "720575940627162344",
+    "720575940627569658",
+    "720575940627617866",
+    "720575940627740922",
+    "720575940627786270",
+    "720575940627901687",
+    "720575940627943966",
+    "720575940627945747",
+    "720575940628136809",
+    "720575940628164229",
+    "720575940628457448",
+    "720575940628493572",
+    "720575940628493828",
+    "720575940628587202",
+    "720575940628802041",
+    "720575940628843458",
+    "720575940628860476",
+    "720575940629055447",
+    "720575940629196670",
+    "720575940629331663",
+    "720575940629691753",
+    "720575940629923883",
+    "720575940630019385",
+    "720575940630199963",
+    "720575940630256402",
+    "720575940630653604",
+    "720575940630728588",
+    "720575940630976568",
+    "720575940631004728",
+    "720575940631025219",
+    "720575940631125036",
+    "720575940631151663",
+    "720575940631244136",
+    "720575940631413156",
+    "720575940631708836",
+    "720575940631990359",
+    "720575940632049935",
+    "720575940632259865",
+    "720575940632598220",
+    "720575940632614295",
+    "720575940632803223",
+    "720575940632844002",
+    "720575940633105378",
+    "720575940633223727",
+    "720575940633519514",
+    "720575940633719487",
+    "720575940633918827",
+    "720575940633982303",
+    "720575940634489592",
+    "720575940634534255",
+    "720575940634627191",
+    "720575940634647732",
+    "720575940635427982",
+    "720575940635430030",
+    "720575940635461550",
+    "720575940635481262",
+    "720575940635530359",
+    "720575940636229183",
+    "720575940636730694",
+    "720575940636735198",
+    "720575940636868186",
+    "720575940637558618",
+    "720575940637591262",
+    "720575940637983814",
+    "720575940638130758",
+    "720575940638850512",
+    "720575940638901875",
+    "720575940639088105",
+    "720575940641557133",
+    "720575940642634532",
+    "720575940642936100",
+    "720575940644645412",
+    "720575940644706083",
+    "720575940645823876",
+    "720575940650926326",
+    "720575940653624310",
+    "720575940658101889",
+    "720575940660921985"
+  ],
+  "neuron_count": 195,
+  "edge_count": 4414,
+  "access_checks": [
+    {
+      "url": "https://codex.flywire.ai/api/download?dataset=fafb",
+      "checked_on": "2026-09-12",
+      "http_status": 200,
+      "result": "HTML sign-in page; catalog and CSV schemas not verified"
+    },
+    {
+      "url": "https://zenodo.org/api/records/10676866",
+      "checked_on": "2026-09-12",
+      "result": "public metadata verified; data files not downloaded"
+    },
+    {
+      "url": "https://api.github.com/repos/flyconnectome/flywire_annotations/contents/supplemental_files?ref=ebd66db2596fcc39c6950fb54ea3efa00f7fe8a0",
+      "checked_on": "2026-09-12",
+      "result": "pinned annotation file metadata verified; TSV not downloaded"
+    }
+  ],
+  "artifacts": [
+    {
+      "name": "Supplemental_file1_neuron_annotations.tsv",
+      "source_url": "https://raw.githubusercontent.com/flyconnectome/flywire_annotations/ebd66db2596fcc39c6950fb54ea3efa00f7fe8a0/supplemental_files/Supplemental_file1_neuron_annotations.tsv",
+      "format": "tsv",
+      "published_size_bytes": 27015208,
+      "published_checksum": {
+        "algorithm": "git-blob-sha1",
+        "value": "1a3168731618ee62a47392252d3af7664e739e9e"
+      },
+      "citation": "https://doi.org/10.1038/s41586-024-07686-5",
+      "status": "downloaded_verified",
+      "metadata_checked_on": "2026-09-12",
+      "retrieved_at": "2026-09-12T22:19:45.129628-03:00",
+      "resolved_download_url": "https://raw.githubusercontent.com/flyconnectome/flywire_annotations/ebd66db2596fcc39c6950fb54ea3efa00f7fe8a0/supplemental_files/Supplemental_file1_neuron_annotations.tsv",
+      "local_path": "data/raw/Supplemental_file1_neuron_annotations.tsv",
+      "local_sha256": "30be6c73975a70c56d930e27911f36455d3886e15abf383b78edd2a5d679e0b6",
+      "license_verified": null,
+      "license_note": "No explicit license found in pinned repository root; attribution retained; redistribution terms need clarification.",
+      "content_type": "text/plain; charset=utf-8",
+      "verified_at": "2026-09-12T22:25:44.819888-03:00"
+    },
+    {
+      "name": "proofread_connections_783.feather",
+      "source_url": "https://zenodo.org/records/10676866",
+      "format": "feather",
+      "published_size_bytes": 852022274,
+      "published_checksum": {
+        "algorithm": "md5",
+        "value": "f48f972d262323a102aed49af1396b8a"
+      },
+      "citation": "https://doi.org/10.5281/zenodo.10676866",
+      "status": "downloaded_verified",
+      "metadata_checked_on": "2026-09-12",
+      "retrieved_at": "2026-09-12T22:27:57.206922-03:00",
+      "resolved_download_url": "https://zenodo.org/api/records/10676866/files/proofread_connections_783.feather/content",
+      "local_path": "data/raw/proofread_connections_783.feather",
+      "local_sha256": "24f960ae3e7d4f8cd30db3b62e99fb5179cc3d1e76d8c155bfb441e9737d3faf",
+      "license_verified": "cc-by-4.0",
+      "license_source": "https://zenodo.org/api/records/10676866",
+      "content_type": "application/octet-stream",
+      "download_method": "verified_http_ranges",
+      "verified_at": "2026-09-12T22:27:57.225548-03:00"
+    },
+    {
+      "name": "proofread_root_ids_783.npy",
+      "source_url": "https://zenodo.org/records/10676866",
+      "format": "npy",
+      "published_size_bytes": 1114168,
+      "published_checksum": {
+        "algorithm": "md5",
+        "value": "e0e6c19732fd8c7a4e39a2d170105421"
+      },
+      "citation": "https://doi.org/10.5281/zenodo.10676866",
+      "status": "downloaded_verified",
+      "metadata_checked_on": "2026-09-12",
+      "retrieved_at": "2026-09-12T22:28:01.068428-03:00",
+      "resolved_download_url": "https://zenodo.org/api/records/10676866/files/proofread_root_ids_783.npy/content",
+      "local_path": "data/raw/proofread_root_ids_783.npy",
+      "local_sha256": "7c7b7e818e9232e5ab64793d52ba20574dbe9da3a6509fbc74193b0f259a01be",
+      "license_verified": "cc-by-4.0",
+      "license_source": "https://zenodo.org/api/records/10676866",
+      "content_type": "application/octet-stream",
+      "verified_at": "2026-09-12T22:28:01.083467-03:00"
+    },
+    {
+      "name": "flywire_synapses_783.feather",
+      "published_size_bytes": 9492998242,
+      "published_checksum": {
+        "algorithm": "md5",
+        "value": "f8f1b97c9d4b0ea9b4c8b287f6b99091"
+      },
+      "source_url": "https://zenodo.org/records/10676866",
+      "citation": "https://doi.org/10.5281/zenodo.10676866",
+      "status": "downloaded_verified",
+      "local_path": "data/raw/flywire_synapses_783.feather",
+      "license_verified": "cc-by-4.0",
+      "resolved_download_url": "https://zenodo.org/api/records/10676866/files/flywire_synapses_783.feather/content",
+      "content_type": "application/octet-stream",
+      "retrieved_at": "2026-09-16T13:36:19.563166+00:00",
+      "local_sha256": "b597601805b31a04f3a90730ae3b6319f89e9f1c2795dd132e4c3f87fb32f44c",
+      "download_method": "verified_http_ranges"
+    }
+  ],
+  "required_citations": [
+    "https://doi.org/10.1038/s41586-024-07558-y",
+    "https://doi.org/10.1038/s41586-024-07686-5",
+    "https://doi.org/10.1016/j.cell.2024.03.016",
+    "https://doi.org/10.5281/zenodo.10676866",
+    "https://doi.org/10.1038/s41586-023-07006-3",
+    "https://doi.org/10.7554/eLife.66039"
+  ],
+  "notes": [
+    "Acquisition status is recorded separately for every artifact.",
+    "Published checksums and local SHA-256 verified; anatomy and annotation versions pinned separately.",
+    "The published PFL3 reference and Delta7/FC2-to-PFL3 compatibility model are verified.",
+    "The explicit EPG feedforward candidate was rejected; PB synapse coordinates and supported Delta7 recurrent dynamics are required before promotion."
+  ],
+  "extraction": {
+    "output_dir": "data/processed/fafb783_epg_delta7_fc2_pfl3",
+    "config_sha256": "c730f5dcaa2e6b5b4d61335d4540ea0dce90634aae9bcb5c94f43dd33c2c69d6",
+    "provenance": "data/processed/fafb783_epg_delta7_fc2_pfl3/provenance.json"
+  },
+  "morphology": {
+    "status": "downloaded_verified",
+    "configuration": "configs/morphology.yaml",
+    "configuration_sha256": "1f43dda88471615cc4cbc073597dcc81d2eb89e03e33ed32530169e6c8eac877",
+    "index": "data/processed/fafb783_epg_delta7_fc2_pfl3/morphology-index.json",
+    "index_sha256": "e34b9ca1db4b27e778a9aacaf86b005d4bf875a5ed092fd4f6c1b68980678a77",
+    "skeleton_count": 195,
+    "atlas_path": "data/raw/JFRC2NP.surf.fw.zip"
+  },
+  "morphology_analysis": {
+    "status": "EPG_16_column_3d_geometry_and_FB_columns_inferred",
+    "features": "data/processed/fafb783_epg_delta7_fc2_pfl3/morphology-features.csv",
+    "features_sha256": "006236dfa8977c7fcb720cef930cf4dd66e7fc02d478559c7e33a4aa579bcbb1",
+    "report": "data/processed/fafb783_epg_delta7_fc2_pfl3/morphology-report.json",
+    "report_sha256": "402d18570c66c2168344696c3455b8a99e5f29e2afa0f23d3bda87426e824663"
+  },
+  "functional_mapping": {
+    "status": "provisional_testable_mapping",
+    "mapping": "data/processed/fafb783_epg_delta7_fc2_pfl3/functional-mapping.csv",
+    "mapping_sha256": "d4aeaf9c8f6ac731953fc2bc2870bb5195d060c1cdd30dc2498946eee3455655",
+    "report": "data/processed/fafb783_epg_delta7_fc2_pfl3/functional-mapping-report.json",
+    "report_sha256": "2e423572aade9772b8e23897bb7a7629400ab94b976af82f01cf61e3376b601a",
+    "primary_fc2_subtypes": [
+      "FC2B",
+      "FC2C"
+    ],
+    "comparison_only_fc2_subtypes": [
+      "FC2A"
+    ]
+  },
+  "neural_model": {
+    "status": "reference_model_verified",
+    "connectome_weighted": false,
+    "configuration": "configs/neural_model.yaml",
+    "configuration_sha256": "46daeb5649a789b15617bc92930ac0c2e989586fad3648ebf304de85c9318b3d",
+    "report": "results/neural/published_pfl3_reference/report.json",
+    "report_sha256": "4c1a2a4170521cbfaedd28c8854c8a34cc8d3d855bdf75733c105d284d2ecb69",
+    "activity_trace": "results/neural/published_pfl3_reference/heading-sweep.csv",
+    "activity_trace_sha256": "f1f6d2f7120f9d38202939b58d19cb0e95cd9966afd35bf2162ab362252e0ea4",
+    "connectome_weighted_experiment": {
+      "status": "evaluated",
+      "scope": "Delta7/FC2-to-PFL3 feedforward",
+      "configuration": "configs/connectome_model.yaml",
+      "configuration_sha256": "02d1911d38ebd1cccdb12b627aaf7c822eade045092dd290d016d78bf4abf829",
+      "report": "results/neural/connectome_weighted_pfl3/report.json",
+      "report_sha256": "651ac58dd6c0759e0eec2b4980409f5eb19010b4037a9aaba12de1086a8da7ee"
+    },
+    "epg_delta7_experiment": {
+      "status": "candidate_rejected_pending_synapse_coordinates_and_recurrent_dynamics",
+      "configuration": "configs/epg_delta7_audit.yaml",
+      "configuration_sha256": "13eb550e1ad894c23d8855aecf8a858b2aecf87a62662a877d27658f30eff070",
+      "report": "results/neural/epg_delta7_audit/report.json",
+      "report_sha256": "2a3086cae51d40455b87de7d02323c4c5f61ecbe9012bbd09a04458acf9af0a2"
+    },
+    "phase_diagnostic": {
+      "status": "diagnostic_only_not_promoted_to_controller",
+      "report": "results/neural/phase_diagnostic/report.json",
+      "report_sha256": "5dd8a580071012fed7ba6d69c498c678b6fed94b5735699f478390319cb929c8",
+      "config": "configs/phase_diagnostic.yaml",
+      "config_sha256": "f9d87eeb119183db52402e153e85327d0debbb8c6fabe42fa035e54f79840bcf",
+      "source_code_sha256": "0597a072b1e1c8f4ad1b2ed65a4c657b1d14f3e27d21a083c8dba0d9dcaf32b4"
+    }
+  },
+  "literature_sources": [
+    {
+      "pmcid": "PMC10881393",
+      "doi": "10.1038/s41586-023-07006-3",
+      "source_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC10881393/fullTextXML",
+      "local_path": "data/raw/literature/PMC10881393.xml",
+      "sha256": "acb46deec819dc1428cd1b7af6fb48de92d777496b5caa5e7995a19541bd2f40",
+      "retrieved_at": "2026-09-13T22:59:42.8334481Z"
+    },
+    {
+      "pmcid": "PMC9477501",
+      "doi": "10.7554/eLife.66039",
+      "source_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC9477501/fullTextXML",
+      "local_path": "data/raw/literature/PMC9477501.xml",
+      "sha256": "245c4d674d4644d7f9dfb4de4afbe920aa5fd4e5feac466b34e73b3c17b7ec8d",
+      "retrieved_at": "2026-09-13T22:59:45.3223854Z"
+    },
+    {
+      "doi": "10.5281/zenodo.10232698",
+      "source_url": "https://zenodo.org/records/10232698",
+      "local_path": "data/raw/literature/Converting_allo_goal_to_ego_steering-v1.0.0.zip",
+      "published_md5": "31403be3aebb5901f787ffca6889e17b",
+      "sha256": "27390ddc1239fe23dba89b5b8a935298328e996bcad88c47c10b0f6a58608c57",
+      "bytes": 11993797,
+      "version": "v1.0.0",
+      "license": "CC-BY-4.0",
+      "status": "downloaded_checksum_verified",
+      "retrieved_at": "2026-09-13"
+    },
+    {
+      "doi": "10.1038/s41586-023-07006-3",
+      "asset": "Extended Data Fig. 5",
+      "source_url": "PMC10881393 embedded graphic 41586_2023_7006_Fig11_ESM.jpg",
+      "local_path": "data/raw/literature/41586_2023_7006_Fig11_ESM.jpg",
+      "sha256": "e36d3aa9a23aa37bcaec8974cd9e29d43ff37fdbc61d5b02659621acc827da1e",
+      "bytes": 159572,
+      "license": "CC-BY-4.0",
+      "status": "downloaded",
+      "retrieved_at": "2026-09-13"
+    }
+  ],
+  "access_constraints": {
+    "cave_selected_synapse_query": {
+      "status": "token_required",
+      "tested_on": "2026-09-13",
+      "datastack": "flywire_fafb_public",
+      "materialization_version": 783,
+      "view": "valid_synapses_nt_np_v6",
+      "extractor_status": "prepared_not_run",
+      "configuration": "configs/synapse_coordinates.yaml",
+      "configuration_sha256": "881e25c2c0edd5dbbd756599f98a040222aba7493bf37391bf839c7135495146",
+      "token_environment_variable": "FLYWIRE_CAVE_TOKEN",
+      "credential_stored": false,
+      "runtime_note": "Official caveclient currently documents Python 3.9-3.12 support; project venv is Python 3.13."
+    },
+    "full_synapse_static_table": {
+      "status": "downloaded_checksum_verified",
+      "name": "flywire_synapses_783.feather",
+      "published_size_bytes": 9492998242,
+      "checksum": "md5:f8f1b97c9d4b0ea9b4c8b287f6b99091",
+      "source": "https://doi.org/10.5281/zenodo.10676866"
+    }
+  },
+  "external_code_review": {
+    "flybrain": {
+      "commit": "97e02fb7c8d19fd5267c3fa9194f8001e08fb613",
+      "document": "docs/research/flybrain-review.md",
+      "executed": false
+    }
+  },
+  "selected_pb_synapse_extraction": {
+    "dataset": "FAFB",
+    "materialization_version": 783,
+    "path": "data/processed/fafb783_epg_delta7_fc2_pfl3/pb-synapses.parquet",
+    "sha256": "d3e5b1bd077a3c04b11060251f3604a51bbf9eeee945765e76757bfb3e916e3a",
+    "rows": 11339,
+    "pair_count_mismatches": 0,
+    "provenance": "data/processed/fafb783_epg_delta7_fc2_pfl3/pb-synapses.provenance.json"
+  },
+  "pb_contact_validation": {
+    "status": "epg47_consistent_angular_sign_source_supported_outer_glomeruli_pending",
+    "report": "results/morphology/pb-contact-validation/report.json",
+    "report_sha256": "326858d2aad47e4f38e7dcaa15cc8bca2c31375e34dde1d91b0259163960feb2",
+    "boundary_provenance": "data/processed/fafb783_epg_delta7_fc2_pfl3/pb-synapses-with-boundary.provenance.json"
+  },
+  "delta7_compartment_review": {
+    "status": "16_compatible_candidates_24_require_review_no_verified_subtypes",
+    "report": "results/morphology/delta7-compartments/report.json",
+    "report_sha256": "fda27109f34f1a1df197365a54f1bbcce238093733a96fe0e471e7259b549418",
+    "next_step": "provisional_dynamic_orientation_harness_before_drone_integration"
+  },
+  "orientation_closed_loop": {
+    "status": "provisional_benchmark_completed_no_drone",
+    "report": "results/neural/orientation_closed_loop/report.json",
+    "report_sha256": "9f708e042e3a597dbf9107e5e001d55a129eece711b50b8b9aa6f7f5effad8eb"
+  },
+  "orientation_sensitivity": {
+    "status": "exploration_completed",
+    "report": "results/neural/orientation_sensitivity/report.json",
+    "report_sha256": "b17721a6c9f6def13de821a74ff718ef504e32cb2ba995ee08769737e5a3fc08"
+  },
+  "orientation_held_out_noise": {
+    "status": "completed",
+    "report": "results/neural/orientation_held_out_noise/report.json",
+    "report_sha256": "04cd41db3d712061038e68495a499ed0c4ba007ef6f6fae6ddc18104909af78e"
+  },
+  "orientation_candidate_v1": {
+    "status": "provisional_interface_gain_selected_held_out_noise_passed_no_drone",
+    "config": "configs/orientation_candidate_v1.yaml",
+    "config_sha256": "fdcac9dcfa342e7474df8a142ccaec2a1b1d1c39923d32b8a6caeac331ba5dba",
+    "gain": 0.02,
+    "held_out_neural_episodes": 576,
+    "held_out_neural_successes": 576
+  },
+  "desktop_prototype": {
+    "status": "native_selectable_planar_and_6dof_navigation_with_conventional_obstacle_layer",
+    "dataset": "FAFB",
+    "materialization_version": 783,
+    "neurons": 195,
+    "skeleton_vertices": 658296,
+    "skeleton_edges": 658101,
+    "geometry_sampling": "none",
+    "integration_report": "results/desktop/navigation-integration-check.json",
+    "integration_sha256": "e85c14f21e2dbf203d0a473a8205dfff3697ef05728fb7e7dddf2b3ac42743b1",
+    "config": "configs/desktop.yaml",
+    "engine": "Panda3D 1.10.16",
+    "navigation_config": "configs/navigation_confirmed.yaml",
+    "navigation_config_sha256": "7f61ec53ecb6c0331468d0574c0e733e9f5694fef45c21976737de0eacfcfeb7",
+    "config_sha256": "1afe6a70028a348e5636355e7c9751474808386382de45d6c84633ee24978a35",
+    "sensor_modes": [
+      "ideal",
+      "perturbed_engineering"
+    ],
+    "post_arrival_recovery_displacement_m": 0.6,
+    "near_goal_bearing_hold_m": 0.3,
+    "near_goal_bearing_release_m": 0.4,
+    "arrival_jitter_check_positions": 16,
+    "arrival_jitter_goal_span_deg": 0.0,
+    "arrival_jitter_pfl3_signal_span_hz": 0.0,
+    "source_code_sha256": "7f8e83018c08e35852f6bcea7c6a722c52c5381fb70c8975661cbf3cbc5cfd04",
+    "activity_color_scheme": "original_green_zero_red_positive_blue_negative",
+    "navigation_source_sha256": "0e51c73d4eff400119e4f83cfaf75540e6eeeafcabedebefa75b4b21580daee3",
+    "quadrotor_source_sha256": "141e4cee758192eb04b891c58b401107a96dd435a81b1e4521f6766453677176",
+    "flight_modes": [
+      "planar",
+      "6dof"
+    ],
+    "interactive_gust_force_n": 0.5,
+    "six_dof_preview": "results/desktop/desktop-6dof-preview.png",
+    "six_dof_preview_sha256": "e6a9d576964c7e0085e3ebeb29bc46d8b17ebfcd6d970b08342c65c282c8edd1",
+    "tests_passed": 58,
+    "obstacle_preview": "results/desktop/desktop-obstacle-preview.png",
+    "obstacle_preview_sha256": "65de339df9c3a399805f7f87502eb48a92729519ac003569e29712c6a0b53413",
+    "obstacle_test_minimum_clearance_m": 0.6500467399089651
+  },
+  "hover_benchmark": {
+    "status": "completed_provisional_hover_yaw",
+    "report": "results/simulation/hover_benchmark/report.json",
+    "sha256": "5157ab95a178e3cc1f59ff55e62173e26c411b82dda4fbf46c0912b60b447721"
+  },
+  "navigation_benchmark": {
+    "report": "results/simulation/navigation/report.json",
+    "sha256": "9c08bf3d8eb2359eb66b887a179e2c6d782353fe8c9db0d35b9f6d030d04faac",
+    "status": "simplified_navigation_provisional"
+  },
+  "navigation_generalization": {
+    "report": "results/simulation/navigation_generalization/report.json",
+    "sha256": "13e6ffe737ce6938262952dd7d0599892f57f0597a80bb925a4e675d52896727",
+    "status": "novel_geometry_imperfect_position_evaluated"
+  },
+  "arrival_confirmed": {
+    "report": "results/simulation/arrival_confirmed/report.json",
+    "sha256": "356865cdf9fb8c3046ebb08c8177af1748a9189da88d8ebcfd270f1363c33159",
+    "status": "novel_geometry_imperfect_position_evaluated"
+  },
+  "arrival_held_out": {
+    "report": "results/simulation/arrival_held_out/report.json",
+    "sha256": "e3d7278faf9184ca82a77ee8bba061de60ea1dd1131ee2ca5747d17a2cc58a3c",
+    "status": "novel_geometry_imperfect_position_evaluated"
+  },
+  "arrival_legacy_held_out": {
+    "report": "results/simulation/arrival_legacy_held_out/report.json",
+    "sha256": "9cf392bc8ae9ef560fcfeec7e493df1df7741680272f716ed9150f81a5a53afb",
+    "status": "novel_geometry_imperfect_position_evaluated"
+  },
+  "arrival_ablation_full": {
+    "report": "results/simulation/arrival_ablation_full/report.json",
+    "sha256": "bfcd6bdc2ae280fbd4d6354e84e6121ecf42e57894b781df3e4cfb4f37fccc5f",
+    "status": "novel_geometry_imperfect_position_evaluated"
+  },
+  "arrival_ablation_no_filter": {
+    "report": "results/simulation/arrival_ablation_no_filter/report.json",
+    "sha256": "5c728e0a93ae8669c81240b28f816b717d7ca180ab3cad71dd338777f84dce67",
+    "status": "novel_geometry_imperfect_position_evaluated"
+  },
+  "arrival_ablation_wide_entry": {
+    "report": "results/simulation/arrival_ablation_wide_entry/report.json",
+    "sha256": "1c917f8758b2c63bb41026ddff8617a6f3d910e4bdb601477f7a38b9257fab35",
+    "status": "novel_geometry_imperfect_position_evaluated"
+  },
+  "arrival_ablation_no_confirmation": {
+    "report": "results/simulation/arrival_ablation_no_confirmation/report.json",
+    "sha256": "6f0ec0809719a5ee606fd05369b9283f005306f7a449727ce6fca8ece48a5eee",
+    "status": "novel_geometry_imperfect_position_evaluated"
+  },
+  "arrival_ablation_no_recovery": {
+    "report": "results/simulation/arrival_ablation_no_recovery/report.json",
+    "sha256": "82d2e96acb4008a457f30f5d4d184f39c986f453e61a702b0e1be06401f8d6f6",
+    "status": "novel_geometry_imperfect_position_evaluated"
+  },
+  "arrival_ablation": {
+    "status": "completed_single_component_ablation",
+    "document": "docs/research/arrival-ablation.md",
+    "summary": "results/simulation/arrival_ablation_summary.csv",
+    "summary_sha256": "fe0986cd1c96a0864d9ec56d2fe818397f33f6c98e7678c818a71e20f0c2b72e",
+    "episodes": 2560,
+    "case_seed": 798,
+    "full_policy_successes": 512,
+    "no_filter_failures": 128,
+    "wide_entry_failures": 1,
+    "no_confirmation_failures": 0,
+    "no_recovery_failures": 128
+  },
+  "quadrotor_6dof": {
+    "status": "first_6dof_waypoint_benchmark_completed",
+    "report": "results/simulation/quadrotor_6dof/report.json",
+    "report_sha256": "51dadd87954ae97ed90b822a6d11202d972527c48514fab669671ff46c2ba23b",
+    "episodes": 64
+  },
+  "quadrotor_6dof_robustness": {
+    "status": "held_out_6dof_perturbations_completed",
+    "report": "results/simulation/quadrotor_6dof_robustness/report.json",
+    "report_sha256": "af82f39e279fdb0ddcfce11e52386b9e6d7c06ba1761e6fe3ee90d2144aa0975",
+    "episodes": 64
+  },
+  "quadrotor_stage": {
+    "status": "first_6dof_and_held_out_robustness_completed",
+    "document": "docs/research/quadrotor-6dof.md",
+    "document_sha256": "fa6f29e51be45dc2d6e8b7c1c2ad170ee13c7d8bc929893c2eeece10fb54e786",
+    "plant_config": "configs/quadrotor.yaml",
+    "plant_config_sha256": "b0f8cedadb8c174a8fe1da8d0d7d7f01cb6f09296ca070e781339a59e3eb461a",
+    "plant_source_sha256": "141e4cee758192eb04b891c58b401107a96dd435a81b1e4521f6766453677176",
+    "figure": "results/simulation/quadrotor_6dof/representative-comparison.png",
+    "figure_sha256": "34bdb687a83bb1df2030c22876522b8468063105aa86c469213e45821db952ae",
+    "deterministic_episodes": 64,
+    "robustness_episodes": 64,
+    "deterministic_successes": 64,
+    "robustness_successes": 64,
+    "tests_passed": 54
+  },
+  "quadrotor_6dof_obstacles": {
+    "status": "conventional_obstacle_safety_layer_evaluated",
+    "report": "results/simulation/quadrotor_6dof_obstacles/report.json",
+    "report_sha256": "a4994b8deb105d16ae2969484d2c94b8fcb4fe5d4ad802a279a92028803dfdf0",
+    "episodes": 32
+  },
+  "quadrotor_6dof_obstacles_v2_diagnostic": {
+    "status": "conventional_obstacle_safety_layer_evaluated",
+    "report": "results/simulation/quadrotor_6dof_obstacles_v2_diagnostic/report.json",
+    "report_sha256": "fd9d485d3332c87ed27a4961788ac473d857ce017c8201c885dee5ee90d8f17d",
+    "episodes": 16
+  },
+  "quadrotor_6dof_obstacles_v3_diagnostic": {
+    "status": "conventional_obstacle_safety_layer_evaluated",
+    "report": "results/simulation/quadrotor_6dof_obstacles_v3_diagnostic/report.json",
+    "report_sha256": "a2fe8e68658273e629c12169a698344de95314742e5bcc0858244f944a68bbe9",
+    "episodes": 16
+  },
+  "quadrotor_6dof_obstacles_v3_held_out": {
+    "status": "conventional_obstacle_safety_layer_evaluated",
+    "report": "results/simulation/quadrotor_6dof_obstacles_v3_held_out/report.json",
+    "report_sha256": "449fad226beb170dd1aab254215c8c81a51612d4cffacb4cc8d41891dc22eb1e",
+    "episodes": 32
+  },
+  "obstacle_navigation_stage": {
+    "status": "heading_aware_conventional_safety_layer_held_out_passed",
+    "document": "docs/research/obstacle-navigation.md",
+    "document_sha256": "dfdfba0908b9f530027f0c69ce13e8258618d007642a9ca59bc1390f2db1e2cf",
+    "held_out_report": "results/simulation/quadrotor_6dof_obstacles_v3_held_out/report.json",
+    "held_out_report_sha256": "449fad226beb170dd1aab254215c8c81a51612d4cffacb4cc8d41891dc22eb1e",
+    "figure": "results/simulation/quadrotor_6dof_obstacles_v3_held_out/obstacle-progression.png",
+    "figure_sha256": "b8804f62e06263beb7ecf4218a6941a096a2d5b5eabcd7c52aa5b5ab535e2f85",
+    "held_out_episodes": 32,
+    "held_out_successes": 32,
+    "held_out_collisions": 0,
+    "attribution": "conventional planner supplies local target; FlyWire-grounded provisional circuit commands yaw only"
+  },
+  "quadrotor_circuit_ablation": {
+    "status": "closed_loop_6dof_circuit_ablations_completed",
+    "report": "results/simulation/quadrotor_circuit_ablation/report.json",
+    "report_sha256": "e3de4651de406c62581ea5c601f6177d760ab3c97e9647f1e994dd4dab88213b",
+    "episodes": 160
+  },
+  "circuit_ablation_orientation": {
+    "status": "heading_only_circuit_ablation_diagnostic_completed",
+    "report": "results/neural/circuit_ablation_orientation/report.json",
+    "report_sha256": "012681948622d4326f415d5db123c3eb2336d0b67081c0985ad5b03547cfaf5c",
+    "episodes": 160
+  },
+  "circuit_ablation_stage": {
+    "status": "projection_ablation_robustness_completed",
+    "document": "docs/research/circuit-ablation-6dof.md",
+    "document_sha256": "92154725f6b91265027735ddfff9d01688dc8c76d83c2e29e3369f2e1982a3f9",
+    "six_dof_report": "results/simulation/quadrotor_circuit_ablation/report.json",
+    "six_dof_report_sha256": "e3de4651de406c62581ea5c601f6177d760ab3c97e9647f1e994dd4dab88213b",
+    "orientation_report": "results/neural/circuit_ablation_orientation/report.json",
+    "orientation_report_sha256": "012681948622d4326f415d5db123c3eb2336d0b67081c0985ad5b03547cfaf5c",
+    "figure": "results/simulation/quadrotor_circuit_ablation/circuit-ablation.png",
+    "figure_sha256": "1cd5b4a6f9bfc95e7295ec7e5d71b73979cd688c5393dca0b41b4408146df9fb",
+    "six_dof_episodes": 384,
+    "orientation_episodes": 480,
+    "intact_successes": 16,
+    "delta7_ablated_successes": 0,
+    "fc2_ablated_successes": 0,
+    "uniformized_successes": 14,
+    "shuffled_successes": 0,
+    "shuffled_episodes": 80,
+    "claim_limit": "computational attribution within provisional model; degree-preserving nulls can show direction-specific accidental success; not a biological perturbation experiment",
+    "degree_null_6dof_report": "results/simulation/quadrotor_degree_preserving_null/report.json",
+    "degree_null_6dof_report_sha256": "73b941a4129571035427e16255e9d5e0882d76a8eca9c2dec3c83166cb0ec83a",
+    "degree_null_orientation_report": "results/neural/degree_preserving_null_orientation/report.json",
+    "degree_null_orientation_report_sha256": "8c2d635dd2ace4a911270f28f25a83d5b25dfbc4e33587e2c134bb264ccaf46a",
+    "projection_null_report": "results/neural/projection_specific_degree_null/report.json",
+    "projection_null_report_sha256": "e107292e95eb26989f1f5e9b70d35cebceaff9f7ce530efbc941ba88120d3722",
+    "projection_figure": "results/neural/projection_specific_degree_null/projection-null.png",
+    "projection_figure_sha256": "12be7154083c680ef1ad320774f20e99486d025e54cc38b9815584faa570da5e",
+    "degree_preserving_null_successes": 7,
+    "degree_preserving_null_episodes": 80,
+    "projection_null_orientation": {
+      "EPG_to_Delta7": "2/80",
+      "Delta7_to_PFL3": "5/80",
+      "FC2_to_PFL3": "9/80"
+    },
+    "tests_passed": 62,
+    "projection_null_6dof_report": "results/simulation/quadrotor_projection_null/report.json",
+    "projection_null_6dof_report_sha256": "011a003144a0a328e3e4bf4bab8f06ab4aa8818ff11858abe55436d8cb14bb40",
+    "held_out_projection_seed": 931,
+    "held_out_projection_successes": {
+      "EPG_to_Delta7": 0,
+      "Delta7_to_PFL3": 0,
+      "FC2_to_PFL3": 1
+    },
+    "projection_robustness_report": "results/simulation/quadrotor_projection_robustness/report.json",
+    "projection_robustness_report_sha256": "bfd59dcf2233496443d996655769a7e8ecfa5be7ae59647ae8a92a693b2fa2e6",
+    "robustness_episodes": 96,
+    "robustness_intact_successes": 32,
+    "robustness_epg_null_successes": 0,
+    "robustness_fc2_null_successes": 1,
+    "relevant_tests_passed": 11
+  },
+  "degree_preserving_null_orientation": {
+    "status": "degree_preserving_null_heading_diagnostic_completed",
+    "report": "results/neural/degree_preserving_null_orientation/report.json",
+    "report_sha256": "8c2d635dd2ace4a911270f28f25a83d5b25dfbc4e33587e2c134bb264ccaf46a",
+    "episodes": 80
+  },
+  "quadrotor_degree_preserving_null": {
+    "status": "degree_preserving_null_6dof_completed",
+    "report": "results/simulation/quadrotor_degree_preserving_null/report.json",
+    "report_sha256": "73b941a4129571035427e16255e9d5e0882d76a8eca9c2dec3c83166cb0ec83a",
+    "episodes": 80
+  },
+  "projection_specific_degree_null": {
+    "status": "projection_specific_degree_null_heading_diagnostic_completed",
+    "report": "results/neural/projection_specific_degree_null/report.json",
+    "report_sha256": "e107292e95eb26989f1f5e9b70d35cebceaff9f7ce530efbc941ba88120d3722",
+    "episodes": 240
+  },
+  "quadrotor_projection_null": {
+    "status": "projection_specific_degree_null_6dof_completed",
+    "report": "results/simulation/quadrotor_projection_null/report.json",
+    "report_sha256": "011a003144a0a328e3e4bf4bab8f06ab4aa8818ff11858abe55436d8cb14bb40",
+    "episodes": 48,
+    "held_out_seed": 931
+  },
+  "quadrotor_projection_robustness": {
+    "status": "projection_null_robustness_completed",
+    "report": "results/simulation/quadrotor_projection_robustness/report.json",
+    "report_sha256": "bfd59dcf2233496443d996655769a7e8ecfa5be7ae59647ae8a92a693b2fa2e6",
+    "episodes": 96
+  },
+  "pid_baseline": {
+    "status": "pid_development_selection_and_held_out_evaluation_completed",
+    "report": "results/simulation/pid_baseline/report.json",
+    "report_sha256": "5ef1bdbe27e99e6c4513d74cd61284a178b17226bab6b7d36803e0eb9b41e539",
+    "development_episodes": 32,
+    "held_out_episodes": 96,
+    "comparison_report": "results/simulation/pid_baseline/comparison_report.json",
+    "comparison_report_sha256": "27a67eb9679591b1b20bbbd19d656169191a75b814c48129f40b6d87dc6d8606",
+    "controllers_compared": [
+      "neural",
+      "pid",
+      "proportional"
+    ],
+    "paired_cases_per_scenario": 16
+  },
+  "additional_extractions": {
+    "fafb783_recurrent_compass": {
+      "output_dir": "data/processed/fafb783_recurrent_compass",
+      "config_sha256": "c0c56ce3085c289a5f3ad0b6d9f5be6192bfd2777626d2aa62de6cd50e06d466",
+      "provenance": "data/processed/fafb783_recurrent_compass/provenance.json",
+      "neuron_count": 149,
+      "edge_count": 6238
+    },
+    "steering_pfl2": {
+      "output_dir": "data/processed/fafb783_epg_delta7_fc2_pfl2_pfl3",
+      "config_sha256": "4d1328eb99b5efadc66feff0a4a83ff67d8cd7f245eb125d0d2f03a382097e9d",
+      "provenance": "data/processed/fafb783_epg_delta7_fc2_pfl2_pfl3/provenance.json",
+      "neuron_count": 207,
+      "edge_count": 5056
+    },
+    "travel_direction_phase6": {
+      "output_dir": "data/processed/fafb783_travel_direction",
+      "config_sha256": "f067b3860e2a48ca99c7bb632071c67ef104d6b631d3b8d7420db80273e8b8d2",
+      "provenance": "data/processed/fafb783_travel_direction/provenance.json",
+      "neuron_count": 202,
+      "edge_count": 6196
+    }
+  },
+  "recurrent_compass_map": {
+    "status": "anatomical_contact_phase_audit_no_dynamics",
+    "report": "results/neural/recurrent_compass_map/report.json",
+    "report_sha256": "4a7f6f092f04ed0b7fb4119872a72ceb4e9206bf2a021d983b0d835da1b571cf",
+    "neurons": 62
+  },
+  "recurrent_compartment_audit": {
+    "status": "anatomical_neuropil_audit_no_dynamics",
+    "report": "results/neural/recurrent_compartment_audit/report.json",
+    "report_sha256": "b588f7bbcbdcbc809f9f9444922bbd390d4cc4598e114827979eebafad51ece8",
+    "projection_rows": 98
+  },
+  "recurrent_compass_synapse_coordinates": {
+    "status": "local_coordinate_extraction_verified",
+    "report": "data/processed/fafb783_recurrent_compass/synapses.report.json",
+    "report_sha256": "b3d603dcc2695758382199fbd73331454e7a782b935f17769955b0f498b907d4",
+    "output": "data/processed/fafb783_recurrent_compass/synapses.parquet",
+    "output_sha256": "55ea2bc57347c56a491f37b57062d437d5230729f7d3d43d43af351612265aae",
+    "synapses": 44492
+  },
+  "recurrent_dynamics": {
+    "status": "compartment_gated_dynamic_candidate_new_held_out_headings",
+    "report": "results/neural/recurrent_dynamics_v3/report.json",
+    "report_sha256": "5cc07c428ef114c9521fe6e3999387a30fa2d6a5331e34b0686031c2d06eb101",
+    "held_out": {
+      "median_dark_drift_deg": 25.59109109038225,
+      "minimum_dark_resultant": 0.0300811216231811,
+      "minimum_dark_contrast": 0.9996740408012957,
+      "median_turn_error_deg": 36.16462661303621,
+      "turn_direction_accuracy": 1.0,
+      "minimum_turn_resultant": 0.01914368277024459,
+      "minimum_turn_contrast": 0.9998126740072008
+    }
+  },
+  "phase_resolved_compass": {
+    "status": "phase_resolved_two_synapse_transfer_audit",
+    "report": "results/neural/phase_resolved_compass/report.json",
+    "report_sha256": "905ee33e24052a50dbd0035821d3a17245966c39dbe63c682086eccdb0ef05a3",
+    "transfers_sha256": "02de964f771b290b5720a8811bc1cd542ddfcc1e6baa7853d7ab8685c0045a7d"
+  },
+  "phase_compass_dynamics": {
+    "status": "phase_resolved_persistence_with_literature_constrained_one_wedge_update",
+    "report": "results/neural/phase_compass_dynamics_v2/report.json",
+    "report_sha256": "fcc44bda18594b09000de7aa17bcd7bbb6c08cfbae4ee2f61652ccbe122bc68c",
+    "held_out": {
+      "median_dark_drift_deg": 0.07607321570049526,
+      "minimum_dark_resultant": 0.640333289307883,
+      "minimum_dark_contrast": 0.9999999972035318,
+      "median_turn_error_deg": 4.699676537819855,
+      "turn_direction_accuracy": 1.0,
+      "minimum_turn_resultant": 0.5677072388115517,
+      "minimum_turn_contrast": 0.9941200049931631
+    }
+  },
+  "phase_compass_ablation": {
+    "status": "frozen_isolated_computational_ablation",
+    "report": "results/neural/phase_compass_dynamics_v2/ablation_report.json",
+    "report_sha256": "12e6795a42f67c15b660b481451c50d40137cc040ad7fad6e28a816429f312d9"
+  },
+  "quadrotor_heading_dropout": {
+    "status": "heading_dropout_6dof_benchmark_completed",
+    "report": "results/simulation/quadrotor_heading_dropout/report.json",
+    "report_sha256": "722a585905374912e5f7a670f6a4f75e74c59152aa14fba70cb2fa47d714c704",
+    "episodes": 64
+  },
+  "phase_velocity_validation": {
+    "status": "multi_velocity_validation_completed",
+    "report": "results/neural/phase_velocity_validation/report.json",
+    "report_sha256": "7d51f28ab6c4ff07e0d5f10f38332c7828e8fc30f755ef4983015d14cd410b3c"
+  },
+  "pen_phase_audit": {
+    "status": "pen_phase_index_audit_completed",
+    "report": "results/neural/pen_phase_audit/report.json",
+    "report_sha256": "6fb96d3309f6f3bf9fc6f32550937805c759358d903061305b7b2fcdd4c29b58"
+  },
+  "regularized_phase_nulls": {
+    "status": "regularized_phase_null_development_test_completed",
+    "report": "results/neural/regularized_phase_nulls/report.json",
+    "report_sha256": "b8adb78df5f4f156f6eadf33968e924e91a29c1b9a6512483e5706e99c2d0556"
+  },
+  "regularization_audit": {
+    "status": "regularization_distance_audit_completed",
+    "report": "results/neural/regularization_audit/report.json",
+    "report_sha256": "bb55329a88d62344372c22d31d2b39a5db5632627034eea70dd09834b970651d"
+  },
+  "phase_resolved_compass_cross_compartment": {
+    "status": "phase_resolved_cross_compartment_pb_to_eb_transfer_audit",
+    "report": "results/neural/phase_resolved_compass_cross_compartment/report.json",
+    "report_sha256": "e244756ad824cf9214877e82854919c635f72ce726616a92d586b85dfb45171b",
+    "transfers_sha256": "e2e6ce9a0f9533c4a3ff1c0c909d7d07fbfab7b7b00420a21f3aae30b489fe6f"
+  },
+  "phase_velocity_cross_compartment": {
+    "status": "multi_velocity_validation_completed",
+    "report": "results/neural/phase_velocity_cross_compartment/report.json",
+    "report_sha256": "17419b7623dfa9e949863eb032faf832d6614b9678a0305f5e7750da783c88a9"
+  },
+  "regularization_audit_cross_compartment": {
+    "status": "regularization_distance_audit_completed",
+    "report": "results/neural/regularization_audit_cross_compartment/report.json",
+    "report_sha256": "232726734462f7349a1314d9b65a3e22b97234d1f81bd0201d8a3feeab505b8a"
+  },
+  "regularized_phase_nulls_cross_compartment_v4": {
+    "status": "regularized_phase_null_development_test_completed",
+    "report": "results/neural/regularized_phase_nulls_cross_compartment_v4/report.json",
+    "report_sha256": "a53be9315c89712b53d741f03587d86e51725daaf5149e6dce4175aa956dab37"
+  },
+  "quadrotor_heading_dropout_v4_prospective": {
+    "status": "heading_dropout_6dof_benchmark_completed",
+    "report": "results/simulation/quadrotor_heading_dropout_v4_prospective/report.json",
+    "report_sha256": "654585c7d124ff698bb69cc6413ffbffc04b27679978cdf4833b6f43996907c6",
+    "episodes": 120
+  },
+  "pfl2_goal_misalignment_model": {
+    "status": "isolated_contact_model_evaluated",
+    "report": "results/neural/pfl2_goal_misalignment/report.json",
+    "report_sha256": "869b32230dc1828ae5024fda1d595d00697fb65fc6e1160cbbb15ac03407e701"
+  },
+  "additional_morphologies": {
+    "steering_pfl2": {
+      "status": "downloaded_verified",
+      "configuration": "configs/morphology_pfl2_steering.yaml",
+      "configuration_sha256": "bbc9d06b55369a012a0e4a2ad57ba6d4fcd43a176c38d0a2492c2551b988f457",
+      "index": "data/processed/fafb783_epg_delta7_fc2_pfl2_pfl3/morphology-index.json",
+      "index_sha256": "26cd808ef8f3091959c20a79d6b139bf77a09cc80851cec5a863d7de642f853e",
+      "skeleton_count": 207,
+      "atlas_path": "data/raw/JFRC2NP.surf.fw.zip"
+    },
+    "travel_direction_phase6": {
+      "status": "downloaded_verified",
+      "configuration": "configs/morphology_travel_direction.yaml",
+      "configuration_sha256": "fc1f179e1ffdc054c2de607b0e266aca31354136941451302fab2edaa21a4455",
+      "index": "data/processed/fafb783_travel_direction/morphology-index.json",
+      "index_sha256": "32c9811caf94500534ca36929f5e7aa454f96dd0109fc8fb65f31bae48018996",
+      "skeleton_count": 202,
+      "atlas_path": "data/raw/JFRC2NP.surf.fw.zip"
+    }
+  },
+  "pfl2_steering_development": {
+    "status": "completed",
+    "report": "results/neural/pfl2_steering_development/report.json",
+    "report_sha256": "fb68dc1db5abcc2061bb2985aef0d40552ea57d1a8235e1a3176419afed83624"
+  },
+  "quadrotor_pfl2_steering_development": {
+    "status": "completed",
+    "report": "results/simulation/quadrotor_pfl2_steering_development/report.json",
+    "report_sha256": "9452654ce284a464699d81887ce96fe63b8e5487338d355c27ba9dc63429e374"
+  },
+  "quadrotor_pfl2_steering_prospective": {
+    "status": "completed_single_run_prospective",
+    "report": "results/simulation/quadrotor_pfl2_steering_prospective/report.json",
+    "report_sha256": "04070f6231b752d296d43db19cd294bfe55a43aa98bee88ccfbe02bc99eef0a4",
+    "episodes": 72,
+    "passed": true
+  },
+  "pfl2_connectivity_nulls": {
+    "status": "post_prospective_phase_permutation_control_completed",
+    "report": "results/neural/pfl2_connectivity_nulls/report.json",
+    "report_sha256": "2890b410c54e4613cf75579be6f90be0e4c240744430c3506eb37124a029d4c8",
+    "null_count": 30
+  },
+  "quadrotor_pfl2_analytic_control": {
+    "status": "post_prospective_matched_gain_control_completed",
+    "report": "results/simulation/quadrotor_pfl2_analytic_control/report.json",
+    "report_sha256": "95f8ee096054d43d9b293289951f18fdf371c6251973f4877571db527a54d886",
+    "episodes": 36
+  },
+  "travel_direction_anatomical_audit": {
+    "status": "anatomical_contacts_only",
+    "report": "data/processed/fafb783_travel_direction/travel-direction-audit.json",
+    "report_sha256": "eb1e22ec89a6acf1b69cac04a7d330f90a6f31896df547d4823de6f97002586a",
+    "neurons": 202
+  },
+  "travel_direction_synapse_coordinates": {
+    "status": "local_coordinate_extraction_verified",
+    "report": "data/processed/fafb783_travel_direction/synapses.csv.report.json",
+    "report_sha256": "fd0d1961880fbe69cae0e09a0e53bafacfd0ea08c07d76a48fd366b7a7d95255",
+    "output": "data/processed/fafb783_travel_direction/synapses.csv.gz",
+    "output_sha256": "21ad74bbed739cc848c7b9a035b410f56bab35db0cbf6aa61460577a9a4dbcba",
+    "synapses": 53999
+  },
+  "travel_direction_phase_diagnostic": {
+    "status": "naive_single_phase_mapping_rejected",
+    "report": "data/processed/fafb783_travel_direction/travel-direction-phase-diagnostic.json",
+    "report_sha256": "6693bd7d9fdd89d8ee1d70b5faccd23538a3f4c6dcbc293806b8c26015084bce"
+  },
+  "travel_direction_columns": {
+    "status": "provisional_geometry_plus_published_compartment_rule",
+    "report": "data/processed/fafb783_travel_direction/travel-direction-columns.report.json",
+    "report_sha256": "e0f23606336a07ca3b4444096718d75366ff5d8859db8acf3b64207a4ae41d1b",
+    "mapping": "data/processed/fafb783_travel_direction/travel-direction-columns.csv",
+    "mapping_sha256": "c325529fbed40716ae5911b454eed4d72af5e8d39d7ac339eef1a394d753a5ca"
+  },
+  "travel_direction_development": {
+    "status": "development_gate_completed",
+    "report": "results/neural/travel_direction_development/report.json",
+    "report_sha256": "51b34b271ae5d3523b0651c452a5fe34ad8df3ad93af84e95e9184727243722c",
+    "passed": true
+  },
+  "travel_direction_ablation": {
+    "status": "post_development_attribution_completed",
+    "report": "results/neural/travel_direction_ablation/report.json",
+    "report_sha256": "0d7418111fdb5db3e352b6cbaf20e6fda91cd3a18f58e890a7789e0cd09bdb0a",
+    "phase_nulls": 30
+  },
+  "travel_direction_prospective": {
+    "status": "prospective_gate_completed",
+    "report": "results/neural/travel_direction_prospective/report.json",
+    "report_sha256": "2138b15bb5b51e838e1da45fc1454c1d3f2f825da8e5b839b911ecce821942a8",
+    "passed": true
+  },
+  "quadrotor_travel_direction_development": {
+    "status": "development_diagnostic_completed",
+    "report": "results/simulation/quadrotor_travel_direction_development/report.json",
+    "report_sha256": "b526372a7b35e5dba9293255071e0d9f512cbcfcdb50f2640b01ac092b88f02c"
+  },
+  "quadrotor_travel_direction_prospective": {
+    "status": "prospective_gate_completed_recovered_report",
+    "report": "results/simulation/quadrotor_travel_direction_prospective/report.json",
+    "report_sha256": "dd13b617fe8aa9d1f7e26218706a587f8be2c7c6dd610fd1ae410582709ab1bf",
+    "passed": true
+  },
+  "quadrotor_travel_sensor_development": {
+    "status": "development_diagnostic_completed",
+    "report": "results/simulation/quadrotor_travel_sensor_development/report.json",
+    "report_sha256": "8ee674c6b2de8195d846db8332abb595ea1ec63a9d48c82a569687530541ebf1"
+  },
+  "quadrotor_travel_sensor_prospective": {
+    "status": "prospective_gate_completed",
+    "report": "results/simulation/quadrotor_travel_sensor_prospective/report.json",
+    "report_sha256": "068756b42e895f9124c53a633c670251b355c024bc5a8351a721b802bc48b41b",
+    "passed": true
+  },
+  "quadrotor_pfl2_advance_development": {
+    "status": "development_diagnostic_completed",
+    "report": "results/simulation/quadrotor_pfl2_advance_development/report.json",
+    "report_sha256": "1025960d83e1a58519cbbe65a79b2043f2b7f0ee207e372e4339dcfb39f2efe0"
+  },
+  "quadrotor_pfl2_advance_prospective": {
+    "status": "prospective_gate_completed",
+    "report": "results/simulation/quadrotor_pfl2_advance_prospective/report.json",
+    "report_sha256": "5c62f282732a0e1685895d68c0769ef5a87e5574ad3b90154277c84b11b791b3",
+    "passed": true
+  },
+  "quadrotor_integrated_development": {
+    "status": "development_completed",
+    "report": "results/simulation/quadrotor_integrated_development/report.json",
+    "report_sha256": "fb496cd3b6e3c317169bf8aca8f2afcbe82eb034d462ddb746a472484c10e553",
+    "episodes": 48
+  },
+  "quadrotor_integrated_duration_diagnostic": {
+    "status": "development_completed",
+    "report": "results/simulation/quadrotor_integrated_duration_diagnostic/report.json",
+    "report_sha256": "9fdb66677585d47dd5b2b86b26ff26b06ebf4cd911f4ba0bcceeab77a2a2c403",
+    "episodes": 24
+  },
+  "quadrotor_integrated_compass_diagnostic": {
+    "status": "development_completed",
+    "report": "results/simulation/quadrotor_integrated_compass_diagnostic/report.json",
+    "report_sha256": "ee66ab40c2172dd14293bb4ea9303eddcd33cc34e32c22ad9ec8c7bbd00f7f94",
+    "episodes": 12
+  },
+  "quadrotor_integrated_velocity_diagnostic": {
+    "status": "development_completed",
+    "report": "results/simulation/quadrotor_integrated_velocity_diagnostic/report.json",
+    "report_sha256": "8ec8c9ad8f17c5c173f7d71e2fdb874d9a10944ae6301296b82581650ba2940a",
+    "episodes": 12
+  },
+  "quadrotor_integrated_v4_corrected_diagnostic": {
+    "status": "development_completed",
+    "report": "results/simulation/quadrotor_integrated_v4_corrected_diagnostic/report.json",
+    "report_sha256": "c575f88b7382528552582e47028ed66883ed0e1ca6769322637cb4bc6b9021d7",
+    "episodes": 12
+  },
+  "quadrotor_integrated_prospective": {
+    "status": "prospective_gate_completed",
+    "report": "results/simulation/quadrotor_integrated_prospective/report.json",
+    "report_sha256": "02ad306a699b4e4c9c2fca159a5ae8a473a59bc93a56bbdd062b2c18a5c27d69",
+    "passed": false
+  },
+  "quadrotor_hybrid_compass_development": {
+    "status": "development_completed",
+    "report": "results/simulation/quadrotor_hybrid_compass_development/report.json",
+    "report_sha256": "b90421a3e1b65c5e0f92ca4e4c385c73f7c11713c94e4fcd0e6e78d49697a60f",
+    "episodes": 48
+  },
+  "quadrotor_hybrid_confidence_correction": {
+    "status": "development_completed",
+    "report": "results/simulation/quadrotor_hybrid_confidence_correction/report.json",
+    "report_sha256": "01df96e16777af76fc55a1cac7700a2e58bbedec78e48928b6c4ae71dca40606",
+    "episodes": 24
+  },
+  "quadrotor_oracle_diagnostics": {
+    "status": "development_oracle_diagnostic_completed",
+    "report": "results/simulation/quadrotor_oracle_diagnostics/report.json",
+    "report_sha256": "9b960cec20c7f166379f7c0a5c46f20df89354eb3050b0f3465024ff66d40bda",
+    "episodes": 48
+  },
+  "quadrotor_open_loop_replay": {
+    "status": "development_open_loop_replay_completed",
+    "report": "results/simulation/quadrotor_open_loop_replay/report.json",
+    "report_sha256": "d44153108ed3f795ff9e85d144396363824d93262ebe8ee4e8447fbaf6bf7144",
+    "episodes": 32
+  },
+  "quadrotor_drift_confidence_development": {
+    "status": "development_confidence_candidate_completed",
+    "report": "results/simulation/quadrotor_drift_confidence_development/report.json",
+    "report_sha256": "1bd5dc549100222400cd1c61136d80126b5ba5a01fb17b8b0a5c0cade3c41821",
+    "episodes": 36
+  },
+  "quadrotor_inertial_velocity_development": {
+    "status": "development_inertial_velocity_candidate_completed",
+    "report": "results/simulation/quadrotor_inertial_velocity_development/report.json",
+    "report_sha256": "1b2d218986043f9410585ec34cbbb7243a4b7fcee52f7b8dc4d93475cb98c8b4",
+    "episodes": 36
+  },
+  "quadrotor_inertial_body_development": {
+    "status": "development_inertial_velocity_candidate_completed",
+    "report": "results/simulation/quadrotor_inertial_body_development/report.json",
+    "report_sha256": "6837a51818bd1294fedd473709ddbcdd651d69d63586c63010d419fef20e0182",
+    "episodes": 36
+  },
+  "quadrotor_matched_drift_readout_development": {
+    "status": "development_inertial_velocity_candidate_completed",
+    "report": "results/simulation/quadrotor_matched_drift_readout_development/report.json",
+    "report_sha256": "ea6a0d6e00e7a09d76f3265f1fb20d0711ab9796786dea5608fdcc9b27a1a66e",
+    "episodes": 36
+  },
+  "quadrotor_matched_drift_readout_3d_development": {
+    "status": "development_inertial_velocity_candidate_completed",
+    "report": "results/simulation/quadrotor_matched_drift_readout_3d_development/report.json",
+    "report_sha256": "d8c9b05f7de2f254a24aa4b7d8e1a739d98276e0d8a107ab492c1f1ed881eb1d",
+    "episodes": 36
+  },
+  "quadrotor_connectome_null_3d_development": {
+    "status": "development_inertial_velocity_candidate_completed",
+    "report": "results/simulation/quadrotor_connectome_null_3d_development/report.json",
+    "report_sha256": "cac85dd51617dc282be1521886c81a42997e672f988443a0f924581d15600514",
+    "episodes": 72
+  },
+  "quadrotor_connectome_block_null_3d_development": {
+    "status": "development_inertial_velocity_candidate_completed",
+    "report": "results/simulation/quadrotor_connectome_block_null_3d_development/report.json",
+    "report_sha256": "5b5d22c10c1273cfec58fa09cbaade5766afb783359fc9ea2ba34b7b1af06ded",
+    "episodes": 48
+  },
+  "quadrotor_connectome_confirmatory_v1": {
+    "status": "development_inertial_velocity_candidate_completed",
+    "report": "results/simulation/quadrotor_connectome_confirmatory_v1/report.json",
+    "report_sha256": "5063ecd250566d8af20d93bb7d2743c3543fed3dd1a5fdabd802115197ff629a",
+    "episodes": 800
+  },
+  "quadrotor_integrated_v2_development": {
+    "status": "integrated_v2_completed",
+    "report": "results/simulation/quadrotor_integrated_v2_development/report.json",
+    "report_sha256": "b1ba3ea4a3f0ed5f89b850f74159e1dd12410748e12d88fda35c06c608c3ba75",
+    "episodes": 96
+  },
+  "quadrotor_integrated_v2_delta7_correction": {
+    "status": "integrated_v2_completed",
+    "report": "results/simulation/quadrotor_integrated_v2_delta7_correction/report.json",
+    "report_sha256": "5953abdab04f76e56fdf0586107297a4296dad0bbf49a1eed22afbaea19a9906",
+    "episodes": 12
+  },
+  "quadrotor_integrated_v2_prospective": {
+    "status": "integrated_v2_completed",
+    "report": "results/simulation/quadrotor_integrated_v2_prospective/report.json",
+    "report_sha256": "4e2020c9bce52c39ab066d54171e002f7353b87b1d0376bd130ef72398535fb5",
+    "episodes": 180
+  },
+  "quadrotor_integrated_v3_arrival_diagnostic": {
+    "status": "integrated_v2_completed",
+    "report": "results/simulation/quadrotor_integrated_v3_arrival_diagnostic/report.json",
+    "report_sha256": "9b7018abe080edf2269508debc8c49af00b30497e0fc70b0a0a4b154f7560779",
+    "episodes": 30
+  },
+  "quadrotor_integrated_v3_position_hold_diagnostic": {
+    "status": "integrated_v2_completed",
+    "report": "results/simulation/quadrotor_integrated_v3_position_hold_diagnostic/report.json",
+    "report_sha256": "84363a8a5d938c76ec0cff74ca700c67be2730ea631509ffe2731501e7e8180c",
+    "episodes": 30
+  },
+  "quadrotor_integrated_v3_absorbing_arrival_diagnostic": {
+    "status": "integrated_v2_completed",
+    "report": "results/simulation/quadrotor_integrated_v3_absorbing_arrival_diagnostic/report.json",
+    "report_sha256": "19e6ac437cbb8f9029b8f8a4c042fa9a1d0de9888670d59a1a02a07ff4f6bedd",
+    "episodes": 30
+  },
+  "quadrotor_integrated_v3_terminal_development": {
+    "status": "integrated_v2_completed",
+    "report": "results/simulation/quadrotor_integrated_v3_terminal_development/report.json",
+    "report_sha256": "d2480522ba595d04f0195e79abd94ad82adcc0cacc4c75e20c5c9bdd7efc16f5",
+    "episodes": 48
+  },
+  "quadrotor_integrated_v3_prospective": {
+    "status": "integrated_v2_completed",
+    "report": "results/simulation/quadrotor_integrated_v3_prospective/report.json",
+    "report_sha256": "389a61564cae531bc28dd270886a6bc644ee08ef8d4218ad25317163c48f9a07",
+    "episodes": 180
+  },
+  "quadrotor_integrated_v4_lateral_development": {
+    "status": "integrated_v2_completed",
+    "report": "results/simulation/quadrotor_integrated_v4_lateral_development/report.json",
+    "report_sha256": "0854e9bc2b79894803cde476707879b261d29b5d424eb41a77b851fa10a89b8d",
+    "episodes": 72
+  },
+  "quadrotor_integrated_v4_lateral_fine_development": {
+    "status": "integrated_v2_completed",
+    "report": "results/simulation/quadrotor_integrated_v4_lateral_fine_development/report.json",
+    "report_sha256": "41ceb1d56b6080650afb840b7cb2c281fe0dc3ab226189b64994b8847073bba1",
+    "episodes": 72
+  },
+  "quadrotor_integrated_v4_prospective": {
+    "status": "integrated_v2_completed",
+    "report": "results/simulation/quadrotor_integrated_v4_prospective/report.json",
+    "report_sha256": "69c7dc0692548cc195f081049390fb6720204f0fb60789172986e4f67c2ace4b",
+    "episodes": 180
+  },
+  "quadrotor_integrated_v4_connectome_null_development": {
+    "status": "integrated_v2_completed",
+    "report": "results/simulation/quadrotor_integrated_v4_connectome_null_development/report.json",
+    "report_sha256": "6d6a73e3d487905b7c22e9ac6017aa702d4ba953660504ad855e7d1e1625d78a",
+    "episodes": 72
+  },
+  "quadrotor_integrated_v4_connectome_null_prospective": {
+    "status": "integrated_v2_completed",
+    "report": "results/simulation/quadrotor_integrated_v4_connectome_null_prospective/report.json",
+    "report_sha256": "e0193176960a05224e509e7f3213f0e2d7c9369130df65ebe34197fc05a4a9a3",
+    "episodes": 252
+  },
+  "quadrotor_integrated_v4_steering_null_development": {
+    "status": "integrated_v2_completed",
+    "report": "results/simulation/quadrotor_integrated_v4_steering_null_development/report.json",
+    "report_sha256": "a9f8a511f51fa99010d5c66045babb70c65b6b5ec2d622ff093a543bdbc2957a",
+    "episodes": 72
+  },
+  "quadrotor_integrated_v4_steering_null_prospective": {
+    "status": "integrated_v2_completed",
+    "report": "results/simulation/quadrotor_integrated_v4_steering_null_prospective/report.json",
+    "report_sha256": "103698082302d4ee877378dd6c9bf4942827024ee293aa0cbf83ca5e79ed616c",
+    "episodes": 252
+  },
+  "quadrotor_integrated_v4_steering_projection_null_development": {
+    "status": "integrated_v2_completed",
+    "report": "results/simulation/quadrotor_integrated_v4_steering_projection_null_development/report.json",
+    "report_sha256": "ebbf6696c58c094db53c22dcabd5e5bb5695c23d5362dd482f1f2082577b7616",
+    "episodes": 132
+  },
+  "quadrotor_integrated_v4_delta_pfl3_null_prospective": {
+    "status": "integrated_v2_completed",
+    "report": "results/simulation/quadrotor_integrated_v4_delta_pfl3_null_prospective/report.json",
+    "report_sha256": "99f5cc237e00fd377e857aafb93acb0c69f8bf784bd0b20bf7a2b46bdaacb921",
+    "episodes": 252
+  },
+  "quadrotor_integrated_v4_epg_delta7_null_prospective": {
+    "status": "integrated_v2_completed",
+    "report": "results/simulation/quadrotor_integrated_v4_epg_delta7_null_prospective/report.json",
+    "report_sha256": "7e89628b4f5af35fd7a81f9a462aa5e9c5fb77a06543e5b880f666eca241680c",
+    "episodes": 252
+  },
+  "quadrotor_integrated_v4_ood_pilot": {
+    "status": "integrated_v2_completed",
+    "report": "results/simulation/quadrotor_integrated_v4_ood_pilot/report.json",
+    "report_sha256": "e7cbe1ae0f7cbdc7c24716fdae852fb5446da658e78b13ecefe4a14181dda4a3",
+    "episodes": 12
+  },
+  "quadrotor_integrated_v4_ood_failure_oracles": {
+    "status": "integrated_v2_completed",
+    "report": "results/simulation/quadrotor_integrated_v4_ood_failure_oracles/report.json",
+    "report_sha256": "9b72aeae9e88b9beadac30bbbaea1fb0f1a7024283656f4ef49c47b3a87eebf9",
+    "episodes": 4
+  },
+  "quadrotor_integrated_v5_heading_diagnostic": {
+    "status": "integrated_v2_completed",
+    "report": "results/simulation/quadrotor_integrated_v5_heading_diagnostic/report.json",
+    "report_sha256": "b37d73b088c9558f1c4cf58b1721645ba92cbe6d94b82beaf741d3c721058cff",
+    "episodes": 96
+  },
+  "quadrotor_integrated_v5_compass_development": {
+    "status": "integrated_v2_completed",
+    "report": "results/simulation/quadrotor_integrated_v5_compass_development/report.json",
+    "report_sha256": "236acc4c79e6ce8717790acaadf20681c5f96bbaadf7676a224122c72e101c48",
+    "episodes": 72
+  },
+  "quadrotor_integrated_v5_compass_telemetry_development": {
+    "status": "integrated_v2_completed",
+    "report": "results/simulation/quadrotor_integrated_v5_compass_telemetry_development/report.json",
+    "report_sha256": "a5bcfea277bb1bede7a26b3e42c06c0603b6f94b298ca98152a9d1e766943dad",
+    "episodes": 24
+  },
+  "quadrotor_integrated_v5_hybrid_gate": {
+    "status": "integrated_v2_completed",
+    "report": "results/simulation/quadrotor_integrated_v5_hybrid_gate/report.json",
+    "report_sha256": "35c6c7d0ca13e1f7fddc6d4967f9deb30159837e061d80ccea0089120c439608",
+    "episodes": 96
+  }
+}

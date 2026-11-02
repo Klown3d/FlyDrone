@@ -1,0 +1,47 @@
+candidate_config: configs/epg_delta7_audit.yaml
+epg_heading_sign: -1
+phase_offset_deg: 0.0
+angular_sign_source: https://doi.org/10.1038/s41586-023-07006-3
+output: results/neural/orientation_candidate_v1
+seed: 783
+shuffle_replicates: 5
+goals_deg:
+- -165
+- -135
+- -105
+- -75
+- -45
+- -15
+- 15
+- 45
+- 75
+- 105
+- 135
+- 165
+initial_errors_deg:
+- -175
+- -135
+- -90
+- -45
+- 45
+- 90
+- 135
+- 175
+dt_s: 0.05
+duration_s: 20.0
+yaw_response_tau_s: 0.15
+readout_gain_rad_per_s_per_hz: 0.02
+maximum_yaw_rate_rad_s: 1.5
+proportional_baseline_gain_per_s: 1.0
+success_error_deg: 10.0
+success_hold_s: 2.0
+scenarios:
+- name: ideal
+  heading_noise_std_deg: 0.0
+  observation_delay_s: 0.0
+- name: noise_and_delay
+  heading_noise_std_deg: 3.0
+  observation_delay_s: 0.15
+candidate_status: engineering_candidate_anatomy_provisional
+selection_report: results/neural/orientation_sensitivity/report.json
+held_out_noise_report: results/neural/orientation_held_out_noise/report.json

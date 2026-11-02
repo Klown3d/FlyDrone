@@ -1,0 +1,12 @@
+velocity_age_time_constant_s: 0.50
+heading_disagreement_sigma_deg: 20.0
+direction_coherence_sigma_deg: 30.0
+confidence_fall_time_constant_s: 0.08
+confidence_rise_time_constant_s: 0.75
+backup_update_time_constant_s: 0.75
+backup_decay_time_constant_s: 3.0
+trusted_confidence_threshold: 0.70
+maximum_correction_m_s2: 1.5
+maximum_correction_rate_m_s3: 3.0
+biological_status: engineering_uncertainty_and_safety_layer_not_neural_reconstruction
+parameter_status: development_candidate_after_oracle_and_open_loop_diagnosis

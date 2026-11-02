@@ -1,0 +1,36 @@
+orientation_config: configs/orientation_candidate_v1.yaml
+navigation_config: configs/navigation_confirmed.yaml
+quadrotor_config: configs/quadrotor.yaml
+quadrotor_navigation_config: configs/quadrotor_benchmark.yaml
+phase_compass_config: configs/phase_compass_cross_compartment_v4.yaml
+phase_compass_alternate_config: configs/phase_compass_dynamics_v2.yaml
+pfl2_steering_config: configs/pfl2_steering.yaml
+pfl2_advance_config: configs/pfl2_advance.yaml
+travel_direction_drift_config: configs/travel_direction_drift.yaml
+travel_velocity_sensor_config: configs/travel_velocity_sensor.yaml
+landmark_heading_sensor_config: configs/landmark_heading_sensor.yaml
+travel_direction_activity_display_scale: 1.0
+pfl3_activity_display_max_hz: 40.0
+dt_s: 0.02
+mass_kg: 0.8
+gravity_m_s2: 9.81
+target_altitude_m: 2.0
+altitude_kp_per_s2: 6.0
+altitude_kd_per_s: 4.0
+maximum_thrust_n: 16.0
+initial_altitude_m: 0.7
+initial_heading_deg: 135.0
+goal_heading_deg: 15.0
+sensor_seed: 20260919
+sensor_position_noise_m: 0.05
+sensor_position_bias_m: [0.2, 0.0]
+neural_goal_hold_radius_m: 0.3
+neural_goal_release_radius_m: 0.4
+desktop_gust_force_world_n: [0.0, 0.5, 0.0]
+desktop_gust_duration_s: 4.0
+desktop_obstacle_radius_m: 0.55
+desktop_obstacle_distance_fraction: 0.5
+desktop_vehicle_radius_m: 0.30
+desktop_obstacle_safety_margin_m: 0.20
+desktop_obstacle_waypoint_margin_m: 0.45
+parameter_status: engineering_simplified_hover_yaw_plant_not_validated_airframe

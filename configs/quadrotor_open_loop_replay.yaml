@@ -1,0 +1,23 @@
+base_config: configs/quadrotor_benchmark.yaml
+plant_config: configs/quadrotor.yaml
+orientation_config: configs/orientation_candidate_v1.yaml
+phase_compass_config: configs/phase_compass_cross_compartment_v4.yaml
+travel_direction_drift_config: configs/travel_direction_drift.yaml
+travel_velocity_sensor_config: configs/travel_velocity_sensor.yaml
+output: results/simulation/quadrotor_open_loop_replay
+manifest_key: quadrotor_open_loop_replay
+duration_s: 35.0
+target_bearings_deg: [-135.0, 55.0]
+initial_relative_headings_deg: [-115.0, 65.0]
+scenarios:
+  - {name: replay_moderate, seed: 20270110, crosswind_force_n: 0.58, wind_start_s: 3.0, wind_end_s: 14.5, position_noise_std_m: 0.020, sensor_delay_s: 0.10, heading_noise_std_deg: 4.5, angular_rate_noise_std_deg_s: 1.8, heading_dropout_start_s: 6.0, heading_dropout_end_s: 9.0, velocity_dropout_start_s: 10.0, velocity_dropout_end_s: 13.0}
+  - {name: replay_strong, seed: 20270111, crosswind_force_n: 0.82, wind_start_s: 2.5, wind_end_s: 15.5, position_noise_std_m: 0.032, sensor_delay_s: 0.14, heading_noise_std_deg: 5.8, angular_rate_noise_std_deg_s: 2.8, heading_dropout_start_s: 4.5, heading_dropout_end_s: 9.0, velocity_dropout_start_s: 6.5, velocity_dropout_end_s: 10.5}
+conditions:
+  - {name: replay_estimated, oracle_mode: none}
+  - {name: replay_true_heading, oracle_mode: true_heading}
+  - {name: replay_true_velocity, oracle_mode: true_velocity}
+  - {name: replay_true_egocentric, oracle_mode: true_egocentric}
+divergence_threshold_deg: 30.0
+recovery_threshold_deg: 15.0
+sustained_duration_s: 0.20
+parameter_status: development_open_loop_causal_diagnostic

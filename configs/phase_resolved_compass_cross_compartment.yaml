@@ -1,0 +1,11 @@
+extraction: data/processed/fafb783_recurrent_compass
+steering_features: data/processed/fafb783_epg_delta7_fc2_pfl3/morphology-features.csv
+epg_phase_config: configs/epg_delta7_audit.yaml
+output: results/neural/phase_resolved_compass_cross_compartment
+manifest_key: phase_resolved_compass_cross_compartment
+projection_compartments:
+  pen_a_left: {input: PB, output: EB}
+  pen_a_right: {input: PB, output: EB}
+  pen_b_left: {input: PB, output: EB}
+  pen_b_right: {input: PB, output: EB}
+status: phase_resolved_cross_compartment_pb_to_eb_transfer_audit

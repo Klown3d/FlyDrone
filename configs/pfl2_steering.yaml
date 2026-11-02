@@ -1,0 +1,12 @@
+pfl2_model_config: configs/pfl2_model.yaml
+output: results/neural/pfl2_steering_development
+maximum_modulation_gain: 0.5
+maximum_yaw_rate_rad_s: 1.5
+dt_s: 0.05
+yaw_response_tau_s: 0.15
+duration_s: 12.0
+success_error_deg: 10.0
+success_hold_s: 1.0
+goals_deg: [-150.0, -60.0, 30.0, 120.0]
+initial_errors_deg: [-175.0, -150.0, -90.0, -30.0, 30.0, 90.0, 150.0, 175.0]
+status: development_only_fixed_pfl2_gain_engineering_modulator

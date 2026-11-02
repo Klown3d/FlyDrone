@@ -1,0 +1,15 @@
+transfers: results/neural/phase_resolved_compass_cross_compartment/transfers.npz
+output: results/neural/phase_compass_dynamics_v2
+velocity_operator: pen_a_difference
+excitation_components: [peg, pen_b_left, pen_b_right]
+matrix_condition: circularized
+parameter_overrides:
+  velocity_gain: 0.5
+  angular_sign: -1.0
+dt_s: 0.02
+time_constant_s: 0.1
+cue_duration_s: 1.0
+cue_concentration: 4.0
+cue_gain: 4.0
+activation_slope: 5.0
+status: cross_compartment_pen_a_velocity_symmetry_regularized_not_literal_topology

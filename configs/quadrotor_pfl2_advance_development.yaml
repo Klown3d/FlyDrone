@@ -1,0 +1,13 @@
+base_config: configs/quadrotor_benchmark.yaml
+plant_config: configs/quadrotor.yaml
+orientation_config: configs/orientation_candidate_v1.yaml
+pfl2_steering_config: configs/pfl2_steering.yaml
+pfl2_advance_config: configs/pfl2_advance.yaml
+output: results/simulation/quadrotor_pfl2_advance_development
+manifest_key: quadrotor_pfl2_advance_development
+duration_s: 25.0
+target_bearings_deg: [-140.0, -50.0, 40.0, 130.0]
+initial_relative_headings_deg: [-170.0, -120.0, 120.0, 170.0]
+scenario: {name: noisy_wind, seed: 20261130, crosswind_force_n: 0.45, wind_start_s: 3.0, wind_end_s: 9.0, position_noise_std_m: 0.03, sensor_delay_s: 0.08, heading_noise_std_deg: 3.0}
+parameter_status: development_only_fixed_mapping_no_search
+

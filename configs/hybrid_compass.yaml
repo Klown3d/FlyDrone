@@ -1,0 +1,5 @@
+neural_compass_config: configs/phase_compass_cross_compartment_v4.yaml
+maximum_neural_weight_during_dropout: 0.25
+disagreement_scale_deg: 25.0
+biological_status: flywire_compass_with_engineering_inertial_fusion
+parameter_status: development_candidate_not_prospectively_validated

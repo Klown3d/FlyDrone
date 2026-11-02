@@ -1,0 +1,30 @@
+dataset: FAFB
+materialization_version: 783
+model_config: configs/travel_direction_model.yaml
+output: results/neural/travel_direction_prospective
+manifest_key: travel_direction_prospective
+run_once: true
+master_seed: 20261010
+# All angles differ from the development grid in travel_direction_model.yaml.
+headings_deg: [-170, -125, -80, -35, 10, 55, 100, 145]
+egocentric_motion_deg: [-175, -137, -99, -61, -23, 15, 53, 91, 129, 167]
+speeds: [0.25, 0.60, 1.00]
+scenarios:
+  - name: ideal
+    heading_noise_sd_deg: 0.0
+    motion_noise_sd_deg: 0.0
+  - name: moderate_sensor_noise
+    heading_noise_sd_deg: 4.0
+    motion_noise_sd_deg: 6.0
+  - name: strong_sensor_noise
+    heading_noise_sd_deg: 8.0
+    motion_noise_sd_deg: 12.0
+gate:
+  ideal_maximum_median_error_deg: 12.0
+  ideal_maximum_worst_error_deg: 30.0
+  all_maximum_median_error_deg: 18.0
+  all_maximum_p90_error_deg: 35.0
+  all_minimum_within_45deg_fraction: 0.95
+  all_minimum_resultant: 0.08
+claim_limit: isolated_static_generalization_and_sensor_noise_only
+

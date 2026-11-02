@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "flydrone"
+version = "0.1.0"
+description = "Reproducible FlyWire circuit extraction for FlyDrone research"
+requires-python = ">=3.11"
+dependencies = [
+  "numpy>=2,<3",
+  "pyarrow>=18",
+  "networkx>=3,<4",
+  "pandas>=2.3,<3",
+  "PyYAML>=6,<7",
+  "scipy>=1.18,<2",
+  "trimesh>=5,<6",
+  "rtree>=1.4,<2",
+]
+
+[project.optional-dependencies]
+test = ["pytest>=8"]
+desktop = ["panda3d==1.10.16"]
+analysis = ["matplotlib>=3.10,<4"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

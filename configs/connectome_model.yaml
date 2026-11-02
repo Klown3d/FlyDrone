@@ -1,0 +1,32 @@
+model_name: flywire_weighted_pfl3_feedforward
+model_family: rate_based_steady_state
+dataset: FAFB
+materialization_version: 783
+edges: data/processed/fafb783_epg_delta7_fc2_pfl3/edges_by_pair.csv
+nodes: data/processed/fafb783_epg_delta7_fc2_pfl3/nodes.csv
+morphology_features: data/processed/fafb783_epg_delta7_fc2_pfl3/morphology-features.csv
+pfl3_mapping: data/processed/fafb783_epg_delta7_fc2_pfl3/functional-mapping.csv
+reference_config: configs/neural_model.yaml
+primary_fc2_subtypes: [FC2B, FC2C]
+excluded_root_ids:
+  - "720575940622374783" # FC2C marked outlier_seg
+  - "720575940629923883" # FC2C marked outlier_seg and isolated internally
+input_mapping:
+  delta7_angles: weighted_circular_mean_of_FlyWire_Delta7_to_PFL3_contacts
+  fc2_angles: geometric_9_column_order_with_published_9_column_angle_scheme
+  fc2_angle_source: https://doi.org/10.1038/s41586-023-07006-3
+weight_transform:
+  value: raw_synapse_count
+  normalization: divide_each_PFL3_row_by_stream_input_sum
+  status: computational_choice
+parameters:
+  goal_input_gain_d: 0.63
+  output_scale_hz_a: 29.23
+  softplus_slope_b: 2.17
+  input_offset_c: -0.70
+parameter_status: literature_reported_fit
+dynamics: none
+limitations:
+  - This is a PFL3 feedforward input model, not yet the full 195-neuron recurrent circuit.
+  - Delta7 preferred angles are inferred from their FlyWire outputs to provisionally mapped PFL3 neurons.
+  - Row normalization is an engineering convention, not a measured synaptic gain.

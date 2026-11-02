@@ -1,0 +1,10 @@
+base_config: configs/quadrotor_integrated_v4_connectome_null_development.yaml
+output: results/simulation/quadrotor_integrated_v4_steering_null_development
+manifest_key: quadrotor_integrated_v4_steering_null_development
+run_once: false
+gate: null
+steering_null_intact_condition: {name: flywire_steering_intact, circuit_condition: intact, yaw_controller: neural, heading_mode: neural_compass, velocity_source: inertial_fusion, pfl2_enabled: true, advance_enabled: true, hdelta_enabled: true, lateral_velocity_kd_per_s: 0.25}
+steering_null_condition_template: {circuit_condition: steering_side_block_rewire, yaw_controller: neural, heading_mode: neural_compass, velocity_source: inertial_fusion, pfl2_enabled: true, advance_enabled: true, hdelta_enabled: true, lateral_velocity_kd_per_s: 0.25}
+steering_null_seeds: [52011, 52021, 52027, 52051, 52057]
+save_all_traces: false
+parameter_status: development_only_epg_delta7_pfl3_side_block_nulls

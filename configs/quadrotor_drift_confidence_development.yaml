@@ -1,0 +1,25 @@
+base_config: configs/quadrotor_benchmark.yaml
+plant_config: configs/quadrotor.yaml
+orientation_config: configs/orientation_candidate_v1.yaml
+phase_compass_config: configs/phase_compass_cross_compartment_v4.yaml
+pfl2_steering_config: configs/pfl2_steering.yaml
+pfl2_advance_config: configs/pfl2_advance.yaml
+travel_direction_drift_config: configs/travel_direction_drift.yaml
+travel_velocity_sensor_config: configs/travel_velocity_sensor.yaml
+drift_confidence_config: configs/drift_confidence.yaml
+output: results/simulation/quadrotor_drift_confidence_development
+manifest_key: quadrotor_drift_confidence_development
+duration_s: 35.0
+target_bearings_deg: [-140.0, -20.0, 100.0]
+initial_relative_headings_deg: [-120.0, 75.0]
+scenarios:
+  - {name: confidence_moderate, seed: 20270120, crosswind_force_n: 0.58, wind_start_s: 3.0, wind_end_s: 14.5, position_noise_std_m: 0.020, sensor_delay_s: 0.10, heading_noise_std_deg: 4.5, angular_rate_noise_std_deg_s: 1.8, heading_dropout_start_s: 6.0, heading_dropout_end_s: 9.0, velocity_dropout_start_s: 10.0, velocity_dropout_end_s: 13.0}
+  - {name: confidence_strong, seed: 20270121, crosswind_force_n: 0.82, wind_start_s: 2.5, wind_end_s: 15.5, position_noise_std_m: 0.032, sensor_delay_s: 0.14, heading_noise_std_deg: 5.8, angular_rate_noise_std_deg_s: 2.8, heading_dropout_start_s: 4.5, heading_dropout_end_s: 9.0, velocity_dropout_start_s: 6.5, velocity_dropout_end_s: 10.5}
+conditions:
+  - {name: raw_hdelta, yaw_controller: neural, heading_mode: neural_compass, hdelta_enabled: true, drift_confidence: false, lateral_velocity_kd_per_s: 0.0}
+  - {name: graded_drift_confidence, yaw_controller: neural, heading_mode: neural_compass, hdelta_enabled: true, drift_confidence: true, lateral_velocity_kd_per_s: 0.0}
+  - {name: conventional_navigation, yaw_controller: proportional, heading_mode: gyro_integrated, hdelta_enabled: false, drift_confidence: false, lateral_velocity_kd_per_s: 2.0}
+divergence_threshold_deg: 30.0
+recovery_threshold_deg: 15.0
+sustained_duration_s: 0.20
+parameter_status: first_development_candidate_after_frozen_oracle_diagnosis

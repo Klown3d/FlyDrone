@@ -1,0 +1,36 @@
+transfers: results/neural/phase_resolved_compass_cross_compartment/transfers.npz
+output: results/neural/phase_velocity_cross_compartment
+manifest_key: phase_velocity_cross_compartment
+dt_s: 0.02
+time_constant_s: 0.1
+cue_duration_s: 1.0
+turn_duration_s: 1.0
+cue_concentration: 4.0
+cue_gain: 4.0
+activation_slope: 5.0
+excitation_gain: 6.0
+inhibition_gain: 4.0
+bias: -1.0
+matrix_conditions: [raw_flywire, circularized]
+excitation_models:
+  peg_only: [peg]
+  peg_pen_b: [peg, pen_b_left, pen_b_right]
+  all_recurrent: [peg, pen_b_left, pen_b_right, pen_a_left, pen_a_right]
+selected_candidate:
+  matrix_condition: circularized
+  excitation_model: peg_pen_b
+  operator: pen_a_difference
+  velocity_gain: 0.5
+  angular_sign: -1.0
+operators: [published_one_wedge, pen_a_difference, pen_b_difference, pen_combined_difference]
+velocity_gains: [0.25, 0.5, 1.0, 1.25, 1.5, 1.75, 2.0, 2.25, 2.5, 2.75, 3.0, 4.0, 8.0, 16.0]
+angular_signs: [-1.0, 1.0]
+development_headings_deg: [-125.0, -35.0, 55.0, 145.0]
+development_velocities_deg_s: [-90.0, -60.0, -30.0, 30.0, 60.0, 90.0]
+held_out_headings_deg: [-95.0, -5.0, 85.0, 175.0]
+held_out_velocities_deg_s: [-75.0, -45.0, -15.0, 15.0, 45.0, 75.0]
+maximum_median_error_deg: 20.0
+maximum_p90_error_deg: 35.0
+minimum_resultant: 0.2
+minimum_velocity_monotonicity: 0.9
+status: development_cross_compartment_pb_to_eb_velocity_audit

@@ -1,0 +1,23 @@
+transfers: results/neural/phase_resolved_compass/transfers.npz
+output: results/neural/phase_compass_dynamics
+dt_s: 0.02
+time_constant_s: 0.1
+cue_duration_s: 1.0
+dark_duration_s: 3.0
+turn_duration_s: 1.0
+turn_velocity_deg_s: 60.0
+development_headings_deg: [-140.0, -50.0, 40.0, 130.0]
+held_out_headings_deg: [-110.0, -20.0, 70.0, 160.0]
+cue_concentration: 4.0
+cue_gain: 4.0
+activation_slope: 5.0
+excitation_gains: [2.0, 4.0, 6.0]
+inhibition_gains: [1.0, 2.0, 4.0]
+biases: [-3.0, -2.0, -1.0]
+velocity_gains: [1.0, 2.0, 4.0, 8.0]
+angular_signs: [-1.0, 1.0]
+maximum_dark_drift_deg: 15.0
+minimum_dark_resultant: 0.2
+minimum_dark_contrast: 0.05
+maximum_turn_error_deg: 30.0
+status: phase_resolved_engineering_candidate

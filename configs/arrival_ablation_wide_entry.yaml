@@ -1,0 +1,14 @@
+plant_config: configs/desktop.yaml
+navigation_config: configs/navigation_ablation_wide_entry.yaml
+output: results/simulation/arrival_ablation_wide_entry
+case_seed: 798
+cases: 64
+initial_xy_range_m: [-3.0, 3.0]
+target_distances_m: [2.0, 5.0, 8.0]
+duration_s: 30.0
+scenarios:
+- {name: ideal, position_noise_std_m: 0.0, position_bias_m: 0.0, heading_noise_std_deg: 0.0, delay_s: 0.0, seeds: [798]}
+- {name: mild_noise, position_noise_std_m: 0.05, position_bias_m: 0.0, heading_noise_std_deg: 3.0, delay_s: 0.15, seeds: [798]}
+- {name: bias_and_noise, position_noise_std_m: 0.15, position_bias_m: 0.2, heading_noise_std_deg: 3.0, delay_s: 0.3, seeds: [798]}
+- {name: post_arrival_displacement, position_noise_std_m: 0.0, position_bias_m: 0.0, heading_noise_std_deg: 0.0, delay_s: 0.0, post_arrival_displacement_m: 0.6, seeds: [798]}
+manifest_key: arrival_ablation_wide_entry

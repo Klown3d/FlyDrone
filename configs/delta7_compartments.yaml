@@ -1,0 +1,11 @@
+dataset: FAFB
+materialization_version: 783
+profiles: results/morphology/pb-contact-validation/full-contact-anchor-profiles.csv
+contacts: data/processed/fafb783_epg_delta7_fc2_pfl3/pb-synapses-with-boundary.parquet
+source: https://doi.org/10.5281/zenodo.10232698
+# Names from archived analysis/em.py glom_sorter_delta7. Geometry labels remain inferred.
+published_patterns: [L8R1R9, L7R2, L7R3, L6R3, L6R4, L5R4, L4R5, L4R6, L3R6, L2R7, L1L9R8]
+# Engineering diagnostic thresholds, not biological subtype definitions.
+dominant_pair_minimum_contact_fraction: 0.8
+display_points_per_neuron: 900
+seed: 783

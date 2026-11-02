@@ -1,0 +1,7 @@
+base_config: configs/orientation_closed_loop.yaml
+output: results/neural/orientation_sensitivity
+gains: [0.01, 0.02, 0.04, 0.08]
+delays_s: [0.0, 0.15, 0.3, 0.5]
+noise_std_deg: 3.0
+seeds: [783, 784, 785]
+# Exploration set, not a held-out estimate of a selected configuration.

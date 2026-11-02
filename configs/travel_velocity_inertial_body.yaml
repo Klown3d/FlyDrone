@@ -1,0 +1,14 @@
+update_period_s: 0.02
+differencing_window_s: 0.20
+filter_time_constant_s: 0.25
+dropout_decay_time_constant_s: 0.60
+position_correction_time_constant_s: 0.25
+inertial_dropout_leak_time_constant_s: 12.0
+maximum_speed_m_s: 3.0
+accelerometer_noise_std_m_s2: 0.10
+accelerometer_bias_x_m_s2: 0.0
+accelerometer_bias_y_m_s2: 0.0
+accelerometer_frame: body
+source: simulated_body_frame_accelerometer_rotated_by_estimated_heading_plus_observed_position
+biological_status: engineering_sensor_fusion_not_fly_physiology
+parameter_status: second_development_candidate_with_heading_error_noise_and_bias

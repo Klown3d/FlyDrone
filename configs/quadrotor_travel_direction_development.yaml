@@ -1,0 +1,18 @@
+base_config: configs/quadrotor_benchmark.yaml
+plant_config: configs/quadrotor.yaml
+orientation_config: configs/orientation_candidate_v1.yaml
+travel_direction_drift_config: configs/travel_direction_drift.yaml
+output: results/simulation/quadrotor_travel_direction_development
+manifest_key: quadrotor_travel_direction_development
+duration_s: 25.0
+target_bearings_deg: [-120.0, 0.0, 120.0]
+initial_relative_headings_deg: [0.0]
+scenarios:
+  - {name: moderate_crosswind, seed: 20261020, crosswind_force_n: 0.5, wind_start_s: 4.0, wind_end_s: 12.0, velocity_noise_std_m_s: 0.0}
+  - {name: strong_crosswind_noisy_velocity, seed: 20261021, crosswind_force_n: 0.8, wind_start_s: 4.0, wind_end_s: 12.0, velocity_noise_std_m_s: 0.05}
+conditions:
+  - {name: hdelta_compensation, lateral_velocity_kd_per_s: 0.0, hdelta_enabled: true}
+  - {name: no_drift_compensation, lateral_velocity_kd_per_s: 0.0, hdelta_enabled: false}
+  - {name: conventional_velocity_compensation, lateral_velocity_kd_per_s: 2.0, hdelta_enabled: false}
+parameter_status: development_diagnostic_gain_not_prospectively_frozen
+

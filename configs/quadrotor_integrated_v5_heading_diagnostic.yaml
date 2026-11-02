@@ -1,0 +1,24 @@
+base_config: configs/quadrotor_integrated_v4_prospective.yaml
+protocol_id: flydrone_v5_heading_oracle_diagnostic_v1
+lock_file: configs/quadrotor_integrated_v5_heading_diagnostic.lock.json
+preregistration_doc: docs/research/v5-heading-diagnostic-preregistration.md
+output: results/simulation/quadrotor_integrated_v5_heading_diagnostic
+manifest_key: quadrotor_integrated_v5_heading_diagnostic
+run_once: true
+gate: null
+parameter_status: prospectively_frozen_v5_heading_diagnostic_not_controller_validation
+claim: Prospective paired oracle diagnosis of heading-path failure generalization; privileged truth conditions are not deployable controllers.
+duration_s: 50.0
+target_distance_m: 7.0
+target_bearings_deg: [-149.0, -61.0, 29.0, 119.0]
+initial_relative_headings_deg: [-121.0, 49.0]
+scenarios:
+  - {name: v5_diag_heading_only_long, seed: 20601101, crosswind_force_n: 0.75, wind_start_s: 4.0, wind_end_s: 29.0, position_noise_std_m: 0.045, sensor_delay_s: 0.22, heading_noise_std_deg: 7.0, angular_rate_noise_std_deg_s: 3.8, heading_dropout_start_s: 8.0, heading_dropout_end_s: 19.0, velocity_dropout_start_s: 80.0, velocity_dropout_end_s: 81.0, accelerometer_noise_std_m_s2: 0.24}
+  - {name: v5_diag_overlapping_long, seed: 20601102, crosswind_force_n: -0.90, wind_start_s: 5.0, wind_end_s: 31.0, position_noise_std_m: 0.052, sensor_delay_s: 0.24, heading_noise_std_deg: 7.5, angular_rate_noise_std_deg_s: 4.1, heading_dropout_start_s: 10.0, heading_dropout_end_s: 22.0, velocity_dropout_start_s: 13.0, velocity_dropout_end_s: 24.0, accelerometer_noise_std_m_s2: 0.27}
+  - {name: v5_diag_late_reacquisition, seed: 20601103, crosswind_force_n: 0.55, wind_start_s: 17.0, wind_end_s: 38.0, position_noise_std_m: 0.043, sensor_delay_s: 0.21, heading_noise_std_deg: 6.5, angular_rate_noise_std_deg_s: 3.6, heading_dropout_start_s: 24.0, heading_dropout_end_s: 36.0, velocity_dropout_start_s: 18.0, velocity_dropout_end_s: 29.0, accelerometer_noise_std_m_s2: 0.23}
+conditions:
+  - {name: observed_v4, circuit_condition: intact, yaw_controller: neural, heading_mode: neural_compass, velocity_source: inertial_fusion, pfl2_enabled: true, advance_enabled: true, hdelta_enabled: true, lateral_velocity_kd_per_s: 0.25, drift_oracle_mode: none}
+  - {name: diagnostic_true_heading, circuit_condition: intact, yaw_controller: neural, heading_mode: direct, velocity_source: inertial_fusion, pfl2_enabled: true, advance_enabled: true, hdelta_enabled: true, lateral_velocity_kd_per_s: 0.25, drift_oracle_mode: true_heading}
+  - {name: diagnostic_true_velocity, circuit_condition: intact, yaw_controller: neural, heading_mode: neural_compass, velocity_source: inertial_fusion, pfl2_enabled: true, advance_enabled: true, hdelta_enabled: true, lateral_velocity_kd_per_s: 0.25, drift_oracle_mode: true_velocity}
+  - {name: diagnostic_true_heading_velocity, circuit_condition: intact, yaw_controller: neural, heading_mode: direct, velocity_source: inertial_fusion, pfl2_enabled: true, advance_enabled: true, hdelta_enabled: true, lateral_velocity_kd_per_s: 0.25, drift_oracle_mode: true_heading_velocity}
+save_all_traces: false

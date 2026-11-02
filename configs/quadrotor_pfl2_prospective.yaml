@@ -1,0 +1,46 @@
+base_config: configs/quadrotor_benchmark.yaml
+plant_config: configs/quadrotor.yaml
+orientation_config: configs/orientation_candidate_v1.yaml
+pfl2_steering_config: configs/pfl2_steering.yaml
+output: results/simulation/quadrotor_pfl2_steering_prospective
+manifest_key: quadrotor_pfl2_steering_prospective
+duration_s: 30.0
+target_bearings_deg: [-128.0, -7.0, 109.0]
+initial_relative_headings_deg: [-172.0, -153.0, 153.0, 172.0]
+scenarios:
+  - name: novel_moderate
+    seed: 20261031
+    position_noise_std_m: 0.06
+    heading_noise_std_deg: 4.0
+    angular_rate_noise_std_deg_s: 2.0
+    sensor_delay_s: 0.12
+    crosswind_force_n: 0.55
+    wind_start_s: 4.5
+    wind_end_s: 9.5
+  - name: novel_strong
+    seed: 20261117
+    position_noise_std_m: 0.12
+    heading_noise_std_deg: 7.0
+    angular_rate_noise_std_deg_s: 3.5
+    sensor_delay_s: 0.18
+    crosswind_force_n: 0.9
+    wind_start_s: 3.5
+    wind_end_s: 11.0
+  - name: delayed_gust
+    seed: 20261203
+    position_noise_std_m: 0.04
+    heading_noise_std_deg: 2.5
+    angular_rate_noise_std_deg_s: 2.0
+    sensor_delay_s: 0.16
+    crosswind_force_n: 0.75
+    wind_start_s: 7.0
+    wind_end_s: 13.0
+run_once: true
+gate:
+  minimum_pfl2_success_rate: 0.9722222222
+  maximum_success_deficit_vs_ablation: 0
+  minimum_overall_median_paired_arrival_improvement_s: 0.30
+  minimum_scenarios_with_positive_median_improvement: 2
+  minimum_median_efficiency_difference: -0.005
+  maximum_direction_changes: 0
+parameter_status: frozen_prospective_pfl2_gain_and_connectivity_no_parameter_search

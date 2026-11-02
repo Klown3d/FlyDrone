@@ -1,0 +1,6 @@
+landmark_world_bearing_deg: 70.0
+landmark_distance_m: 4.5
+perturbed_bearing_noise_std_deg: 3.0
+source: simulated_relative_bearing_to_known_landmark
+biological_status: computational_abstraction_not_visual_neuron_reconstruction
+

@@ -1,0 +1,24 @@
+extraction: data/processed/fafb783_recurrent_compass
+steering_features: data/processed/fafb783_epg_delta7_fc2_pfl3/morphology-features.csv
+epg_phase_config: configs/epg_delta7_audit.yaml
+output: results/neural/recurrent_dynamics_v2
+dt_s: 0.02
+time_constant_s: 0.1
+cue_duration_s: 1.0
+dark_duration_s: 3.0
+turn_duration_s: 1.0
+turn_velocity_deg_s: 60.0
+development_headings_deg: [-135.0, -45.0, 45.0, 135.0]
+held_out_headings_deg: [-105.0, -15.0, 75.0, 165.0]
+cue_concentration: 4.0
+cue_gain: 4.0
+activation_slope: 6.0
+recurrent_gains: [2.0, 3.0, 4.0, 6.0]
+biases: [-3.0, -2.0, -1.0, 0.0]
+velocity_gains: [1.0, 2.0, 4.0]
+angular_signs: [-1.0, 1.0]
+maximum_dark_drift_deg: 15.0
+minimum_dark_resultant: 0.2
+minimum_dark_contrast: 0.05
+maximum_turn_error_deg: 30.0
+status: second_engineering_dynamic_candidate_new_held_out_headings

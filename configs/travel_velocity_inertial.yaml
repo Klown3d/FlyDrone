@@ -1,0 +1,14 @@
+update_period_s: 0.02
+differencing_window_s: 0.20
+filter_time_constant_s: 0.25
+dropout_decay_time_constant_s: 0.60
+position_correction_time_constant_s: 0.25
+inertial_dropout_leak_time_constant_s: 12.0
+maximum_speed_m_s: 3.0
+accelerometer_noise_std_m_s2: 0.08
+accelerometer_bias_x_m_s2: 0.0
+accelerometer_bias_y_m_s2: 0.0
+accelerometer_frame: world
+source: observed_position_difference_plus_simulated_world_frame_accelerometer
+biological_status: engineering_sensor_fusion_not_fly_physiology
+parameter_status: first_development_candidate_after_oracle_velocity_diagnosis

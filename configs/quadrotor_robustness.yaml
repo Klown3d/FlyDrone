@@ -1,0 +1,25 @@
+plant_config: configs/quadrotor.yaml
+orientation_config: configs/orientation_candidate_v1.yaml
+output: results/simulation/quadrotor_6dof_robustness
+duration_s: 30.0
+neural_update_period_s: 0.02
+target_altitude_m: 2.0
+target_distance_m: 4.0
+target_bearings_deg: [-135.0, -45.0, 45.0, 135.0]
+initial_relative_headings_deg: [-120.0, 120.0]
+maximum_forward_speed_m_s: 0.8
+distance_gain_per_s: 0.6
+forward_speed_kp_per_s: 2.0
+lateral_velocity_kd_per_s: 2.0
+arrival_radius_m: 0.3
+stop_speed_m_s: 0.12
+terminal_hold_s: 2.0
+goal_hold_radius_m: 0.3
+goal_release_radius_m: 0.4
+scenarios:
+- {name: sensor_noise_delay, seed: 810, position_noise_std_m: 0.05, heading_noise_std_deg: 3.0, sensor_delay_s: 0.1}
+- {name: crosswind, seed: 811, crosswind_force_n: 0.5, wind_start_s: 4.0, wind_end_s: 8.0}
+- {name: combined, seed: 812, position_noise_std_m: 0.05, heading_noise_std_deg: 3.0, sensor_delay_s: 0.1, crosswind_force_n: 0.5, wind_start_s: 4.0, wind_end_s: 8.0}
+- {name: strong_combined, seed: 813, position_noise_std_m: 0.15, heading_noise_std_deg: 8.0, sensor_delay_s: 0.2, crosswind_force_n: 1.0, wind_start_s: 3.0, wind_end_s: 10.0}
+manifest_key: quadrotor_6dof_robustness
+parameter_status: frozen_first_6dof_candidate_held_out_perturbations

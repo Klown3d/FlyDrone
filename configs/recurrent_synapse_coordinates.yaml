@@ -1,0 +1,8 @@
+dataset: FAFB
+materialization_version: 783
+source: data/raw/flywire_synapses_783.feather
+nodes: data/processed/fafb783_recurrent_compass/nodes.csv
+expected_edges: data/processed/fafb783_recurrent_compass/edges.csv
+output: data/processed/fafb783_recurrent_compass/synapses.parquet
+manifest_key: recurrent_compass_synapse_coordinates
+status: local_coordinate_extraction_verified

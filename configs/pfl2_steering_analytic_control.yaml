@@ -1,0 +1,6 @@
+pfl2_model_config: configs/pfl2_model.yaml
+output: results/neural/pfl2_steering_analytic_control
+maximum_modulation_gain: 0.5
+maximum_yaw_rate_rad_s: 1.5
+index_mode: analytic_error
+status: post_prospective_engineering_control_same_gain_without_connectome_readout

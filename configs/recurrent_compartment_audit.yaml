@@ -1,0 +1,8 @@
+extraction: data/processed/fafb783_recurrent_compass
+steering_features: data/processed/fafb783_epg_delta7_fc2_pfl3/morphology-features.csv
+epg_phase_config: configs/epg_delta7_audit.yaml
+output: results/neural/recurrent_compartment_audit
+manifest_key: recurrent_compartment_audit
+neuropils: [PB, EB, NO]
+target_types: [PEN_a(PEN1), PEN_b(PEN2), PEG]
+status: anatomical_neuropil_audit_no_dynamics

@@ -1,0 +1,19 @@
+base_config: configs/quadrotor_integrated_v4_prospective.yaml
+protocol_id: flydrone_integrated_v4_steering_null_prospective_v1
+lock_file: configs/quadrotor_integrated_v4_steering_null_prospective.lock.json
+preregistration_doc: docs/research/integrated-v4-steering-null-preregistration.md
+output: results/simulation/quadrotor_integrated_v4_steering_null_prospective
+manifest_key: quadrotor_integrated_v4_steering_null_prospective
+run_once: true
+gate: null
+target_bearings_deg: [-143.0, 29.0, 137.0]
+initial_relative_headings_deg: [-109.0, 71.0]
+scenarios:
+  - {name: steering_null_heading_velocity, seed: 20351031, crosswind_force_n: 0.77, wind_start_s: 3.2, wind_end_s: 17.4, position_noise_std_m: 0.039, sensor_delay_s: 0.17, heading_noise_std_deg: 6.4, angular_rate_noise_std_deg_s: 3.4, heading_dropout_start_s: 5.0, heading_dropout_end_s: 11.2, velocity_dropout_start_s: 14.1, velocity_dropout_end_s: 19.5, accelerometer_noise_std_m_s2: 0.22, accelerometer_bias_x_m_s2: -0.055, accelerometer_bias_y_m_s2: 0.047, accelerometer_bias_z_m_s2: 0.073}
+  - {name: steering_null_combined_late, seed: 20351032, crosswind_force_n: 0.86, wind_start_s: 4.5, wind_end_s: 20.4, position_noise_std_m: 0.043, sensor_delay_s: 0.19, heading_noise_std_deg: 6.9, angular_rate_noise_std_deg_s: 3.6, heading_dropout_start_s: 12.4, heading_dropout_end_s: 17.5, velocity_dropout_start_s: 5.5, velocity_dropout_end_s: 12.8, accelerometer_noise_std_m_s2: 0.25, accelerometer_bias_x_m_s2: 0.065, accelerometer_bias_y_m_s2: -0.059, accelerometer_bias_z_m_s2: -0.083}
+steering_null_intact_condition: {name: flywire_steering_intact, circuit_condition: intact, yaw_controller: neural, heading_mode: neural_compass, velocity_source: inertial_fusion, pfl2_enabled: true, advance_enabled: true, hdelta_enabled: true, lateral_velocity_kd_per_s: 0.25}
+steering_null_condition_template: {circuit_condition: steering_side_block_rewire, yaw_controller: neural, heading_mode: neural_compass, velocity_source: inertial_fusion, pfl2_enabled: true, advance_enabled: true, hdelta_enabled: true, lateral_velocity_kd_per_s: 0.25}
+steering_null_seeds: [62003, 62011, 62017, 62039, 62047, 62053, 62057, 62071, 62081, 62099, 62119, 62129, 62131, 62143, 62149, 62171, 62189, 62201, 62207, 62213]
+primary_gate: {minimum_intact_successes: 10, maximum_empirical_rank_p: 0.05, required_null_seed_count: 20}
+save_all_traces: false
+parameter_status: prospectively_frozen_v4_steering_side_block_null_attribution

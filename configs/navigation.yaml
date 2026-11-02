@@ -1,0 +1,9 @@
+target_xy_m: [3.5, 2.0]
+maximum_speed_m_s: 0.6
+distance_gain_per_s: 0.6
+velocity_tau_s: 0.3
+advance_angle_limit_deg: 60.0
+arrival_radius_m: 0.3
+stop_speed_m_s: 0.08
+duration_s: 30.0
+parameter_status: engineering_forward_speed_and_braking_not_neuronal

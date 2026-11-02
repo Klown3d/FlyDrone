@@ -1,0 +1,7 @@
+index_source: connectome_pfl2_antigoal_index
+speed_factor: one_minus_index_squared
+exponent: 2.0
+minimum_speed_fraction: 0.0
+maximum_speed_fraction: 1.0
+biological_status: pfl2_slowing_direction_supported_output_mapping_engineering
+

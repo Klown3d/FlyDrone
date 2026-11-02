@@ -1,0 +1,11 @@
+base_config: configs/quadrotor_integrated_v4_lateral_development.yaml
+output: results/simulation/quadrotor_integrated_v4_lateral_fine_development
+manifest_key: quadrotor_integrated_v4_lateral_fine_development
+conditions:
+  - {name: full_kd_0_10, circuit_condition: intact, yaw_controller: neural, heading_mode: neural_compass, velocity_source: inertial_fusion, pfl2_enabled: true, advance_enabled: true, hdelta_enabled: true, lateral_velocity_kd_per_s: 0.10}
+  - {name: full_kd_0_20, circuit_condition: intact, yaw_controller: neural, heading_mode: neural_compass, velocity_source: inertial_fusion, pfl2_enabled: true, advance_enabled: true, hdelta_enabled: true, lateral_velocity_kd_per_s: 0.20}
+  - {name: full_kd_0_25, circuit_condition: intact, yaw_controller: neural, heading_mode: neural_compass, velocity_source: inertial_fusion, pfl2_enabled: true, advance_enabled: true, hdelta_enabled: true, lateral_velocity_kd_per_s: 0.25}
+  - {name: no_hdelta_kd_0_10, circuit_condition: intact, yaw_controller: neural, heading_mode: neural_compass, velocity_source: none, pfl2_enabled: true, advance_enabled: true, hdelta_enabled: false, lateral_velocity_kd_per_s: 0.10}
+  - {name: no_hdelta_kd_0_20, circuit_condition: intact, yaw_controller: neural, heading_mode: neural_compass, velocity_source: none, pfl2_enabled: true, advance_enabled: true, hdelta_enabled: false, lateral_velocity_kd_per_s: 0.20}
+  - {name: no_hdelta_kd_0_25, circuit_condition: intact, yaw_controller: neural, heading_mode: neural_compass, velocity_source: none, pfl2_enabled: true, advance_enabled: true, hdelta_enabled: false, lateral_velocity_kd_per_s: 0.25}
+parameter_status: development_only_fine_lateral_damping_cases_excluded_from_future_gate

@@ -1,0 +1,32 @@
+plant_config: configs/quadrotor.yaml
+orientation_config: configs/orientation_candidate_v1.yaml
+evaluation_config: configs/quadrotor_projection_null.yaml
+robustness_config: configs/quadrotor_projection_robustness.yaml
+output: results/simulation/pid_baseline
+manifest_key: pid_baseline
+development:
+  duration_s: 30.0
+  neural_update_period_s: 0.02
+  target_altitude_m: 2.0
+  target_distance_m: 4.0
+  target_bearings_deg: [-101.25, 78.75]
+  initial_relative_headings_deg: [-120.0, 120.0]
+  maximum_forward_speed_m_s: 0.8
+  distance_gain_per_s: 0.6
+  forward_speed_kp_per_s: 2.0
+  lateral_velocity_kd_per_s: 2.0
+  arrival_radius_m: 0.3
+  stop_speed_m_s: 0.12
+  terminal_hold_s: 2.0
+  goal_hold_radius_m: 0.3
+  goal_release_radius_m: 0.4
+  scenario: {name: development_combined, seed: 821, position_noise_std_m: 0.07, heading_noise_std_deg: 4.0, sensor_delay_s: 0.12, crosswind_force_n: 0.65, wind_start_s: 4.0, wind_end_s: 9.0}
+candidate_grid:
+  kp_per_s: [0.8, 1.1]
+  ki_per_s2: [0.02, 0.06]
+  kd: [0.03, 0.08]
+fixed:
+  maximum_yaw_rate_rad_s: 1.5
+  integral_limit_rad_s: 0.75
+  derivative_filter_tau_s: 0.12
+parameter_status: pid_grid_selected_on_development_only_then_frozen_for_held_out_evaluation

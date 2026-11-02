@@ -1,0 +1,26 @@
+dataset: FAFB
+materialization_version: 783
+nodes: data/processed/fafb783_travel_direction/nodes.csv
+edges: data/processed/fafb783_travel_direction/edges.csv
+column_mapping: data/processed/fafb783_travel_direction/travel-direction-columns.csv
+output: results/neural/travel_direction_development
+manifest_key: travel_direction_development
+preferred_egocentric_axes_deg:
+  PFNd_right: 44.5
+  PFNd_left: -41.5
+  PFNv_right: -131.5
+  PFNv_left: 136.5
+axis_source: Lyu_Abbott_Maimon_2022_connectome_based_angles
+pfn_activity: signed_cosine_modulation_around_unmodeled_baseline
+velocity_amplitude: positive_projection_onto_four_published_axes
+connection_weights: raw_fafb783_pfn_to_hdeltaB_contact_counts
+hdelta_readout: population_vector_over_12_provisional_axon_columns
+phase_anchor: global_rotation_set_by_heading_zero_forward_motion
+development_headings_deg: [-157.5, -112.5, -67.5, -22.5, 22.5, 67.5, 112.5, 157.5]
+development_egocentric_motion_deg: [-168.75, -146.25, -123.75, -101.25, -78.75, -56.25, -33.75, -11.25, 11.25, 33.75, 56.25, 78.75, 101.25, 123.75, 146.25, 168.75]
+gate:
+  maximum_median_error_deg: 12.0
+  maximum_worst_error_deg: 30.0
+  minimum_within_45deg_fraction: 1.0
+  minimum_resultant: 0.08
+parameter_status: development_model_selected_after_activation_and_normalization_diagnostic_not_prospective

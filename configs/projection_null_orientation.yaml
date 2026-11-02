@@ -1,0 +1,14 @@
+candidate_config: configs/epg_delta7_audit.yaml
+orientation_config: configs/orientation_candidate_v1.yaml
+output: results/neural/projection_specific_degree_null
+goals_deg: [-146.25, -56.25, 33.75, 123.75]
+initial_errors_deg: [-165.0, -75.0, 75.0, 165.0]
+seeds: [921, 922, 923, 924, 925]
+projections: [epg_to_delta, delta_to_pfl3, fc2_weights]
+dt_s: 0.02
+duration_s: 30.0
+yaw_response_tau_s: 0.15
+success_error_deg: 10.0
+success_hold_s: 2.0
+manifest_key: projection_specific_degree_null
+parameter_status: heading_only_projection_localization_with_degree_preserving_rewire

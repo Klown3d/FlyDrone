@@ -1,0 +1,26 @@
+base_config: configs/quadrotor_benchmark.yaml
+plant_config: configs/quadrotor.yaml
+orientation_config: configs/orientation_candidate_v1.yaml
+travel_direction_drift_config: configs/travel_direction_drift.yaml
+output: results/simulation/quadrotor_travel_direction_prospective
+manifest_key: quadrotor_travel_direction_prospective
+run_once: true
+duration_s: 25.0
+target_bearings_deg: [-160.0, -95.0, -30.0, 35.0, 100.0]
+initial_relative_headings_deg: [-20.0, 0.0, 20.0]
+scenarios:
+  - {name: delayed_moderate_crosswind, seed: 20261101, crosswind_force_n: 0.55, wind_start_s: 3.5, wind_end_s: 12.5, sensor_delay_s: 0.08, heading_noise_std_deg: 3.0, velocity_noise_std_m_s: 0.04}
+  - {name: delayed_strong_crosswind, seed: 20261102, crosswind_force_n: 0.90, wind_start_s: 3.0, wind_end_s: 13.0, sensor_delay_s: 0.16, heading_noise_std_deg: 6.0, velocity_noise_std_m_s: 0.08}
+conditions:
+  - {name: hdelta_compensation, lateral_velocity_kd_per_s: 0.0, hdelta_enabled: true}
+  - {name: no_drift_compensation, lateral_velocity_kd_per_s: 0.0, hdelta_enabled: false}
+  - {name: conventional_velocity_compensation, lateral_velocity_kd_per_s: 2.0, hdelta_enabled: false}
+  - {name: shuffled_pfn_phases, lateral_velocity_kd_per_s: 0.0, hdelta_enabled: true, phase_shuffle_seed: 91703}
+gate:
+  minimum_hdelta_successes: 27
+  minimum_success_advantage_over_absent: 6
+  minimum_cross_track_reduction_vs_absent_fraction: 0.40
+  maximum_cross_track_disadvantage_vs_conventional_m: 0.40
+  minimum_cross_track_reduction_vs_shuffled_fraction: 0.20
+  maximum_motor_saturation_fraction: 0.10
+parameter_status: prospectively_frozen_before_execution

@@ -1,0 +1,22 @@
+plant_config: configs/quadrotor.yaml
+orientation_config: configs/orientation_candidate_v1.yaml
+output: results/simulation/quadrotor_6dof_obstacles_v3_diagnostic
+duration_s: 35.0
+neural_update_period_s: 0.02
+target_altitude_m: 2.0
+target_distance_m: 4.0
+target_bearings_deg: [-135.0, -45.0, 45.0, 135.0]
+initial_relative_headings_deg: [-120.0, 120.0]
+maximum_forward_speed_m_s: 0.8
+distance_gain_per_s: 0.6
+forward_speed_kp_per_s: 2.0
+lateral_velocity_kd_per_s: 2.0
+arrival_radius_m: 0.3
+stop_speed_m_s: 0.12
+terminal_hold_s: 2.0
+goal_hold_radius_m: 0.3
+goal_release_radius_m: 0.4
+scenarios:
+- {name: heading_aware_safety_planner_v3_diagnostic, seed: 820, obstacle_radius_m: 0.55, obstacle_distance_fraction: 0.5, vehicle_radius_m: 0.30, safety_margin_m: 0.20, waypoint_margin_m: 0.45, planner_enabled: true}
+manifest_key: quadrotor_6dof_obstacles_v3_diagnostic
+parameter_status: engineering_heading_aware_bypass_diagnostic_on_previous_cases

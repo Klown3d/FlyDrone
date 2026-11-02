@@ -1,0 +1,24 @@
+base_config: configs/quadrotor_benchmark.yaml
+plant_config: configs/quadrotor.yaml
+orientation_config: configs/orientation_candidate_v1.yaml
+phase_compass_config: configs/phase_compass_cross_compartment_v4.yaml
+travel_direction_drift_config: configs/travel_direction_drift.yaml
+travel_velocity_sensor_config: configs/travel_velocity_sensor.yaml
+travel_velocity_inertial_config: configs/travel_velocity_inertial_3d.yaml
+output: results/simulation/quadrotor_connectome_block_null_3d_development
+manifest_key: quadrotor_connectome_block_null_3d_development
+duration_s: 35.0
+target_bearings_deg: [-165.0, -45.0, 75.0]
+initial_relative_headings_deg: [-125.0, 75.0]
+scenarios:
+  - {name: matched_3d_moderate, seed: 20270410, crosswind_force_n: 0.64, wind_start_s: 3.0, wind_end_s: 15.3, position_noise_std_m: 0.025, sensor_delay_s: 0.12, heading_noise_std_deg: 5.0, angular_rate_noise_std_deg_s: 2.2, heading_dropout_start_s: 5.2, heading_dropout_end_s: 8.8, velocity_dropout_start_s: 8.8, velocity_dropout_end_s: 12.8, accelerometer_noise_std_m_s2: 0.12, accelerometer_bias_x_m_s2: 0.03, accelerometer_bias_y_m_s2: -0.02, accelerometer_bias_z_m_s2: 0.04}
+  - {name: matched_3d_strong, seed: 20270411, crosswind_force_n: 0.92, wind_start_s: 2.0, wind_end_s: 16.5, position_noise_std_m: 0.038, sensor_delay_s: 0.17, heading_noise_std_deg: 6.6, angular_rate_noise_std_deg_s: 3.4, heading_dropout_start_s: 3.6, heading_dropout_end_s: 9.5, velocity_dropout_start_s: 5.5, velocity_dropout_end_s: 10.8, accelerometer_noise_std_m_s2: 0.22, accelerometer_bias_x_m_s2: 0.06, accelerometer_bias_y_m_s2: -0.05, accelerometer_bias_z_m_s2: 0.08}
+conditions:
+  - {name: flywire_hdelta_intact, circuit_condition: intact, yaw_controller: neural, heading_mode: neural_compass, velocity_source: inertial_fusion, hdelta_enabled: true, drift_readout_mode: connectome, lateral_velocity_kd_per_s: 0.0}
+  - {name: null_rewire_block_81903, circuit_condition: type_side_block_rewire, block_weight_rewire_seed: 81903, yaw_controller: neural, heading_mode: neural_compass, velocity_source: inertial_fusion, hdelta_enabled: true, drift_readout_mode: connectome, lateral_velocity_kd_per_s: 0.0}
+  - {name: null_rewire_block_98211, circuit_condition: type_side_block_rewire, block_weight_rewire_seed: 98211, yaw_controller: neural, heading_mode: neural_compass, velocity_source: inertial_fusion, hdelta_enabled: true, drift_readout_mode: connectome, lateral_velocity_kd_per_s: 0.0}
+  - {name: null_rewire_block_109173, circuit_condition: type_side_block_rewire, block_weight_rewire_seed: 109173, yaw_controller: neural, heading_mode: neural_compass, velocity_source: inertial_fusion, hdelta_enabled: true, drift_readout_mode: connectome, lateral_velocity_kd_per_s: 0.0}
+divergence_threshold_deg: 30.0
+recovery_threshold_deg: 15.0
+sustained_duration_s: 0.20
+parameter_status: development_only_reuses_prior_scenarios_not_confirmatory

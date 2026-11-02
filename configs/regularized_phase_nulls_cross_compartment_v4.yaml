@@ -1,0 +1,26 @@
+phase_transfer_config: configs/phase_resolved_compass_cross_compartment.yaml
+output: results/neural/regularized_phase_nulls_cross_compartment_v4
+manifest_key: regularized_phase_nulls_cross_compartment_v4
+dt_s: 0.02
+time_constant_s: 0.1
+cue_duration_s: 1.0
+turn_duration_s: 1.0
+cue_concentration: 4.0
+cue_gain: 4.0
+activation_slope: 5.0
+excitation_gain: 6.0
+inhibition_gain: 4.0
+bias: -1.0
+excitation_components: [peg, pen_b_left, pen_b_right]
+operators: [pen_a_difference]
+velocity_gains: [0.5]
+angular_signs: [-1.0]
+development_headings_deg: [-125.0, -35.0, 55.0, 145.0]
+development_velocities_deg_s: [-90.0, -60.0, -30.0, 30.0, 60.0, 90.0]
+maximum_median_error_deg: 20.0
+maximum_p90_error_deg: 35.0
+minimum_resultant: 0.2
+minimum_velocity_monotonicity: 0.9
+null_seeds: [91000, 91001, 91002, 91003, 91004, 91005, 91006, 91007, 91008, 91009, 91010, 91011, 91012, 91013, 91014, 91015, 91016, 91017, 91018, 91019, 91020, 91021, 91022, 91023, 91024, 91025, 91026, 91027, 91028, 91029]
+status: development_only_fixed_v4_cross_compartment_phase_label_nulls
+claim: "Development attribution test: the frozen v4 operator, gains and circularization are applied after EPG phase labels are shuffled while neuron identities and contacts remain fixed."

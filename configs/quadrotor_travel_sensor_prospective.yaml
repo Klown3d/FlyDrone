@@ -1,0 +1,29 @@
+base_config: configs/quadrotor_benchmark.yaml
+plant_config: configs/quadrotor.yaml
+orientation_config: configs/orientation_candidate_v1.yaml
+travel_direction_drift_config: configs/travel_direction_drift.yaml
+travel_velocity_sensor_config: configs/travel_velocity_sensor.yaml
+output: results/simulation/quadrotor_travel_sensor_prospective
+manifest_key: quadrotor_travel_sensor_prospective
+run_once: true
+duration_s: 25.0
+target_bearings_deg: [-175.0, -105.0, -35.0, 40.0, 110.0]
+initial_relative_headings_deg: [-15.0, 5.0, 25.0]
+scenarios:
+  - {name: heldout_noisy_delayed_position, seed: 20261120, crosswind_force_n: 0.60, wind_start_s: 3.5, wind_end_s: 12.5, position_noise_std_m: 0.020, sensor_delay_s: 0.10, heading_noise_std_deg: 4.0, velocity_noise_std_m_s: 0.05}
+  - {name: heldout_long_velocity_dropout, seed: 20261121, crosswind_force_n: 0.85, wind_start_s: 3.0, wind_end_s: 13.0, position_noise_std_m: 0.012, sensor_delay_s: 0.07, heading_noise_std_deg: 5.0, velocity_dropout_start_s: 5.5, velocity_dropout_end_s: 9.0}
+conditions:
+  - {name: hdelta_position_velocity, lateral_velocity_kd_per_s: 0.0, hdelta_enabled: true, velocity_source: position_difference}
+  - {name: hdelta_direct_velocity, lateral_velocity_kd_per_s: 0.0, hdelta_enabled: true, velocity_source: simulator_velocity}
+  - {name: no_drift_compensation, lateral_velocity_kd_per_s: 0.0, hdelta_enabled: false, velocity_source: none}
+  - {name: conventional_velocity_compensation, lateral_velocity_kd_per_s: 2.0, hdelta_enabled: false, velocity_source: simulator_velocity}
+gate:
+  minimum_estimated_successes: 27
+  minimum_success_advantage_over_absent: 6
+  minimum_cross_track_reduction_vs_absent_fraction: 0.40
+  maximum_cross_track_cost_vs_direct_m: 0.50
+  maximum_success_deficit_vs_direct: 3
+  minimum_dropout_scenario_successes: 13
+  maximum_motor_saturation_fraction: 0.10
+parameter_status: prospectively_frozen_before_execution
+

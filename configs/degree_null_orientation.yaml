@@ -1,0 +1,13 @@
+candidate_config: configs/epg_delta7_audit.yaml
+orientation_config: configs/orientation_candidate_v1.yaml
+output: results/neural/degree_preserving_null_orientation
+goals_deg: [-146.25, -56.25, 33.75, 123.75]
+initial_errors_deg: [-165.0, -75.0, 75.0, 165.0]
+seeds: [911, 912, 913, 914, 915]
+dt_s: 0.02
+duration_s: 30.0
+yaw_response_tau_s: 0.15
+success_error_deg: 10.0
+success_hold_s: 2.0
+manifest_key: degree_preserving_null_orientation
+parameter_status: degree_preserving_bipartite_edge_swap_null_heading_diagnostic

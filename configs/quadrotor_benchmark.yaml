@@ -1,0 +1,20 @@
+plant_config: configs/quadrotor.yaml
+orientation_config: configs/orientation_candidate_v1.yaml
+output: results/simulation/quadrotor_6dof
+duration_s: 25.0
+neural_update_period_s: 0.02
+target_altitude_m: 2.0
+target_distance_m: 4.0
+target_bearings_deg: [-157.5, -112.5, -67.5, -22.5, 22.5, 67.5, 112.5, 157.5]
+initial_relative_headings_deg: [-150.0, -60.0, 60.0, 150.0]
+maximum_forward_speed_m_s: 0.8
+distance_gain_per_s: 0.6
+forward_speed_kp_per_s: 2.0
+lateral_velocity_kd_per_s: 2.0
+arrival_radius_m: 0.3
+stop_speed_m_s: 0.12
+terminal_hold_s: 2.0
+goal_hold_radius_m: 0.3
+goal_release_radius_m: 0.4
+manifest_key: quadrotor_6dof
+parameter_status: engineering_first_6dof_waypoint_benchmark_no_sensor_noise

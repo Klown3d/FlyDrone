@@ -1,0 +1,17 @@
+base_config: configs/quadrotor_benchmark.yaml
+plant_config: configs/quadrotor.yaml
+orientation_config: configs/orientation_candidate_v1.yaml
+pfl2_steering_config: configs/pfl2_steering.yaml
+output: results/simulation/quadrotor_pfl2_steering_development
+manifest_key: quadrotor_pfl2_steering_development
+duration_s: 25.0
+target_bearings_deg: [-150.0, -60.0, 30.0, 120.0]
+initial_relative_headings_deg: [-175.0, -150.0, 150.0, 175.0]
+scenario:
+  name: large_heading_error
+  seed: 20261010
+  heading_noise_std_deg: 0.0
+  angular_rate_noise_std_deg_s: 0.0
+  sensor_delay_s: 0.0
+  position_noise_std_m: 0.0
+parameter_status: development_only_paired_pfl2_ablation_no_parameter_search

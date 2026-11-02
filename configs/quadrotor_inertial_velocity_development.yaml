@@ -1,0 +1,23 @@
+base_config: configs/quadrotor_benchmark.yaml
+plant_config: configs/quadrotor.yaml
+orientation_config: configs/orientation_candidate_v1.yaml
+phase_compass_config: configs/phase_compass_cross_compartment_v4.yaml
+travel_direction_drift_config: configs/travel_direction_drift.yaml
+travel_velocity_sensor_config: configs/travel_velocity_sensor.yaml
+travel_velocity_inertial_config: configs/travel_velocity_inertial.yaml
+output: results/simulation/quadrotor_inertial_velocity_development
+manifest_key: quadrotor_inertial_velocity_development
+duration_s: 35.0
+target_bearings_deg: [-155.0, -35.0, 85.0]
+initial_relative_headings_deg: [-105.0, 80.0]
+scenarios:
+  - {name: inertial_moderate, seed: 20270130, crosswind_force_n: 0.60, wind_start_s: 3.3, wind_end_s: 14.8, position_noise_std_m: 0.022, sensor_delay_s: 0.11, heading_noise_std_deg: 4.7, angular_rate_noise_std_deg_s: 1.9, heading_dropout_start_s: 5.8, heading_dropout_end_s: 8.8, velocity_dropout_start_s: 9.5, velocity_dropout_end_s: 12.8, accelerometer_noise_std_m_s2: 0.08}
+  - {name: inertial_strong, seed: 20270131, crosswind_force_n: 0.86, wind_start_s: 2.3, wind_end_s: 16.0, position_noise_std_m: 0.034, sensor_delay_s: 0.15, heading_noise_std_deg: 6.0, angular_rate_noise_std_deg_s: 3.0, heading_dropout_start_s: 4.2, heading_dropout_end_s: 9.2, velocity_dropout_start_s: 6.2, velocity_dropout_end_s: 10.7, accelerometer_noise_std_m_s2: 0.12}
+conditions:
+  - {name: position_difference_hdelta, yaw_controller: neural, heading_mode: neural_compass, velocity_source: position_difference, hdelta_enabled: true, lateral_velocity_kd_per_s: 0.0}
+  - {name: inertial_fusion_hdelta, yaw_controller: neural, heading_mode: neural_compass, velocity_source: inertial_fusion, hdelta_enabled: true, lateral_velocity_kd_per_s: 0.0}
+  - {name: conventional_navigation, yaw_controller: proportional, heading_mode: gyro_integrated, velocity_source: none, hdelta_enabled: false, lateral_velocity_kd_per_s: 2.0}
+divergence_threshold_deg: 30.0
+recovery_threshold_deg: 15.0
+sustained_duration_s: 0.20
+parameter_status: first_development_inertial_fusion_candidate_after_oracle_diagnosis

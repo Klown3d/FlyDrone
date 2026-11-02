@@ -1,0 +1,23 @@
+base_config: configs/quadrotor_benchmark.yaml
+plant_config: configs/quadrotor.yaml
+orientation_config: configs/orientation_candidate_v1.yaml
+pfl2_steering_config: configs/pfl2_steering.yaml
+pfl2_advance_config: configs/pfl2_advance.yaml
+output: results/simulation/quadrotor_pfl2_advance_prospective
+manifest_key: quadrotor_pfl2_advance_prospective
+run_once: true
+duration_s: 25.0
+target_bearings_deg: [-165.0, -95.0, -25.0, 45.0, 115.0]
+initial_relative_headings_deg: [-160.0, -110.0, 140.0]
+scenarios:
+  - {name: heldout_moderate, seed: 20261201, crosswind_force_n: 0.40, wind_start_s: 3.5, wind_end_s: 9.5, position_noise_std_m: 0.025, sensor_delay_s: 0.06, heading_noise_std_deg: 3.5}
+  - {name: heldout_strong, seed: 20261202, crosswind_force_n: 0.65, wind_start_s: 3.0, wind_end_s: 11.0, position_noise_std_m: 0.04, sensor_delay_s: 0.12, heading_noise_std_deg: 5.0}
+gate:
+  minimum_pfl2_successes: 27
+  maximum_success_deficit: 2
+  maximum_arrival_time_cost_s: 0.50
+  maximum_efficiency_cost: 0.03
+  maximum_cross_track_cost_m: 0.10
+  maximum_motor_saturation_fraction: 0.10
+parameter_status: prospectively_frozen_before_execution
+

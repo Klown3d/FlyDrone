@@ -1,0 +1,22 @@
+base_config: configs/quadrotor_benchmark.yaml
+plant_config: configs/quadrotor.yaml
+orientation_config: configs/orientation_candidate_v1.yaml
+phase_compass_config: configs/phase_compass_cross_compartment_v4.yaml
+pfl2_steering_config: configs/pfl2_steering.yaml
+pfl2_advance_config: configs/pfl2_advance.yaml
+travel_direction_drift_config: configs/travel_direction_drift.yaml
+travel_velocity_sensor_config: configs/travel_velocity_sensor.yaml
+output: results/simulation/quadrotor_integrated_development
+manifest_key: quadrotor_integrated_development
+duration_s: 28.0
+target_bearings_deg: [-140.0, -20.0, 100.0]
+initial_relative_headings_deg: [-120.0, 75.0]
+scenarios:
+  - {name: combined_moderate, seed: 20261210, crosswind_force_n: 0.50, wind_start_s: 3.0, wind_end_s: 14.0, position_noise_std_m: 0.020, sensor_delay_s: 0.08, heading_noise_std_deg: 4.0, angular_rate_noise_std_deg_s: 1.5, heading_dropout_start_s: 6.0, heading_dropout_end_s: 8.0, velocity_dropout_start_s: 10.0, velocity_dropout_end_s: 12.0}
+  - {name: combined_strong_overlap, seed: 20261211, crosswind_force_n: 0.75, wind_start_s: 2.5, wind_end_s: 15.0, position_noise_std_m: 0.035, sensor_delay_s: 0.12, heading_noise_std_deg: 5.0, angular_rate_noise_std_deg_s: 2.5, heading_dropout_start_s: 5.0, heading_dropout_end_s: 9.0, velocity_dropout_start_s: 7.0, velocity_dropout_end_s: 11.0}
+conditions:
+  - {name: full_flywire, yaw_controller: neural, heading_mode: neural_compass, pfl2_enabled: true, advance_enabled: true, hdelta_enabled: true, lateral_velocity_kd_per_s: 0.0}
+  - {name: no_pfl2, yaw_controller: neural, heading_mode: neural_compass, pfl2_enabled: false, advance_enabled: false, hdelta_enabled: true, lateral_velocity_kd_per_s: 0.0}
+  - {name: no_hdelta, yaw_controller: neural, heading_mode: neural_compass, pfl2_enabled: true, advance_enabled: true, hdelta_enabled: false, lateral_velocity_kd_per_s: 0.0}
+  - {name: conventional_navigation, yaw_controller: proportional, heading_mode: gyro_integrated, pfl2_enabled: false, advance_enabled: false, hdelta_enabled: false, lateral_velocity_kd_per_s: 2.0}
+parameter_status: development_only_combined_perturbations_no_prospective_claim

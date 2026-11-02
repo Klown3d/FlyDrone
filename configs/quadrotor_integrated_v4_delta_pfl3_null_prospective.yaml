@@ -1,0 +1,19 @@
+base_config: configs/quadrotor_integrated_v4_prospective.yaml
+protocol_id: flydrone_integrated_v4_delta_pfl3_null_prospective_v1
+lock_file: configs/quadrotor_integrated_v4_delta_pfl3_null_prospective.lock.json
+preregistration_doc: docs/research/integrated-v4-delta-pfl3-null-preregistration.md
+output: results/simulation/quadrotor_integrated_v4_delta_pfl3_null_prospective
+manifest_key: quadrotor_integrated_v4_delta_pfl3_null_prospective
+run_once: true
+gate: null
+target_bearings_deg: [-161.0, 13.0, 119.0]
+initial_relative_headings_deg: [-127.0, 53.0]
+scenarios:
+  - {name: delta_pfl3_heading_velocity, seed: 20361117, crosswind_force_n: 0.79, wind_start_s: 3.4, wind_end_s: 17.7, position_noise_std_m: 0.040, sensor_delay_s: 0.17, heading_noise_std_deg: 6.5, angular_rate_noise_std_deg_s: 3.4, heading_dropout_start_s: 5.2, heading_dropout_end_s: 11.4, velocity_dropout_start_s: 14.3, velocity_dropout_end_s: 19.7, accelerometer_noise_std_m_s2: 0.22, accelerometer_bias_x_m_s2: 0.057, accelerometer_bias_y_m_s2: -0.050, accelerometer_bias_z_m_s2: 0.075}
+  - {name: delta_pfl3_combined_late, seed: 20361118, crosswind_force_n: 0.88, wind_start_s: 4.7, wind_end_s: 20.6, position_noise_std_m: 0.044, sensor_delay_s: 0.19, heading_noise_std_deg: 7.0, angular_rate_noise_std_deg_s: 3.7, heading_dropout_start_s: 12.6, heading_dropout_end_s: 17.7, velocity_dropout_start_s: 5.7, velocity_dropout_end_s: 13.0, accelerometer_noise_std_m_s2: 0.25, accelerometer_bias_x_m_s2: -0.067, accelerometer_bias_y_m_s2: 0.061, accelerometer_bias_z_m_s2: -0.085}
+steering_null_intact_condition: {name: flywire_delta_pfl3_intact, circuit_condition: intact, yaw_controller: neural, heading_mode: neural_compass, velocity_source: inertial_fusion, pfl2_enabled: true, advance_enabled: true, hdelta_enabled: true, lateral_velocity_kd_per_s: 0.25}
+steering_null_condition_template: {circuit_condition: delta_pfl3_side_block_rewire, steering_null_projection: delta_to_pfl3, yaw_controller: neural, heading_mode: neural_compass, velocity_source: inertial_fusion, pfl2_enabled: true, advance_enabled: true, hdelta_enabled: true, lateral_velocity_kd_per_s: 0.25}
+steering_null_seeds: [64007, 64013, 64019, 64033, 64037, 64063, 64067, 64081, 64091, 64109, 64123, 64151, 64153, 64157, 64171, 64187, 64189, 64217, 64223, 64231]
+primary_gate: {minimum_intact_successes: 10, maximum_empirical_rank_p: 0.05, required_null_seed_count: 20}
+save_all_traces: false
+parameter_status: prospectively_frozen_v4_delta_to_pfl3_side_block_null_attribution

@@ -1,0 +1,39 @@
+protocol_id: flydrone_pfn_hdelta_confirmatory_v1
+base_config: configs/quadrotor_benchmark.yaml
+plant_config: configs/quadrotor.yaml
+orientation_config: configs/orientation_candidate_v1.yaml
+phase_compass_config: configs/phase_compass_cross_compartment_v4.yaml
+travel_direction_drift_config: configs/travel_direction_drift.yaml
+travel_velocity_sensor_config: configs/travel_velocity_sensor.yaml
+travel_velocity_inertial_config: configs/travel_velocity_inertial_3d.yaml
+output: results/simulation/quadrotor_connectome_confirmatory_v1
+manifest_key: quadrotor_connectome_confirmatory_v1
+lock_file: configs/quadrotor_connectome_confirmatory.lock.json
+duration_s: 35.0
+target_bearings_deg: [-144.0, -73.0, 6.0, 81.0, 153.0]
+initial_relative_headings_deg: [-141.0, -66.0, 11.0, 74.0, 147.0]
+scenarios:
+  - {name: confirm_crosswind_late, seed: 20281021, crosswind_force_n: 0.78, wind_start_s: 4.7, wind_end_s: 19.2, position_noise_std_m: 0.031, sensor_delay_s: 0.14, heading_noise_std_deg: 5.7, angular_rate_noise_std_deg_s: 2.8, heading_dropout_start_s: 11.0, heading_dropout_end_s: 14.7, velocity_dropout_start_s: 5.9, velocity_dropout_end_s: 9.6, accelerometer_noise_std_m_s2: 0.17, accelerometer_bias_x_m_s2: 0.04, accelerometer_bias_y_m_s2: -0.035, accelerometer_bias_z_m_s2: 0.055}
+  - {name: confirm_heading_long, seed: 20281022, crosswind_force_n: 0.55, wind_start_s: 1.5, wind_end_s: 12.0, position_noise_std_m: 0.029, sensor_delay_s: 0.13, heading_noise_std_deg: 6.1, angular_rate_noise_std_deg_s: 3.1, heading_dropout_start_s: 4.4, heading_dropout_end_s: 10.7, velocity_dropout_start_s: 15.0, velocity_dropout_end_s: 18.5, accelerometer_noise_std_m_s2: 0.15, accelerometer_bias_x_m_s2: -0.035, accelerometer_bias_y_m_s2: 0.045, accelerometer_bias_z_m_s2: 0.06}
+  - {name: confirm_velocity_long, seed: 20281023, crosswind_force_n: 0.74, wind_start_s: 3.3, wind_end_s: 17.8, position_noise_std_m: 0.036, sensor_delay_s: 0.16, heading_noise_std_deg: 5.4, angular_rate_noise_std_deg_s: 2.6, heading_dropout_start_s: 14.0, heading_dropout_end_s: 17.0, velocity_dropout_start_s: 3.2, velocity_dropout_end_s: 10.4, accelerometer_noise_std_m_s2: 0.20, accelerometer_bias_x_m_s2: 0.055, accelerometer_bias_y_m_s2: 0.04, accelerometer_bias_z_m_s2: -0.07}
+  - {name: confirm_combined_shifted, seed: 20281024, crosswind_force_n: 0.88, wind_start_s: 6.0, wind_end_s: 21.0, position_noise_std_m: 0.041, sensor_delay_s: 0.18, heading_noise_std_deg: 6.8, angular_rate_noise_std_deg_s: 3.6, heading_dropout_start_s: 2.8, heading_dropout_end_s: 7.9, velocity_dropout_start_s: 9.7, velocity_dropout_end_s: 15.8, accelerometer_noise_std_m_s2: 0.23, accelerometer_bias_x_m_s2: -0.06, accelerometer_bias_y_m_s2: -0.055, accelerometer_bias_z_m_s2: 0.085}
+conditions:
+  - {name: flywire_hdelta_intact, circuit_condition: intact, yaw_controller: neural, heading_mode: neural_compass, velocity_source: inertial_fusion, hdelta_enabled: true, drift_readout_mode: connectome, lateral_velocity_kd_per_s: 0.0}
+  - {name: null_rewire_block_130021, circuit_condition: type_side_block_rewire, block_weight_rewire_seed: 130021, yaw_controller: neural, heading_mode: neural_compass, velocity_source: inertial_fusion, hdelta_enabled: true, drift_readout_mode: connectome, lateral_velocity_kd_per_s: 0.0}
+  - {name: null_rewire_block_130027, circuit_condition: type_side_block_rewire, block_weight_rewire_seed: 130027, yaw_controller: neural, heading_mode: neural_compass, velocity_source: inertial_fusion, hdelta_enabled: true, drift_readout_mode: connectome, lateral_velocity_kd_per_s: 0.0}
+  - {name: null_rewire_block_130043, circuit_condition: type_side_block_rewire, block_weight_rewire_seed: 130043, yaw_controller: neural, heading_mode: neural_compass, velocity_source: inertial_fusion, hdelta_enabled: true, drift_readout_mode: connectome, lateral_velocity_kd_per_s: 0.0}
+  - {name: null_rewire_block_130051, circuit_condition: type_side_block_rewire, block_weight_rewire_seed: 130051, yaw_controller: neural, heading_mode: neural_compass, velocity_source: inertial_fusion, hdelta_enabled: true, drift_readout_mode: connectome, lateral_velocity_kd_per_s: 0.0}
+  - {name: null_rewire_block_130069, circuit_condition: type_side_block_rewire, block_weight_rewire_seed: 130069, yaw_controller: neural, heading_mode: neural_compass, velocity_source: inertial_fusion, hdelta_enabled: true, drift_readout_mode: connectome, lateral_velocity_kd_per_s: 0.0}
+  - {name: direct_velocity_matched, circuit_condition: non_neural_matched, yaw_controller: neural, heading_mode: neural_compass, velocity_source: inertial_fusion, hdelta_enabled: true, drift_readout_mode: direct_velocity, lateral_velocity_kd_per_s: 0.0}
+  - {name: conventional_navigation, circuit_condition: conventional, yaw_controller: proportional, heading_mode: gyro_integrated, velocity_source: none, hdelta_enabled: false, lateral_velocity_kd_per_s: 2.0}
+divergence_threshold_deg: 30.0
+recovery_threshold_deg: 15.0
+sustained_duration_s: 0.20
+gate:
+  minimum_intact_successes: 90
+  minimum_success_advantage_over_null_median_percentage_points: 20.0
+  require_intact_at_or_above_null_95th_percentile: true
+  maximum_success_deficit_vs_direct_percentage_points: 10.0
+  maximum_motor_saturation_fraction: 0.01
+  maximum_collisions: 0
+parameter_status: frozen_confirmatory_v1_execute_once

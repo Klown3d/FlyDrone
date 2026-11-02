@@ -1,0 +1,18 @@
+# Exact versions used for the extraction on Python 3.13.14 / Windows.
+numpy==2.5.3
+pyarrow==25.0.1
+networkx==3.6.1
+pandas==2.3.3
+PyYAML==6.0.3
+scipy==1.18.1
+trimesh==5.1.0
+rtree==1.4.1
+pytest==9.1.1
+scipy==1.18.1
+trimesh==5.1.0
+rtree==1.4.1
+colorama==0.4.6
+iniconfig==2.3.0
+packaging==26.3
+pluggy==1.6.0
+Pygments==2.21.0

@@ -1,0 +1,19 @@
+dt_s: 0.002
+mass_kg: 0.8
+gravity_m_s2: 9.81
+inertia_kg_m2: [0.008, 0.008, 0.014]
+arm_length_m: 0.18
+maximum_motor_thrust_n: 4.0
+yaw_moment_per_thrust_m: 0.015
+motor_time_constant_s: 0.04
+linear_drag_n_per_m_s: [0.12, 0.12, 0.20]
+angular_drag_nm_per_rad_s: [0.002, 0.002, 0.003]
+position_kp_per_s2: 1.2
+velocity_kd_per_s: 1.8
+altitude_kp_per_s2: 5.0
+altitude_kd_per_s: 3.5
+maximum_horizontal_acceleration_m_s2: 2.5
+attitude_kp_nm: [0.12, 0.12, 0.05]
+rate_kd_nm_s: [0.035, 0.035, 0.025]
+maximum_yaw_rate_rad_s: 1.4
+parameter_status: engineering_unvalidated_generic_quadrotor

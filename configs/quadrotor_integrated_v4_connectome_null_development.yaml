@@ -1,0 +1,19 @@
+base_config: configs/quadrotor_integrated_v4_prospective.yaml
+output: results/simulation/quadrotor_integrated_v4_connectome_null_development
+manifest_key: quadrotor_integrated_v4_connectome_null_development
+run_once: false
+gate: null
+target_bearings_deg: [-131.0, 47.0, 163.0]
+initial_relative_headings_deg: [-121.0, 89.0]
+scenarios:
+  - {name: null_development_a, seed: 20330907, crosswind_force_n: 0.75, wind_start_s: 3.0, wind_end_s: 17.2, position_noise_std_m: 0.038, sensor_delay_s: 0.16, heading_noise_std_deg: 6.2, angular_rate_noise_std_deg_s: 3.2, heading_dropout_start_s: 4.8, heading_dropout_end_s: 10.9, velocity_dropout_start_s: 13.7, velocity_dropout_end_s: 19.0, accelerometer_noise_std_m_s2: 0.21, accelerometer_bias_x_m_s2: 0.051, accelerometer_bias_y_m_s2: -0.049, accelerometer_bias_z_m_s2: 0.071}
+  - {name: null_development_b, seed: 20330908, crosswind_force_n: 0.85, wind_start_s: 4.3, wind_end_s: 20.0, position_noise_std_m: 0.042, sensor_delay_s: 0.18, heading_noise_std_deg: 6.7, angular_rate_noise_std_deg_s: 3.5, heading_dropout_start_s: 12.0, heading_dropout_end_s: 17.0, velocity_dropout_start_s: 5.1, velocity_dropout_end_s: 12.3, accelerometer_noise_std_m_s2: 0.24, accelerometer_bias_x_m_s2: -0.061, accelerometer_bias_y_m_s2: 0.058, accelerometer_bias_z_m_s2: -0.080}
+conditions:
+  - {name: flywire_hdelta_intact, circuit_condition: intact, yaw_controller: neural, heading_mode: neural_compass, velocity_source: inertial_fusion, pfl2_enabled: true, advance_enabled: true, hdelta_enabled: true, lateral_velocity_kd_per_s: 0.25}
+  - {name: null_rewire_block_31001, circuit_condition: type_side_block_rewire, block_weight_rewire_seed: 31001, yaw_controller: neural, heading_mode: neural_compass, velocity_source: inertial_fusion, pfl2_enabled: true, advance_enabled: true, hdelta_enabled: true, lateral_velocity_kd_per_s: 0.25}
+  - {name: null_rewire_block_31003, circuit_condition: type_side_block_rewire, block_weight_rewire_seed: 31003, yaw_controller: neural, heading_mode: neural_compass, velocity_source: inertial_fusion, pfl2_enabled: true, advance_enabled: true, hdelta_enabled: true, lateral_velocity_kd_per_s: 0.25}
+  - {name: null_rewire_block_31007, circuit_condition: type_side_block_rewire, block_weight_rewire_seed: 31007, yaw_controller: neural, heading_mode: neural_compass, velocity_source: inertial_fusion, pfl2_enabled: true, advance_enabled: true, hdelta_enabled: true, lateral_velocity_kd_per_s: 0.25}
+  - {name: null_rewire_block_31009, circuit_condition: type_side_block_rewire, block_weight_rewire_seed: 31009, yaw_controller: neural, heading_mode: neural_compass, velocity_source: inertial_fusion, pfl2_enabled: true, advance_enabled: true, hdelta_enabled: true, lateral_velocity_kd_per_s: 0.25}
+  - {name: null_rewire_block_31013, circuit_condition: type_side_block_rewire, block_weight_rewire_seed: 31013, yaw_controller: neural, heading_mode: neural_compass, velocity_source: inertial_fusion, pfl2_enabled: true, advance_enabled: true, hdelta_enabled: true, lateral_velocity_kd_per_s: 0.25}
+save_all_traces: false
+parameter_status: development_only_block_degree_weight_preserving_hdelta_nulls

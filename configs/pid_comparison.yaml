@@ -1,0 +1,5 @@
+pid_config: configs/pid_baseline.yaml
+output: results/simulation/pid_baseline
+neural_ideal_episodes: results/simulation/quadrotor_circuit_ablation/episodes.csv
+neural_robustness_episodes: results/simulation/quadrotor_projection_robustness/episodes.csv
+analysis_status: paired_descriptive_comparison_of_frozen_held_out_results

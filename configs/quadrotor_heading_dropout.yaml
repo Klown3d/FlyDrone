@@ -1,0 +1,39 @@
+base_config: configs/quadrotor_benchmark.yaml
+plant_config: configs/quadrotor.yaml
+orientation_config: configs/orientation_candidate_v1.yaml
+compass_config: configs/phase_compass_dynamics_v2.yaml
+pid_config: results/simulation/pid_baseline/selected_pid.yaml
+output: results/simulation/quadrotor_heading_dropout
+manifest_key: quadrotor_heading_dropout
+duration_s: 25.0
+target_bearings_deg: [-95.0, -5.0, 85.0, 175.0]
+initial_relative_headings_deg: [-120.0, 120.0]
+controllers:
+  - {label: flywire_compass, yaw_controller: neural, heading_mode: neural_compass}
+  - {label: neural_sample_hold, yaw_controller: neural, heading_mode: sample_hold}
+  - {label: pid_gyro, yaw_controller: pid, heading_mode: gyro_integrated}
+  - {label: proportional_gyro, yaw_controller: proportional, heading_mode: gyro_integrated}
+scenarios:
+  - name: dropout_4s
+    seed: 4300
+    heading_dropout_start_s: 3.0
+    heading_dropout_end_s: 7.0
+    heading_noise_std_deg: 3.0
+    angular_rate_noise_std_deg_s: 2.0
+    sensor_delay_s: 0.10
+    position_noise_std_m: 0.03
+    crosswind_force_n: 0.4
+    wind_start_s: 4.0
+    wind_end_s: 7.0
+  - name: dropout_8s
+    seed: 8600
+    heading_dropout_start_s: 3.0
+    heading_dropout_end_s: 11.0
+    heading_noise_std_deg: 5.0
+    angular_rate_noise_std_deg_s: 3.0
+    sensor_delay_s: 0.15
+    position_noise_std_m: 0.05
+    crosswind_force_n: 0.6
+    wind_start_s: 4.0
+    wind_end_s: 10.0
+parameter_status: engineering_sensor_dropout_protocol_with_frozen_phase_compass

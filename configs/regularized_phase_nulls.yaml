@@ -1,0 +1,24 @@
+phase_transfer_config: configs/phase_resolved_compass.yaml
+output: results/neural/regularized_phase_nulls
+manifest_key: regularized_phase_nulls
+dt_s: 0.02
+time_constant_s: 0.1
+cue_duration_s: 1.0
+turn_duration_s: 1.0
+cue_concentration: 4.0
+cue_gain: 4.0
+activation_slope: 5.0
+excitation_gain: 6.0
+inhibition_gain: 4.0
+bias: -1.0
+operators: [published_one_wedge, pen_a_difference, pen_b_difference, pen_combined_difference]
+velocity_gains: [0.25, 0.5, 1.0, 1.25, 1.5, 1.75, 2.0, 2.25, 2.5, 2.75, 3.0, 4.0, 8.0, 16.0]
+angular_signs: [-1.0, 1.0]
+development_headings_deg: [-125.0, -35.0, 55.0, 145.0]
+development_velocities_deg_s: [-90.0, -60.0, -30.0, 30.0, 60.0, 90.0]
+maximum_median_error_deg: 20.0
+maximum_p90_error_deg: 35.0
+minimum_resultant: 0.2
+minimum_velocity_monotonicity: 0.9
+null_seeds: [91000, 91001, 91002, 91003, 91004, 91005, 91006, 91007, 91008, 91009, 91010, 91011, 91012, 91013, 91014, 91015, 91016, 91017, 91018, 91019, 91020, 91021, 91022, 91023, 91024, 91025, 91026, 91027, 91028, 91029]
+status: development_only_regularized_phase_label_nulls

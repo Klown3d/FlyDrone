@@ -1,0 +1,7 @@
+candidate_config: configs/epg_delta7_audit.yaml
+synapses: data/processed/fafb783_epg_delta7_fc2_pfl3/pb-synapses.parquet
+output: results/neural/phase_diagnostic
+# Engineering choices; not measured Delta7 physiology.
+recurrence_gain: 1.0
+sigmoid_slope: 1.0
+phase_resultant_tolerance: 1.0e-10

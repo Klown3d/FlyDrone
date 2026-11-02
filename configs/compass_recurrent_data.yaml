@@ -1,0 +1,20 @@
+# Exact FAFB 783 annotations for the recurrent heading candidate.
+dataset: FAFB
+materialization_version: 783
+annotation_commit: ebd66db2596fcc39c6950fb54ea3efa00f7fe8a0
+type_column: hemibrain_type
+types:
+  EPG: compass
+  Delta7: global_inhibition_candidate
+  PEN_a(PEN1): angular_update_candidate
+  PEN_b(PEN2): angular_update_candidate
+  PEG: persistence_candidate
+excluded_related_types:
+  EPGt: Distinct annotation; not automatically equated with EPG.
+minimum_pair_synapses: 1
+sensitivity_thresholds: [1, 3, 5, 10]
+neuropil_filter: null
+boundary_hops: 1
+output_dir: data/processed/fafb783_recurrent_compass
+register_as_primary: false
+manifest_key: fafb783_recurrent_compass

@@ -1,0 +1,5 @@
+transfers: results/neural/phase_resolved_compass_cross_compartment/transfers.npz
+output: results/neural/regularization_audit_cross_compartment
+manifest_key: regularization_audit_cross_compartment
+matrices: [delta7, peg, pen_a_left, pen_a_right, pen_b_left, pen_b_right]
+status: descriptive_cross_compartment_regularization_distance_audit

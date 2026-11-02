@@ -1,0 +1,37 @@
+base_config: configs/quadrotor_benchmark.yaml
+plant_config: configs/quadrotor.yaml
+orientation_config: configs/orientation_candidate_v1.yaml
+compass_config: configs/phase_compass_cross_compartment_v4.yaml
+pid_config: results/simulation/pid_baseline/selected_pid.yaml
+output: results/simulation/quadrotor_heading_dropout_v4_prospective
+manifest_key: quadrotor_heading_dropout_v4_prospective
+evaluation_role: prospective_once_v4_frozen_before_execution
+run_once: true
+duration_s: 25.0
+target_bearings_deg: [-163.0, -91.0, -19.0, 53.0, 127.0]
+initial_relative_headings_deg: [-147.0, -83.0, -31.0, 37.0, 101.0, 159.0]
+primary_controller: flywire_v4_compass
+sample_hold_controller: neural_sample_hold
+controllers:
+  - {label: flywire_v4_compass, yaw_controller: neural, heading_mode: neural_compass}
+  - {label: neural_sample_hold, yaw_controller: neural, heading_mode: sample_hold}
+  - {label: neural_gyro, yaw_controller: neural, heading_mode: gyro_integrated}
+  - {label: pid_gyro, yaw_controller: pid, heading_mode: gyro_integrated}
+scenarios:
+  - name: prospective_dropout_6s
+    seed: 20260924
+    heading_dropout_start_s: 4.0
+    heading_dropout_end_s: 10.0
+    heading_noise_std_deg: 4.0
+    angular_rate_noise_std_deg_s: 2.5
+    sensor_delay_s: 0.13
+    position_noise_std_m: 0.04
+    crosswind_force_n: 0.5
+    wind_start_s: 5.0
+    wind_end_s: 10.0
+decision_criteria:
+  minimum_success_rate: 0.90
+  maximum_median_dropout_heading_error_deg: 25.0
+  maximum_dropout_heading_error_deg: 75.0
+  minimum_improvement_over_sample_hold_deg: 5.0
+parameter_status: frozen_cross_compartment_v4_with_engineering_sensor_interface

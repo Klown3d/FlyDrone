@@ -1,0 +1,21 @@
+base_config: configs/quadrotor_integrated_v4_prospective.yaml
+protocol_id: flydrone_v5_compass_development_v1
+output: results/simulation/quadrotor_integrated_v5_compass_development
+manifest_key: quadrotor_integrated_v5_compass_development
+gate: null
+run_once: false
+parameter_status: development_only_not_confirmatory
+claim: Development comparison on cases disjoint from the frozen v5 oracle diagnostic. Results may select a v5 compass candidate but cannot validate it.
+duration_s: 50.0
+target_distance_m: 7.0
+target_bearings_deg: [-137.0, -43.0, 41.0, 133.0]
+initial_relative_headings_deg: [-103.0, 67.0]
+scenarios:
+  - {name: v5_dev_heading_long, seed: 20710201, crosswind_force_n: 0.72, wind_start_s: 3.5, wind_end_s: 28.0, position_noise_std_m: 0.044, sensor_delay_s: 0.21, heading_noise_std_deg: 6.8, angular_rate_noise_std_deg_s: 3.7, heading_dropout_start_s: 7.5, heading_dropout_end_s: 18.0, velocity_dropout_start_s: 80.0, velocity_dropout_end_s: 81.0, accelerometer_noise_std_m_s2: 0.23}
+  - {name: v5_dev_overlap_long, seed: 20710202, crosswind_force_n: -0.87, wind_start_s: 5.5, wind_end_s: 30.0, position_noise_std_m: 0.050, sensor_delay_s: 0.23, heading_noise_std_deg: 7.3, angular_rate_noise_std_deg_s: 4.0, heading_dropout_start_s: 9.5, heading_dropout_end_s: 21.0, velocity_dropout_start_s: 12.5, velocity_dropout_end_s: 23.0, accelerometer_noise_std_m_s2: 0.26}
+  - {name: v5_dev_late_reacquisition, seed: 20710203, crosswind_force_n: 0.58, wind_start_s: 16.0, wind_end_s: 37.0, position_noise_std_m: 0.042, sensor_delay_s: 0.20, heading_noise_std_deg: 6.3, angular_rate_noise_std_deg_s: 3.5, heading_dropout_start_s: 23.0, heading_dropout_end_s: 34.5, velocity_dropout_start_s: 17.0, velocity_dropout_end_s: 28.0, accelerometer_noise_std_m_s2: 0.22}
+conditions:
+  - {name: neural_v4, circuit_condition: intact, yaw_controller: neural, heading_mode: neural_compass, velocity_source: inertial_fusion, pfl2_enabled: true, advance_enabled: true, hdelta_enabled: true, lateral_velocity_kd_per_s: 0.25}
+  - {name: hybrid_v5_candidate, circuit_condition: intact, yaw_controller: neural, heading_mode: hybrid_compass, compass_config: configs/hybrid_compass_v5_development.yaml, velocity_source: inertial_fusion, pfl2_enabled: true, advance_enabled: true, hdelta_enabled: true, lateral_velocity_kd_per_s: 0.25}
+  - {name: gyro_heading_control, circuit_condition: engineering_heading_control, yaw_controller: neural, heading_mode: gyro_integrated, velocity_source: inertial_fusion, pfl2_enabled: true, advance_enabled: true, hdelta_enabled: true, lateral_velocity_kd_per_s: 0.25}
+save_all_traces: false

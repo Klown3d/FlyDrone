@@ -1,0 +1,13 @@
+candidate_config: configs/epg_delta7_audit.yaml
+orientation_config: configs/orientation_candidate_v1.yaml
+output: results/neural/circuit_ablation_orientation
+goals_deg: [-146.25, -56.25, 33.75, 123.75]
+initial_errors_deg: [-165.0, -75.0, 75.0, 165.0]
+shuffle_seeds: [901, 902, 903, 904, 905]
+dt_s: 0.02
+duration_s: 30.0
+yaw_response_tau_s: 0.15
+success_error_deg: 10.0
+success_hold_s: 2.0
+manifest_key: circuit_ablation_orientation
+parameter_status: heading_only_diagnostic_for_completed_6dof_ablation

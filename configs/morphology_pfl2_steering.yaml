@@ -1,0 +1,14 @@
+dataset: FAFB
+materialization_version: 783
+nodes: data/processed/fafb783_epg_delta7_fc2_pfl2_pfl3/nodes.csv
+expected_neuron_count: 207
+manifest_key: steering_pfl2
+skeleton_base_url: https://flyem.mrc-lmb.cam.ac.uk/flyconnectome/flywire_skeletons_783
+fafbseg_commit: d0da95123ee606e204ae2c702e7bc78538646fbd
+atlas_url: https://raw.githubusercontent.com/navis-org/fafbseg-py/d0da95123ee606e204ae2c702e7bc78538646fbd/fafbseg/data/JFRC2NP.surf.fw.zip
+atlas_git_blob_sha1: f9c843c8c46c430ccb37b4b9f787a6f99edaba47
+atlas_size_bytes: 1081524
+skeleton_dir: data/raw/flywire_skeletons_783
+atlas_path: data/raw/JFRC2NP.surf.fw.zip
+index_path: data/processed/fafb783_epg_delta7_fc2_pfl2_pfl3/morphology-index.json
+workers: 8

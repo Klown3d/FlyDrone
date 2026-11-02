@@ -1,0 +1,6 @@
+extraction: data/processed/fafb783_recurrent_compass
+steering_features: data/processed/fafb783_epg_delta7_fc2_pfl3/morphology-features.csv
+epg_phase_config: configs/epg_delta7_audit.yaml
+output: results/neural/phase_resolved_compass
+manifest_key: phase_resolved_compass
+status: phase_resolved_two_synapse_transfer_audit

@@ -1,0 +1,8 @@
+dataset: FAFB
+materialization_version: 783
+source: data/raw/flywire_synapses_783.feather
+nodes: data/processed/fafb783_travel_direction/nodes.csv
+expected_edges: data/processed/fafb783_travel_direction/edges.csv
+output: data/processed/fafb783_travel_direction/synapses.csv.gz
+manifest_key: travel_direction_synapse_coordinates
+status: local_coordinate_extraction_verified

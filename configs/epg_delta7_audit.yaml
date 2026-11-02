@@ -1,0 +1,37 @@
+dataset: FAFB
+materialization_version: 783
+base_model_config: configs/connectome_model.yaml
+neuropil_edges: data/processed/fafb783_epg_delta7_fc2_pfl3/edges.csv
+neuropil: PB
+
+# EPG occupies the 16 central ROIs of the published 18-glomerulus PB mask.
+# Angles are derived from Extended Data Fig. 5 and the archived analysis code
+# of Mussells Pires et al. (2024). The arbitrary bump-to-heading phase offset
+# is not fixed here.
+epg_preferred_heading_deg:
+  PB02: 33.75
+  PB03: 78.75
+  PB04: 123.75
+  PB05: 168.75
+  PB06: -146.25
+  PB07: -101.25
+  PB08: -56.25
+  PB09: -11.25
+  PB10: 11.25
+  PB11: 56.25
+  PB12: 101.25
+  PB13: 146.25
+  PB14: -168.75
+  PB15: -123.75
+  PB16: -78.75
+  PB17: -33.75
+
+projection_signs:
+  EPG_to_Delta7: 1
+  Delta7_to_PFL3: -1
+  EPG_to_PFL3: 1
+
+sources:
+  circuit_and_angles: https://doi.org/10.1038/s41586-023-07006-3
+  archived_analysis_code: https://doi.org/10.5281/zenodo.10232698
+  neurotransmitter_predictions: https://doi.org/10.1038/s41592-024-02439-0

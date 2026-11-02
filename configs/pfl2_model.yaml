@@ -1,0 +1,21 @@
+model_name: flywire_weighted_pfl2_goal_misalignment
+dataset: FAFB
+materialization_version: 783
+base_pfl3_config: configs/connectome_model.yaml
+nodes: data/processed/fafb783_epg_delta7_fc2_pfl2_pfl3/nodes.csv
+edges: data/processed/fafb783_epg_delta7_fc2_pfl2_pfl3/edges.csv
+primary_fc2_subtypes: [FC2B, FC2C]
+input_mapping:
+  delta7_angles: inherited_from_frozen_pfl3_contact_phase_audit
+  fc2_angles: geometric_9_column_order_from_primary_model
+weight_transform:
+  value: raw_synapse_count
+  normalization: divide_each_PFL2_row_by_stream_input_sum
+activation:
+  transform: half_wave_rectified_equal_stream_sum
+  scale: divide_by_theoretical_maximum_two
+  status: engineering_choice_not_measured_firing_rate
+readout:
+  value: mean_activity_calibrated_between_aligned_and_antialigned_references
+  status: engineering_population_index
+claim_status: anatomical_contact_model_with_engineering_activation_and_readout

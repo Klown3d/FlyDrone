@@ -1,0 +1,19 @@
+base_config: configs/quadrotor_benchmark.yaml
+plant_config: configs/quadrotor.yaml
+orientation_config: configs/orientation_candidate_v1.yaml
+phase_compass_config: configs/phase_compass_cross_compartment_v4.yaml
+pfl2_steering_config: configs/pfl2_steering.yaml
+pfl2_advance_config: configs/pfl2_advance.yaml
+travel_direction_drift_config: configs/travel_direction_drift.yaml
+travel_velocity_sensor_config: configs/travel_velocity_sensor.yaml
+output: results/simulation/quadrotor_integrated_v4_corrected_diagnostic
+manifest_key: quadrotor_integrated_v4_corrected_diagnostic
+duration_s: 35.0
+target_bearings_deg: [-140.0, -20.0, 100.0]
+initial_relative_headings_deg: [-120.0, 75.0]
+scenarios:
+  - {name: combined_moderate, seed: 20261210, crosswind_force_n: 0.50, wind_start_s: 3.0, wind_end_s: 14.0, position_noise_std_m: 0.020, sensor_delay_s: 0.08, heading_noise_std_deg: 4.0, angular_rate_noise_std_deg_s: 1.5, heading_dropout_start_s: 6.0, heading_dropout_end_s: 8.0, velocity_dropout_start_s: 10.0, velocity_dropout_end_s: 12.0}
+  - {name: combined_strong_overlap, seed: 20261211, crosswind_force_n: 0.75, wind_start_s: 2.5, wind_end_s: 15.0, position_noise_std_m: 0.035, sensor_delay_s: 0.12, heading_noise_std_deg: 5.0, angular_rate_noise_std_deg_s: 2.5, heading_dropout_start_s: 5.0, heading_dropout_end_s: 9.0, velocity_dropout_start_s: 7.0, velocity_dropout_end_s: 11.0}
+conditions:
+  - {name: full_flywire_v4_corrected_sensor, yaw_controller: neural, heading_mode: neural_compass, velocity_source: position_difference, pfl2_enabled: true, advance_enabled: true, hdelta_enabled: true, lateral_velocity_kd_per_s: 0.0}
+parameter_status: post_result_corrected_sensor_diagnostic_not_confirmatory

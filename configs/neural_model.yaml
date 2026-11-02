@@ -1,0 +1,14 @@
+model_name: published_pfl3_reference
+model_family: rate_based_steady_state
+source: https://doi.org/10.1038/s41586-023-07006-3
+mapping: data/processed/fafb783_epg_delta7_fc2_pfl3/functional-mapping.csv
+parameters:
+  goal_input_gain_d: 0.63
+  output_scale_hz_a: 29.23
+  softplus_slope_b: 2.17
+  input_offset_c: -0.70
+parameter_status: literature_reported_fit
+readout: summed_right_LAL_minus_summed_left_LAL
+readout_status: literature_supported_neural_steering_signal
+dynamics: none
+dynamics_note: The reference model is an algebraic firing-rate model; no time constant is invented.
