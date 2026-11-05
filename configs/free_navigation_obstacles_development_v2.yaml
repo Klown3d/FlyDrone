@@ -1,0 +1,50 @@
+base_config: configs/free_navigation_obstacles_development_v1.yaml
+protocol_id: flydrone_free_navigation_obstacles_development_v2_speed_governor
+output: results/simulation/free_navigation_obstacles_development_v2
+manifest_key: free_navigation_obstacles_development_v2
+parameter_status: exploratory_development_not_confirmatory
+claim: Post-v1 development of the engineering range-based speed governor and safe target geometry; thresholds remain exploratory and no biological vision claim is made.
+initial_relative_headings_deg: [61.0]
+scenarios:
+  - name: obstacle_course_v2_a
+    seed: 20930201
+    vehicle_radius_m: 0.25
+    crosswind_force_n: 0.0
+    wind_start_s: 0.0
+    wind_end_s: 0.0
+    position_noise_std_m: 0.025
+    sensor_delay_s: 0.10
+    heading_noise_std_deg: 3.0
+    angular_rate_noise_std_deg_s: 1.5
+    heading_dropout_start_s: 120.0
+    heading_dropout_end_s: 121.0
+    velocity_dropout_start_s: 120.0
+    velocity_dropout_end_s: 121.0
+    accelerometer_noise_std_m_s2: 0.12
+    obstacles:
+      - {center_xy_m: [1.75, 1.0], radius_m: 0.55}
+      - {center_xy_m: [1.0, 2.5], radius_m: 0.55}
+      - {center_xy_m: [-3.0, 0.5], radius_m: 0.55}
+      - {center_xy_m: [-1.0, -2.5], radius_m: 0.55}
+      - {center_xy_m: [3.0, -0.5], radius_m: 0.55}
+  - name: obstacle_course_v2_b_wind
+    seed: 20930202
+    vehicle_radius_m: 0.25
+    crosswind_force_n: 0.30
+    wind_start_s: 10.0
+    wind_end_s: 65.0
+    position_noise_std_m: 0.035
+    sensor_delay_s: 0.15
+    heading_noise_std_deg: 4.5
+    angular_rate_noise_std_deg_s: 2.4
+    heading_dropout_start_s: 28.0
+    heading_dropout_end_s: 35.0
+    velocity_dropout_start_s: 48.0
+    velocity_dropout_end_s: 55.0
+    accelerometer_noise_std_m_s2: 0.18
+    obstacles:
+      - {center_xy_m: [1.6, 0.9], radius_m: 0.55}
+      - {center_xy_m: [1.0, 2.4], radius_m: 0.50}
+      - {center_xy_m: [-2.8, 0.8], radius_m: 0.55}
+      - {center_xy_m: [-1.0, -2.4], radius_m: 0.50}
+      - {center_xy_m: [2.8, -0.8], radius_m: 0.55}

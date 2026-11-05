@@ -1,0 +1,16 @@
+base_config: configs/free_navigation_obstacles_development_v2.yaml
+protocol_id: flydrone_free_navigation_obstacles_development_v15_unified
+output: results/simulation/free_navigation_obstacles_development_v15_unified
+manifest_key: free_navigation_obstacles_development_v15_unified
+parameter_status: exploratory_development_not_confirmatory
+claim: Unified patrol and nearest-unvisited exploration development check with a separately frozen 0.65 engineering avoidance candidate; no biological perception, planning, or memory claim.
+behavior_manager_config: configs/behavior_manager_nearest.yaml
+range_avoidance_config: configs/range_avoidance_candidate_v15.yaml
+behavior_modes: [patrol, explore]
+initial_relative_headings_deg: [19.0]
+development_success_heuristic:
+  patrol_minimum_targets: 4
+  explore_minimum_targets: 5
+  explore_minimum_spatial_coverage_fraction: 0.25
+  maximum_workspace_escape_fraction: 0.02
+  minimum_obstacle_clearance_m: 0.15

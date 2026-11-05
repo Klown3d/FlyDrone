@@ -1,0 +1,8 @@
+base_config: configs/free_navigation_obstacles_development_v17_unified_omni.yaml
+protocol_id: flydrone_free_navigation_obstacles_development_v28_unified_barrier
+output: results/simulation/free_navigation_obstacles_development_v28_unified_barrier
+manifest_key: free_navigation_obstacles_development_v28_unified_barrier
+parameter_status: exploratory_development_not_confirmatory
+claim: Unified exploratory obstacle-navigation development matrix with omnidirectional engineering range sensing and an inflated swept-path engineering safety barrier; no biological perception claim.
+range_avoidance_config: configs/range_avoidance_candidate_v16.yaml
+range_safety_barrier_config: configs/range_safety_barrier.yaml

@@ -1,0 +1,8 @@
+base_config: configs/free_navigation_obstacles_development_v2.yaml
+protocol_id: flydrone_free_navigation_obstacles_development_v10_patrol_clear_hold
+output: results/simulation/free_navigation_obstacles_development_v10_patrol
+manifest_key: free_navigation_obstacles_development_v10_patrol
+parameter_status: exploratory_development_not_confirmatory
+claim: Exact-condition exploratory patrol diagnostic with sustained-clear contour release; no biological perception or planning claim.
+behavior_modes: [patrol]
+initial_relative_headings_deg: [19.0]

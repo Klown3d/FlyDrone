@@ -35,6 +35,10 @@ class QuadrotorArrivalSupervisor:
             "hold_position_kp_per_s2",
             "hold_velocity_kd_per_s",
             "maximum_hold_acceleration_m_s2",
+            "capture_radius_m",
+            "capture_position_kp_per_s2",
+            "capture_velocity_kd_per_s",
+            "maximum_capture_acceleration_m_s2",
         ):
             if float(self.config.get(key, 0.0)) < 0:
                 raise ValueError(f"{key} must be non-negative")
@@ -46,6 +50,23 @@ class QuadrotorArrivalSupervisor:
         self.arrived = False
         self.arrival_candidate_s = 0.0
         self.departure_candidate_s = 0.0
+
+    def set_target(self, target_xy_m: np.ndarray, reset_evidence: bool = True) -> None:
+        """Move the engineering supervisor to a new temporary goal.
+
+        Dynamic mission planning is not a neural mechanism.  Resetting arrival
+        evidence prevents a latch for the previous waypoint from carrying over.
+        The filtered observed state is retained so velocity estimation remains
+        continuous across a waypoint transition.
+        """
+        target = np.asarray(target_xy_m, dtype=float)
+        if target.shape != (2,) or not np.isfinite(target).all():
+            raise ValueError("target_xy_m must contain two finite coordinates")
+        self.target = target.copy()
+        if reset_evidence:
+            self.arrived = False
+            self.arrival_candidate_s = 0.0
+            self.departure_candidate_s = 0.0
 
     @staticmethod
     def _alpha(dt_s: float, tau_s: float) -> float:
@@ -97,15 +118,23 @@ class QuadrotorArrivalSupervisor:
 
     def holding_correction(self) -> np.ndarray:
         """Return a bounded engineering position hold from filtered observations."""
-        if not self.arrived or self.filtered_position is None:
+        if self.filtered_position is None:
             return np.zeros(2, dtype=float)
+        distance = float(np.linalg.norm(self.target - self.filtered_position))
+        capture = (not self.arrived and
+                   distance <= float(self.config.get("capture_radius_m", 0.0)))
+        if not self.arrived and not capture:
+            return np.zeros(2, dtype=float)
+        position_gain = float(self.config.get(
+            "capture_position_kp_per_s2" if capture else "hold_position_kp_per_s2", 0.0))
+        velocity_gain = float(self.config.get(
+            "capture_velocity_kd_per_s" if capture else "hold_velocity_kd_per_s", 0.0))
+        maximum_key = "maximum_capture_acceleration_m_s2" if capture else "maximum_hold_acceleration_m_s2"
         correction = (
-            float(self.config.get("hold_position_kp_per_s2", 0.0))
-            * (self.target - self.filtered_position)
-            - float(self.config.get("hold_velocity_kd_per_s", 0.0))
-            * self.filtered_velocity
+            position_gain * (self.target - self.filtered_position)
+            - velocity_gain * self.filtered_velocity
         )
-        maximum = float(self.config.get("maximum_hold_acceleration_m_s2", 0.0))
+        maximum = float(self.config.get(maximum_key, 0.0))
         magnitude = float(np.linalg.norm(correction))
         if maximum <= 0.0:
             return np.zeros(2, dtype=float)

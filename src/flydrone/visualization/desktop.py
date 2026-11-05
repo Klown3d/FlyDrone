@@ -27,8 +27,12 @@ from flydrone.simulation.quadrotor import (QuadrotorState,acceleration_attitude_
 from flydrone.simulation.obstacles import CircleObstacle,ObstaclePlanner,point_clearance
 from flydrone.simulation.travel_velocity_sensor import PositionVelocityEstimator
 from flydrone.simulation.landmark_heading_sensor import LandmarkHeadingSensor
+from flydrone.simulation.behavior_manager import MODES, NavigationBehaviorManager
 from flydrone.neural.steering_interface import command
 from flydrone.data.acquire import save_json, file_hash, utc_now
+
+
+BEHAVIOR_LABELS = {"point": "punto", "manual": "dirección", "patrol": "patrulla", "explore": "exploración"}
 
 
 def signed_activity_color(value: float, scale: float) -> tuple:
@@ -63,6 +67,7 @@ class FlyDroneDesktop(ShowBase):
         self.drift_controller=TravelDirectionDriftController(root,root/self.c['travel_direction_drift_config'])
         self.velocity_sensor=PositionVelocityEstimator(root/self.c['travel_velocity_sensor_config'])
         self.landmark_sensor=LandmarkHeadingSensor(root/self.c['landmark_heading_sensor_config'])
+        self.behavior_manager=NavigationBehaviorManager(root/self.c['behavior_manager_config'])
         self.scene=self.render.attachNewNode('hover environment');self.scene.hide(BitMask32.bit(1))
         self.brain=self.render.attachNewNode('complete skeleton circuit');self.brain.hide(BitMask32.bit(0))
         self.cam.node().setCameraMask(BitMask32.bit(0));self.camNode.getDisplayRegion(0).setDimensions(0,.6,0,1)
@@ -91,6 +96,7 @@ class FlyDroneDesktop(ShowBase):
         for i,(label,action) in enumerate(buttons):
             DirectButton(text=label,scale=.04,pos=(-1.32+i*.64,0,-.82),command=action)
         DirectButton(text='Sensor ideal / perturbado',scale=.034,pos=(-1.18,0,-.72),command=self.switch_sensor)
+        self.behavior_button=DirectButton(text='Modo: punto',scale=.030,pos=(-1.30,0,-.63),command=self.cycle_behavior_mode)
         DirectButton(text='Perturbar dron +0,6 m',scale=.034,pos=(-.53,0,-.72),command=self.disturb)
         DirectButton(text='Planta plana / 6DoF',scale=.034,pos=(.10,0,-.72),command=self.switch_flight_mode)
         DirectButton(text='Ráfaga 0,5 N',scale=.031,pos=(.47,0,-.75),command=self.apply_gust)
@@ -102,7 +108,7 @@ class FlyDroneDesktop(ShowBase):
         DirectButton(text='Avance PFL2 ON/OFF',scale=.024,pos=(.04,0,-.69),command=self.toggle_pfl2_advance)
         for i,label in enumerate(['Todas','EPG','Delta7','FC2','PFL3','PFL2','PFN','hDeltaB']):
             DirectButton(text=label,scale=.027,pos=(.27+i*.17,0,-.61),command=self.filter,extraArgs=[label])
-        self.accept('space',self.toggle);self.accept('r',self.reset);self.accept('g',self.next_goal);self.accept('s',self.save)
+        self.accept('space',self.toggle);self.accept('r',self.reset);self.accept('g',self.next_goal);self.accept('b',self.cycle_behavior_mode);self.accept('s',self.save)
         self.accept('arrow_left',self.rotate,[-12]);self.accept('arrow_right',self.rotate,[12])
         self.accept('wheel_up',self.zoom,[.9]);self.accept('wheel_down',self.zoom,[1.1])
         self.taskMgr.add(self.tick,'fixed_step_simulation')
@@ -176,7 +182,9 @@ class FlyDroneDesktop(ShowBase):
             self.quad_state=QuadrotorState(position_m=np.array([0.,0.,self.c['initial_altitude_m']]),
                                             quaternion_wxyz=euler_to_quaternion(0,0,self.state.heading))
             self.neural_countdown=0.;self.last_yaw_command=0.;self.desired_speed=0.;self.last_motor_command=np.zeros(4)
-        self.target=tuple(self.navigation['target_xy_m']);self.goal=float(goal_bearing(self.state,self.target));self.elapsed=0.;self.trace=[];self.accumulator=0.
+        self.behavior_manager.reset(tuple(self.navigation['target_xy_m']),self.state.heading)
+        self.behavior_target=self.behavior_manager.update((float(self.state.x),float(self.state.y)),self.state.heading)
+        self.target=self.behavior_target.target_xy_m;self.goal=float(goal_bearing(self.state,self.target));self.elapsed=0.;self.trace=[];self.accumulator=0.
         self.compass_estimator=PhaseCompassEstimator(self.root,self.active_phase_compass_config,self.state.heading)
         self.compass_heading=self.state.heading;self.compass_resultant=1.;self.compass_contrast=1.
         self.configure_obstacle()
@@ -186,6 +194,7 @@ class FlyDroneDesktop(ShowBase):
         if hasattr(self,'trail'):self.trail.removeNode()
         self.trail=self.scene.attachNewNode('recorded trajectory');self.last_trail_update=-1.
         if hasattr(self,'status'):self.status.setText('Pausado')
+        if hasattr(self,'behavior_button'):self.behavior_button['text']=f"Modo: {BEHAVIOR_LABELS[self.behavior_manager.mode]}"
         raw=self.observe();self.last_control_observation=self.compass_observe(raw,self.c['dt_s'])
         self.neural_update(self.last_control_observation);self.render_state()
 
@@ -208,7 +217,10 @@ class FlyDroneDesktop(ShowBase):
 
     def neural_update(self,observation=None):
         m=self.model;observation=self.observe() if observation is None else observation
-        self.observation=observation;self.true_goal=float(goal_bearing(self.state,self.target))
+        self.observation=observation
+        behavior=self.behavior_manager.update((float(observation.x),float(observation.y)),observation.heading)
+        self.apply_behavior_target(behavior)
+        self.true_goal=float(goal_bearing(self.state,self.target))
         self.local_target=self.target if self.planner is None else tuple(self.planner.local_goal(np.array([observation.x,observation.y]),np.asarray(self.target),observation.heading))
         if np.allclose(self.local_target,self.target):
             self.goal,self.goal_held=held_goal_bearing(self.last_reliable_goal,self.goal_held,observation,self.target,
@@ -318,6 +330,7 @@ class FlyDroneDesktop(ShowBase):
         if self.obstacle is not None:self.minimum_obstacle_clearance_m=min(self.minimum_obstacle_clearance_m,point_clearance(self.quad_state.position_m[:2],self.obstacle,float(self.c['desktop_vehicle_radius_m'])))
         if record:
             row={'time_s':self.elapsed,'x_m':self.state.x,'y_m':self.state.y,'observed_x_m':float(self.observation.x),'observed_y_m':float(self.observation.y),'observed_heading_rad':float(self.raw_observation.heading),'neural_heading_rad':float(self.compass_heading),'compass_resultant':self.compass_resultant,'compass_contrast':self.compass_contrast,'heading_signal_available':self.heading_signal_available,'velocity_signal_available':self.velocity_signal_available,'target_x_m':self.target[0],'target_y_m':self.target[1],'arrived':bool(self.state.arrived),'altitude_m':self.state.altitude,'heading_rad':self.state.heading,'goal_rad':self.goal,'true_goal_rad':self.true_goal,'command_rad_s':self.last_yaw_command,'desired_speed_m_s':self.desired_speed,'advance_fraction':self.advance_fraction,'pfl2_advance_enabled':self.pfl2_advance_enabled and not self.baseline,'pfl3_right_minus_left_hz':self.neural_summary['signal_hz'],'pfl2_index':self.neural_summary['pfl2_index'],'pfl2_scale':self.neural_summary['pfl2_scale'],'controller':'proportional' if self.baseline else 'neural','sensor_mode':self.sensor_mode,'flight_mode':'6dof'}
+            row.update(self.behavior_trace_fields())
             row.update({'local_target_x_m':self.local_target[0],'local_target_y_m':self.local_target[1],'obstacle_clearance_m':None if self.obstacle is None else self.minimum_obstacle_clearance_m,'hdelta_drift_enabled':neural_drift,'decoded_travel_direction_rad':self.drift_state['decoded_direction_rad'],'travel_resultant':self.drift_state['resultant'],'lateral_drift_m_s':self.drift_state['lateral_drift_m_s'],'drift_correction_m_s2':float(np.linalg.norm(drift_correction))});row.update({f'motor_{i}_n':float(v) for i,v in enumerate(self.quad_state.motor_thrust_n)});row.update({f'wind_{axis}_n':float(value) for axis,value in zip('xyz',wind)});row.update({f'activity_{rid}':v for rid,v in self.activity.items()});self.trace.append(row)
 
     def tick(self,task):
@@ -330,6 +343,7 @@ class FlyDroneDesktop(ShowBase):
                     raw=self.observe();observation=self.compass_observe(raw,dt);self.last_control_observation=observation;yaw_command=self.neural_update(observation)
                     thrust=advance(self.state,yaw_command,self.target,self.c,self.navigation,self.b['yaw_response_tau_s'],dt,observation=observation);self.elapsed+=dt
                     row={'time_s':self.elapsed,'x_m':float(self.state.x),'y_m':float(self.state.y),'observed_x_m':float(observation.x),'observed_y_m':float(observation.y),'observed_heading_rad':float(self.raw_observation.heading),'neural_heading_rad':float(self.compass_heading),'compass_resultant':self.compass_resultant,'compass_contrast':self.compass_contrast,'heading_signal_available':self.heading_signal_available,'target_x_m':self.target[0],'target_y_m':self.target[1],'arrived':bool(self.state.arrived),'altitude_m':self.state.altitude,'heading_rad':self.state.heading,'goal_rad':self.goal,'true_goal_rad':self.true_goal,'command_rad_s':yaw_command,'pfl3_right_minus_left_hz':self.neural_summary['signal_hz'],'pfl2_index':self.neural_summary['pfl2_index'],'pfl2_scale':self.neural_summary['pfl2_scale'],'thrust_n':thrust,'controller':'proportional' if self.baseline else 'neural','sensor_mode':self.sensor_mode,'flight_mode':'plano'}
+                    row.update(self.behavior_trace_fields())
                     row.update({f'activity_{rid}':v for rid,v in self.activity.items()});self.trace.append(row)
                 self.accumulator-=dt
             self.neural_update(self.last_control_observation);self.render_state()
@@ -342,7 +356,7 @@ class FlyDroneDesktop(ShowBase):
             if self.obstacle is not None:attitude+=f" | margen {self.minimum_obstacle_clearance_m:.2f} m"
         compass_error=np.rad2deg(np.angle(np.exp(1j*(self.compass_heading-self.state.heading))))
         signal='ON' if self.heading_signal_available else 'OFF'
-        self.metrics.setText(f"{'Proporcional' if self.baseline else 'FlyWire'} | brújula {self.compass_variant} | planta {self.flight_mode}\nTiempo {self.elapsed:.1f} s | altura {self.state.altitude:.2f} m\nDistancia real {distance:.2f} m | observada {sensed_distance:.2f} m\n{'Meta alcanzada' if self.state.arrived else 'En camino'} | sensor {self.sensor_mode} | landmark {signal}\nRumbo neuronal {np.rad2deg(self.compass_heading):.1f}° | error {compass_error:+.1f}° | confianza {self.compass_resultant:.2f}{attitude}")
+        self.metrics.setText(f"{'Proporcional' if self.baseline else 'FlyWire'} | brújula {self.compass_variant} | planta {self.flight_mode}\nTiempo {self.elapsed:.1f} s | altura {self.state.altitude:.2f} m | modo {BEHAVIOR_LABELS[self.behavior_manager.mode]}\nDistancia real {distance:.2f} m | observada {sensed_distance:.2f} m | objetivo {self.behavior_target.target_index+1}/{self.behavior_target.total_targets}\n{'Meta alcanzada' if self.state.arrived else 'En camino'} | sensor {self.sensor_mode} | landmark {signal}\nRumbo neuronal {np.rad2deg(self.compass_heading):.1f}° | error {compass_error:+.1f}° | confianza {self.compass_resultant:.2f}{attitude}")
         goal_note=' (retenida cerca de meta)' if self.goal_held else (' (meta local convencional)' if not np.allclose(self.local_target,self.target) else '')
         self.pipeline.setText(f"ENTRADA  landmark {np.rad2deg(self.landmark_relative_bearing):+.1f}° -> heading {np.rad2deg(self.observation.heading):.1f}° -> meta {np.rad2deg(self.goal):.1f}°{goal_note}\nCIRCUITO EPG[{n['epg_peak']}] -> Delta7[{n['delta_peak']}] + FC2[{n['fc2_peak']}]\nSALIDA   PFL3 L {n['pfl3_left_hz']:.1f} Hz | R {n['pfl3_right_hz']:.1f} Hz | pico PFL3[{n['pfl3_peak']}] {n['pfl3_peak_hz']:.1f} Hz\nPFL2     actividad {n['pfl2_mean_activity']:.2f} | antimeta {n['pfl2_index']:.2f} | giro x{n['pfl2_scale']:.2f} | avance x{self.advance_fraction:.2f} {'ON' if self.pfl2_advance_enabled and not self.baseline else 'analítico'}\nPFN->hDeltaB  dirección {np.rad2deg(n['travel_direction_rad']):+.1f}° | confianza {n['travel_resultant']:.2f} | velocidad {'ON' if self.velocity_signal_available else 'OFF'}\nDERIVA   {n['lateral_drift_m_s']:+.2f} m/s -> corrección {n['drift_correction_m_s2']:.2f} m/s2 | {'ON' if self.drift_enabled else 'OFF'}")
         return task.cont
@@ -354,10 +368,36 @@ class FlyDroneDesktop(ShowBase):
                          cwd=self.root,env=environment,
                          creationflags=getattr(subprocess,'CREATE_NO_WINDOW',0))
         self.status.setText('Comparador 3D abierto: reproduce ensayos preservados')
+    def apply_behavior_target(self,behavior):
+        previous=getattr(self,'target',None);self.behavior_target=behavior;self.target=behavior.target_xy_m
+        changed=behavior.changed and (previous is None or not np.allclose(previous,self.target))
+        if changed and hasattr(self,'state'):
+            self.state.arrived=False;self.state.arrival_candidate_s=0.;self.state.departure_candidate_s=0.
+            self.state.filtered_x=None;self.state.filtered_y=None;self.goal_held=False
+            if hasattr(self,'obstaclenode') and self.obstacle_enabled and self.behavior_manager.mode!='manual':
+                self.configure_obstacle()
+    def behavior_trace_fields(self):
+        return {'behavior_mode':self.behavior_target.mode,
+                'behavior_target_index':self.behavior_target.target_index,
+                'behavior_visited_targets':self.behavior_target.visited_targets,
+                'behavior_total_targets':self.behavior_target.total_targets,
+                'behavior_target_source':self.behavior_target.source}
+    def cycle_behavior_mode(self):
+        index=(MODES.index(self.behavior_manager.mode)+1)%len(MODES)
+        behavior=self.behavior_manager.set_mode(MODES[index],(float(self.state.x),float(self.state.y)),self.state.heading)
+        self.apply_behavior_target(behavior);self.configure_obstacle();self.goal_held=False
+        self.behavior_button['text']=f"Modo: {BEHAVIOR_LABELS[self.behavior_manager.mode]}"
+        self.neural_update(self.last_control_observation);self.render_state()
+        self.status.setText(f"Modo {BEHAVIOR_LABELS[self.behavior_manager.mode]}: metas temporales de ingeniería")
     def next_goal(self):
-        angle=np.arctan2(self.target[1],self.target[0])+np.pi/3;radius=np.hypot(*self.navigation['target_xy_m'])
-        self.target=(float(radius*np.cos(angle)),float(radius*np.sin(angle)));self.state.arrived=False;self.goal_held=False;self.configure_obstacle();self.render_state();self.neural_update(self.last_control_observation)
-        self.state.arrival_candidate_s=0.;self.state.departure_candidate_s=0.
+        if self.behavior_manager.mode=='point':
+            angle=np.arctan2(self.target[1],self.target[0])+np.pi/3;radius=np.hypot(*self.navigation['target_xy_m'])
+            self.behavior_manager.set_point((float(radius*np.cos(angle)),float(radius*np.sin(angle))))
+        elif self.behavior_manager.mode=='manual':
+            self.behavior_manager.rotate_manual_direction(np.pi/3)
+        else:self.behavior_manager.skip_current_target()
+        behavior=self.behavior_manager.update((float(self.state.x),float(self.state.y)),self.state.heading)
+        self.apply_behavior_target(behavior);self.configure_obstacle();self.render_state();self.neural_update(self.last_control_observation)
     def switch(self):self.baseline=not self.baseline;self.reset()
     def switch_sensor(self):
         self.sensor_mode='perturbado' if self.sensor_mode=='ideal' else 'ideal';self.reset()
@@ -409,7 +449,7 @@ class FlyDroneDesktop(ShowBase):
         folder=self.root/'results/desktop'/str(time.time_ns());folder.mkdir(parents=True)
         pd.DataFrame(self.trace).to_csv(folder/'trace.csv',index=False)
         claim='6DoF rigid-body engineering plant; neural yaw and optional PFN/hDeltaB drift correction; conventional attitude/altitude/motors' if self.flight_mode=='6dof' else 'simplified vertical/yaw/planar velocity simulation'
-        save_json(folder/'metadata.json',{'created_at':utc_now(),'geometry':self.geometry_report,'plant':self.c,'quadrotor':self.quad if self.flight_mode=='6dof' else None,'orientation':self.b,'navigation':self.navigation,'velocity_sensor':self.velocity_sensor.config,'pfl2_advance':self.pfl2_advance_controller.config,'pfl2_advance_enabled':self.pfl2_advance_enabled,'compass_variant':self.compass_variant,'phase_compass_config':self.active_phase_compass_config.as_posix(),'flight_mode':self.flight_mode,'claim':claim,'config_sha256':file_hash(self.root/'configs/desktop.yaml')})
+        save_json(folder/'metadata.json',{'created_at':utc_now(),'geometry':self.geometry_report,'plant':self.c,'quadrotor':self.quad if self.flight_mode=='6dof' else None,'orientation':self.b,'navigation':self.navigation,'velocity_sensor':self.velocity_sensor.config,'pfl2_advance':self.pfl2_advance_controller.config,'pfl2_advance_enabled':self.pfl2_advance_enabled,'compass_variant':self.compass_variant,'phase_compass_config':self.active_phase_compass_config.as_posix(),'flight_mode':self.flight_mode,'behavior_mode':self.behavior_manager.mode,'behavior_manager':self.behavior_manager.config,'claim':claim+'; temporary goals are supplied by an explicit engineering behavior manager','config_sha256':file_hash(self.root/'configs/desktop.yaml')})
         self.status.setText('Ensayo guardado en results/desktop')
 
 
@@ -444,6 +484,21 @@ if __name__=='__main__':
             resumed=resumed or not bool(app.state.arrived)
         recovery={'displacement_x_m':.6,'arrived_before_disturbance':arrived_before_disturbance,'resumed_after_disturbance':resumed,
                   'arrived_again':bool(app.state.arrived),'final_distance_m':float(np.hypot(app.target[0]-app.state.x,app.target[1]-app.state.y))}
+        behavior_checks=[]
+        for mode in MODES:
+            command=app.behavior_manager.set_mode(mode,(float(app.state.x),float(app.state.y)),app.state.heading)
+            app.apply_behavior_target(command);initial_target=app.target
+            yaw=app.neural_update(app.last_control_observation)
+            if mode in {'patrol','explore'}:
+                synthetic=NavigationState(x=initial_target[0],y=initial_target[1],altitude=app.state.altitude,heading=app.state.heading)
+                app.neural_update(synthetic)
+            elif mode=='manual':
+                synthetic=NavigationState(x=app.state.x+.5,y=app.state.y+.25,altitude=app.state.altitude,heading=app.state.heading)
+                app.neural_update(synthetic)
+            behavior_checks.append({'mode':mode,'initial_target_xy_m':list(initial_target),'updated_target_xy_m':list(app.target),
+                                    'target_changed':not np.allclose(initial_target,app.target),'yaw_command_rad_s':float(yaw),
+                                    'source':app.behavior_target.source})
+        app.behavior_manager.set_mode('point',(float(app.state.x),float(app.state.y)),app.state.heading);app.reset()
         output=Path('results/desktop');output.mkdir(parents=True,exist_ok=True)
         app.flight_mode='6dof';app.baseline=False;app.sensor_mode='ideal';app.reset();max_tilt=0.;saturated=False;wall_start=time.perf_counter()
         for index in range(round(30/app.quad['dt_s'])):
@@ -470,7 +525,7 @@ if __name__=='__main__':
         app.paused=True;app.reset();app.taskMgr.step()
         app.win.saveScreenshot(str(output/'desktop-preview.png'))
         save_json(output/'geometry-report.json',app.geometry_report)
-        save_json(output/'navigation-integration-check.json',{'trials':trials,'arrival_activity_stability':stability,'post_arrival_recovery':recovery,'six_dof_trial':sixdof,'obstacle_trial':obstacle_trial,'claim':'Two ideal planar checks plus engineering arrival stability/recovery, selectable 6DoF with PFN/hDeltaB drift correction, gust, and one conventional obstacle-layer application check; not robustness evaluation'})
+        save_json(output/'navigation-integration-check.json',{'trials':trials,'arrival_activity_stability':stability,'post_arrival_recovery':recovery,'behavior_interface_checks':behavior_checks,'six_dof_trial':sixdof,'obstacle_trial':obstacle_trial,'claim':'Two ideal planar checks plus engineering arrival stability/recovery, four engineering behavior interfaces, selectable 6DoF with PFN/hDeltaB drift correction, gust, and one conventional obstacle-layer application check; not robustness evaluation'})
         if app.geometry_report['neurons']!=286:raise RuntimeError(f"Expected 286 complete skeletons, found {app.geometry_report['neurons']}")
         if not all(t['arrived'] and t['distance_m']<=app.navigation['arrival_radius_m'] and abs(t['final_altitude_m']-app.c['target_altitude_m'])<=.1 for t in trials):
             raise RuntimeError('Spatial desktop integration check failed')
@@ -478,6 +533,9 @@ if __name__=='__main__':
             raise RuntimeError('Post-arrival recovery check failed')
         if stability['held_goal_span_deg']>1e-9 or stability['pfl3_signal_span_hz']>1e-9:
             raise RuntimeError('Neural goal changed under near-target position jitter')
+        if (not all(np.isfinite(item['yaw_command_rad_s']) and item['source']=='engineering_behavior_manager' for item in behavior_checks)
+                or not all(item['target_changed'] for item in behavior_checks if item['mode']!='point')):
+            raise RuntimeError('Behavior manager interface check failed')
         if not (sixdof['arrived'] and sixdof['distance_m']<=app.navigation['arrival_radius_m'] and abs(sixdof['final_altitude_m']-app.quad_navigation['target_altitude_m'])<=.1 and sixdof['final_speed_m_s']<=app.quad_navigation['stop_speed_m_s'] and not sixdof['motor_saturated'] and abs(sixdof['quaternion_norm']-1)<1e-9):
             raise RuntimeError('Selectable 6DoF desktop integration check failed')
         if not (obstacle_trial['arrived'] and not obstacle_trial['collision'] and obstacle_trial['distance_m']<=app.navigation['arrival_radius_m'] and obstacle_trial['final_speed_m_s']<=app.quad_navigation['stop_speed_m_s']):

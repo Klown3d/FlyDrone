@@ -1,0 +1,7 @@
+base_config: configs/free_navigation_obstacles_development_v2.yaml
+protocol_id: flydrone_free_navigation_obstacles_development_v7_contour_follow
+output: results/simulation/free_navigation_obstacles_development_v7
+manifest_key: free_navigation_obstacles_development_v7
+parameter_status: exploratory_development_not_confirmatory
+claim: Exact-condition exploratory comparison against v6 after adding stateful engineering contour following; it is not a prospective gate and makes no biological vision, planning, or memory claim.
+initial_relative_headings_deg: [19.0]

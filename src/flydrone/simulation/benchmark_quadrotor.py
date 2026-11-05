@@ -1,6 +1,7 @@
 """First 6-DoF waypoint benchmark with neural yaw and conventional inner loop."""
 from pathlib import Path
 import json
+from typing import Callable
 import numpy as np
 import pandas as pd
 import yaml
@@ -11,6 +12,7 @@ from flydrone.neural.orientation_closed_loop import wrap
 from flydrone.neural.steering_interface import command
 from flydrone.neural.travel_direction_drift import direct_velocity_correction
 from flydrone.simulation.navigation import NavigationState,held_goal_bearing
+from flydrone.simulation.geofence import correction as geofence_command
 from flydrone.simulation.obstacles import CircleObstacle,ObstaclePlanner,point_clearance
 from flydrone.simulation.quadrotor_arrival import QuadrotorArrivalSupervisor
 from flydrone.simulation.quadrotor import (QuadrotorState,acceleration_attitude_controller,
@@ -30,7 +32,11 @@ def simulate(root: Path,c: dict,plant: dict,model: EPGDelta7Candidate,orientatio
              advance_controller=None,neural_advance_enabled: bool=True,
              confidence_governor=None,drift_oracle_mode:str='none',
              apply_drift_correction:bool=True,drift_confidence_governor=None,
-             drift_readout_mode:str='connectome') -> tuple[dict,dict|None]:
+             drift_readout_mode:str='connectome',
+             target_provider:Callable[[tuple[float,float],float],object]|None=None,
+             blocked_target_handler:Callable[[tuple[float,float]],None]|None=None,
+             initial_target_xy_m:tuple[float,float]|None=None,
+             range_sensor=None,range_avoidance_planner=None) -> tuple[dict,dict|None]:
     scenario={} if scenario is None else scenario;rng=np.random.default_rng(seed);imu_rng=np.random.default_rng(seed+104729)
     yaw_controller=('proportional' if baseline else 'neural') if yaw_controller is None else yaw_controller
     if yaw_controller not in {'neural','proportional','pid'}:raise ValueError(f'Unknown yaw controller: {yaw_controller}')
@@ -43,14 +49,23 @@ def simulate(root: Path,c: dict,plant: dict,model: EPGDelta7Candidate,orientatio
         if pid_config is None:raise ValueError('pid_config is required for the PID yaw controller')
         pid=yaw_pid_from_config(pid_config)
     dt=float(plant['dt_s']);steps=round(c['duration_s']/dt);control_stride=round(c['neural_update_period_s']/dt)
-    target=np.array([c['target_distance_m']*np.cos(target_bearing),c['target_distance_m']*np.sin(target_bearing),c['target_altitude_m']])
+    initial_xy=(np.array(initial_target_xy_m,dtype=float) if initial_target_xy_m is not None else
+                np.array([c['target_distance_m']*np.cos(target_bearing),c['target_distance_m']*np.sin(target_bearing)]))
+    if initial_xy.shape!=(2,) or not np.isfinite(initial_xy).all():raise ValueError('initial_target_xy_m must be one finite 2D point')
+    target=np.array([*initial_xy,c['target_altitude_m']])
     arrival_config=c.get('arrival_supervisor',{});arrival_supervisor=QuadrotorArrivalSupervisor(arrival_config,target[:2]) if arrival_config.get('enabled',False) else None
     arrival_status={'arrived':False,'filtered_distance_m':float('nan'),'estimated_speed_m_s':float('nan'),'arrival_candidate_s':0.,'departure_candidate_s':0.};arrival_latched_steps=0;drift_suppressed_steps=0;arrival_hold_correction=np.zeros(2);arrival_hold_history=[]
     obstacles=[];planner=None;minimum_clearance=float('inf')
+    if scenario.get('obstacles'):
+        obstacles=[CircleObstacle(np.asarray(item['center_xy_m'],dtype=float),float(item['radius_m']))
+                   for item in scenario['obstacles']]
     if 'obstacle_radius_m' in scenario:
+        if obstacles:raise ValueError('Use either obstacles or obstacle_radius_m, not both')
         center=target[:2]*float(scenario.get('obstacle_distance_fraction',.5));obstacles=[CircleObstacle(center,float(scenario['obstacle_radius_m']))]
         if scenario.get('planner_enabled',False):
             planner=ObstaclePlanner(obstacles,float(scenario['vehicle_radius_m']),float(scenario['safety_margin_m']),float(scenario['waypoint_margin_m']),float(scenario.get('waypoint_acceptance_m',.25)))
+    if range_avoidance_planner is not None and range_sensor is None:raise ValueError('range_sensor is required by range_avoidance_planner')
+    if range_avoidance_planner is not None and planner is not None:raise ValueError('Range and privileged obstacle planners cannot run together')
     initial_heading=float(wrap(target_bearing+relative_heading));state=QuadrotorState(quaternion_wxyz=euler_to_quaternion(0,0,initial_heading))
     compass=PhaseCompassEstimator(root,compass_config,initial_heading) if heading_mode=='neural_compass' else (HybridCompassEstimator(root,compass_config,initial_heading) if heading_mode=='hybrid_compass' else None)
     estimated_heading=initial_heading;gyro_heading=initial_heading;last_resultant=1.;last_contrast=1.
@@ -64,8 +79,11 @@ def simulate(root: Path,c: dict,plant: dict,model: EPGDelta7Candidate,orientatio
     observed_position=np.zeros(3);observed_velocity=np.zeros(2);velocity_dropout=False;measurement_age_s=0.;drift_heading=initial_heading;estimated_egocentric=0.;true_egocentric=0.;true_travel_direction=initial_heading
     raw_yaw=initial_heading;yaw_rate=0.;drift_velocity=np.zeros(2);drift_input_egocentric=0.;drift_input_speed=0.;raw_drift_correction=np.zeros(2);inertial_acceleration=np.zeros(3);previous_control_true_velocity=np.zeros(3)
     drift_confidence={'confidence':1.,'raw_confidence':1.,'velocity_confidence':1.,'heading_confidence':1.,'coherence_confidence':1.,'backup_correction_m_s2':np.zeros(2)}
-    drift_confidence_history=[]
+    drift_confidence_history=[];range_drift_suppressed_steps=0
     pfn_activity=np.zeros(len(drift_controller.model.pfn)) if drift_controller is not None else np.zeros(0);hdelta_activity=np.zeros(len(drift_controller.model.hdelta)) if drift_controller is not None else np.zeros(0)
+    behavior_state=None;behavior_target_changed=False;behavior_target_switches=0;blocked_target_events=0
+    geofence_config=c.get('geofence',{});geofence_enabled=bool(geofence_config.get('enabled',False));geofence_correction=np.zeros(2);geofence_active_steps=0;geofence_history=[]
+    avoidance_state=None;avoidance_active=False;avoidance_speed_fraction=1.;avoidance_active_steps=0;minimum_sensed_range=float('inf');maximum_mapped_points=0;maximum_mapped_surfaces=0;local_target=target[:2].copy();avoidance_speed_history=[];avoidance_safety_correction=np.zeros(2);avoidance_safety_history=[];range_barrier_active=False;range_barrier_active_steps=0;range_barrier_speed_fraction=1.;minimum_predicted_clearance=float('inf')
     if velocity_estimator is not None:velocity_estimator.reset(state.position_m[:2])
     if confidence_governor is not None:confidence_governor.reset()
     if drift_confidence_governor is not None:drift_confidence_governor.reset()
@@ -97,11 +115,32 @@ def simulate(root: Path,c: dict,plant: dict,model: EPGDelta7Candidate,orientatio
             else:
                 compass_neural_heading=float('nan');compass_neural_weight=0.;compass_disagreement=float(wrap(estimated_heading-gyro_heading))
             observed_yaw=estimated_heading
+            behavior_target_changed=False
+            if target_provider is not None:
+                behavior_state=target_provider((float(observed_position[0]),float(observed_position[1])),observed_yaw)
+                dynamic_target=np.asarray(behavior_state.target_xy_m,dtype=float)
+                if dynamic_target.shape!=(2,) or not np.isfinite(dynamic_target).all():raise ValueError('target_provider returned an invalid target')
+                target[:2]=dynamic_target
+                behavior_target_changed=bool(behavior_state.changed)
+                behavior_target_switches+=int(behavior_target_changed)
+                if behavior_target_changed and arrival_supervisor is not None:
+                    arrival_supervisor.set_target(dynamic_target)
+                    arrival_status=arrival_supervisor.update(observed_position[:2],float(c['neural_update_period_s']))
             if dropout:
                 dropout_heading_errors.append(abs(float(wrap(observed_yaw-yaw))))
                 if np.isfinite(compass_neural_weight):dropout_compass_neural_weights.append(compass_neural_weight)
             sensed=NavigationState(x=float(observed_position[0]),y=float(observed_position[1]),heading=observed_yaw)
-            local_target=target[:2] if planner is None else planner.local_goal(observed_position[:2],target[:2],observed_yaw)
+            if range_avoidance_planner is not None:
+                scan=range_sensor.scan((float(observed_position[0]),float(observed_position[1])),observed_yaw,obstacles)
+                avoidance_state=range_avoidance_planner.update(scan,(float(observed_position[0]),float(observed_position[1])),observed_yaw,(float(target[0]),float(target[1])),float(c['neural_update_period_s']),(float(velocity_history[past][0]),float(velocity_history[past][1])))
+                local_target=np.asarray(avoidance_state.target_xy_m,dtype=float);avoidance_active=bool(avoidance_state.active);avoidance_speed_fraction=float(avoidance_state.speed_fraction);avoidance_safety_correction=np.asarray(avoidance_state.safety_correction_xy_m_s2,dtype=float);range_barrier_active=bool(avoidance_state.barrier_active);range_barrier_speed_fraction=float(avoidance_state.barrier_speed_fraction);minimum_predicted_clearance=min(minimum_predicted_clearance,float(avoidance_state.predicted_clearance_m))
+                minimum_sensed_range=min(minimum_sensed_range,float(avoidance_state.minimum_sensed_range_m));maximum_mapped_points=max(maximum_mapped_points,int(avoidance_state.mapped_points));maximum_mapped_surfaces=max(maximum_mapped_surfaces,int(avoidance_state.mapped_surfaces))
+                if avoidance_state.mission_target_blocked and blocked_target_handler is not None:
+                    blocked_target_handler((float(observed_position[0]),float(observed_position[1])))
+                    blocked_target_events+=1
+            else:
+                local_target=target[:2] if planner is None else planner.local_goal(observed_position[:2],target[:2],observed_yaw)
+                avoidance_active=False;avoidance_speed_fraction=1.;avoidance_safety_correction=np.zeros(2);range_barrier_active=False;range_barrier_speed_fraction=1.
             if np.allclose(local_target,target[:2]):
                 last_goal,goal_held=held_goal_bearing(last_goal,goal_held,sensed,tuple(target[:2]),c['goal_hold_radius_m'],c['goal_release_radius_m'])
             else:
@@ -144,6 +183,8 @@ def simulate(root: Path,c: dict,plant: dict,model: EPGDelta7Candidate,orientatio
                     drift_confidence_history.append(float(drift_confidence['confidence']))
             else:
                 drift_correction=np.zeros(2);raw_drift_correction=np.zeros(2);decoded_travel=float('nan');travel_resultant=float('nan');lateral_drift=0.;drift_velocity=np.zeros(2);drift_input_egocentric=0.;drift_input_speed=0.
+            geofence_correction=(geofence_command(observed_position[:2],velocity_history[past][:2],geofence_config)
+                                  if geofence_enabled else np.zeros(2))
             if yaw_controller=='pid':yaw_command=pid.update(observed_yaw,last_goal,float(c['neural_update_period_s']))
             elif pfl2_controller is not None and yaw_controller=='neural':
                 yaw_command,_,_,current_pfl2_index,current_pfl2_scale,_=pfl2_controller.command(
@@ -158,6 +199,7 @@ def simulate(root: Path,c: dict,plant: dict,model: EPGDelta7Candidate,orientatio
                 current_advance_fraction=float(max(0.,np.cos(heading_error)));desired_speed=min(c['maximum_forward_speed_m_s'],c['distance_gain_per_s']*observed_distance)*current_advance_fraction
             if confidence_governor is not None:
                 current_confidence_fraction=confidence_governor.update(last_resultant,not velocity_dropout,float(c['neural_update_period_s']));desired_speed*=current_confidence_fraction
+            desired_speed*=avoidance_speed_fraction;avoidance_speed_history.append(avoidance_speed_fraction)
             confidence_fractions.append(current_confidence_fraction)
             advance_fractions.append(current_advance_fraction)
             if (arrival_supervisor is not None and arrival_status['arrived']) or (arrival_supervisor is None and observed_distance<=c['arrival_radius_m']):desired_speed=0.
@@ -165,10 +207,29 @@ def simulate(root: Path,c: dict,plant: dict,model: EPGDelta7Candidate,orientatio
         forward_speed=float(state.velocity_m_s[:2]@forward);lateral_speed=float(state.velocity_m_s[:2]@lateral)
         arrival_latched=bool(arrival_supervisor is not None and arrival_status['arrived']);arrival_latched_steps+=int(arrival_latched)
         suppress_arrival_drift=bool(arrival_latched and arrival_config.get('suppress_drift_when_arrived',True));drift_suppressed_steps+=int(suppress_arrival_drift and drift_controller is not None and drift_enabled)
-        applied_drift_correction=drift_correction if apply_drift_correction and not suppress_arrival_drift else np.zeros(2)
+        suppress_range_drift=bool(c.get('suppress_drift_when_range_avoidance_active',False) and
+                                  (avoidance_active or range_barrier_active))
+        range_drift_suppressed_steps+=int(suppress_range_drift and drift_controller is not None and drift_enabled)
+        applied_drift_correction=(drift_correction if apply_drift_correction and
+                                  not suppress_arrival_drift and not suppress_range_drift else np.zeros(2))
         arrival_hold_correction=arrival_supervisor.holding_correction() if arrival_supervisor is not None else np.zeros(2)
         arrival_hold_history.append(float(np.linalg.norm(arrival_hold_correction)))
-        acceleration_xy=forward*c['forward_speed_kp_per_s']*(desired_speed-forward_speed)-lateral*c['lateral_velocity_kd_per_s']*lateral_speed+applied_drift_correction+arrival_hold_correction
+        geofence_active_steps+=int(np.linalg.norm(geofence_correction)>1e-9);geofence_history.append(float(np.linalg.norm(geofence_correction)))
+        avoidance_active_steps+=int(avoidance_active)
+        nominal_acceleration_xy=forward*c['forward_speed_kp_per_s']*(desired_speed-forward_speed)-lateral*c['lateral_velocity_kd_per_s']*lateral_speed+applied_drift_correction+arrival_hold_correction+geofence_correction
+        if range_avoidance_planner is not None and range_avoidance_planner.final_command_filter_enabled:
+            final_safety=range_avoidance_planner.final_command_safety(
+                (float(observed_position[0]),float(observed_position[1])),
+                (float(velocity_history[past][0]),float(velocity_history[past][1])),
+                (float(nominal_acceleration_xy[0]),float(nominal_acceleration_xy[1])))
+            if final_safety.active:
+                avoidance_safety_correction=np.asarray(final_safety.correction_xy_m_s2,dtype=float)
+            range_barrier_active=bool(range_barrier_active or final_safety.active)
+            range_barrier_speed_fraction=min(range_barrier_speed_fraction,float(final_safety.speed_fraction))
+            minimum_predicted_clearance=min(minimum_predicted_clearance,float(final_safety.predicted_clearance_m))
+        range_barrier_active_steps+=int(range_barrier_active)
+        avoidance_safety_history.append(float(np.linalg.norm(avoidance_safety_correction)))
+        acceleration_xy=nominal_acceleration_xy+avoidance_safety_correction
         acceleration_z=plant['altitude_kp_per_s2']*(target[2]-state.position_m[2])-plant['altitude_kd_per_s']*state.velocity_m_s[2]
         motors,diagnostics=acceleration_attitude_controller(state,np.r_[acceleration_xy,acceleration_z],yaw_command,plant)
         saturated+=int(np.any((motors<=1e-9)|(motors>=plant['maximum_motor_thrust_n']-1e-9)))
@@ -182,7 +243,7 @@ def simulate(root: Path,c: dict,plant: dict,model: EPGDelta7Candidate,orientatio
         distance_history.append(float(np.linalg.norm(target[:2]-state.position_m[:2])));speed_history.append(float(np.linalg.norm(state.velocity_m_s)));altitude_history.append(float(state.position_m[2]))
         cross_track_history.append(float(state.position_m[0]*-np.sin(target_bearing)+state.position_m[1]*np.cos(target_bearing)))
         if trace and i%control_stride==0:
-            records.append([i*dt,*state.position_m,*state.velocity_m_s,*observed_position[:2],*observed_velocity,*inertial_acceleration,yaw,raw_yaw,yaw_rate,observed_yaw,gyro_heading,float(wrap(observed_yaw-gyro_heading)),compass_neural_heading,compass_neural_weight,compass_disagreement,last_goal,yaw_command,desired_speed,float(arrival_latched),arrival_status['filtered_distance_m'],arrival_status['estimated_speed_m_s'],float(suppress_arrival_drift),*arrival_hold_correction,last_resultant,last_contrast,float(dropout),float(not velocity_dropout),measurement_age_s,current_pfl2_index,current_pfl2_scale,*drift_velocity,drift_heading,drift_input_speed,drift_input_egocentric,decoded_travel,true_travel_direction,estimated_egocentric,true_egocentric,travel_resultant,lateral_drift,*raw_drift_correction,*drift_correction,drift_confidence['confidence'],drift_confidence['raw_confidence'],drift_confidence['velocity_confidence'],drift_confidence['heading_confidence'],drift_confidence['coherence_confidence'],*drift_confidence['backup_correction_m_s2'],*pfn_activity,*hdelta_activity,*state.motor_thrust_n])
+            records.append([i*dt,*state.position_m,*state.velocity_m_s,*observed_position[:2],*observed_velocity,*inertial_acceleration,yaw,raw_yaw,yaw_rate,observed_yaw,gyro_heading,float(wrap(observed_yaw-gyro_heading)),compass_neural_heading,compass_neural_weight,compass_disagreement,last_goal,yaw_command,desired_speed,float(arrival_latched),arrival_status['filtered_distance_m'],arrival_status['estimated_speed_m_s'],float(suppress_arrival_drift),float(suppress_range_drift),*arrival_hold_correction,last_resultant,last_contrast,float(dropout),float(not velocity_dropout),measurement_age_s,current_pfl2_index,current_pfl2_scale,*drift_velocity,drift_heading,drift_input_speed,drift_input_egocentric,decoded_travel,true_travel_direction,estimated_egocentric,true_egocentric,travel_resultant,lateral_drift,*raw_drift_correction,*drift_correction,drift_confidence['confidence'],drift_confidence['raw_confidence'],drift_confidence['velocity_confidence'],drift_confidence['heading_confidence'],drift_confidence['coherence_confidence'],*drift_confidence['backup_correction_m_s2'],target[0],target[1],float(behavior_target_changed),float('nan') if behavior_state is None else behavior_state.target_index,float('nan') if behavior_state is None else behavior_state.completed_targets_total,float('nan') if behavior_state is None else behavior_state.completed_cycles,*geofence_correction,float(avoidance_active),float('nan') if avoidance_state is None else avoidance_state.minimum_sensed_range_m,float('nan') if avoidance_state is None else avoidance_state.selected_relative_angle_rad,float('nan') if avoidance_state is None else avoidance_state.mapped_points,float('nan') if avoidance_state is None else avoidance_state.mapped_surfaces,avoidance_speed_fraction,*local_target,*avoidance_safety_correction,float(range_barrier_active),float('nan') if avoidance_state is None else avoidance_state.predicted_clearance_m,range_barrier_speed_fraction,*pfn_activity,*hdelta_activity,*state.motor_thrust_n])
     hold=round(c['terminal_hold_s']/dt);dist=np.asarray(distance_history);speed=np.asarray(speed_history);alt=np.asarray(altitude_history)
     stable=(dist<=c['arrival_radius_m'])&(speed<=c['stop_speed_m_s'])&(np.abs(alt-target[2])<=.1)
     stable_windows=np.convolve(stable.astype(int),np.ones(hold,dtype=int),mode='valid');stable_matches=np.flatnonzero(stable_windows==hold)
@@ -197,11 +258,21 @@ def simulate(root: Path,c: dict,plant: dict,model: EPGDelta7Candidate,orientatio
             'arrival_time_s':arrival_time_s,'pfl2_enabled':bool(pfl2_controller is not None and pfl2_enabled),
             'arrival_supervisor_enabled':bool(arrival_supervisor is not None),'arrival_latched_fraction':arrival_latched_steps/steps,'drift_suppressed_at_arrival_fraction':drift_suppressed_steps/steps,
             'arrival_position_hold_enabled':bool(arrival_supervisor is not None and float(arrival_config.get('maximum_hold_acceleration_m_s2',0.))>0.),'mean_arrival_hold_acceleration_m_s2':float(np.mean(arrival_hold_history)) if arrival_hold_history else 0.,'maximum_arrival_hold_acceleration_m_s2':float(np.max(arrival_hold_history)) if arrival_hold_history else 0.,
+            'dynamic_goal_capture_enabled':bool(target_provider is not None and arrival_supervisor is not None and float(arrival_config.get('maximum_capture_acceleration_m_s2',0.))>0.),
+            'geofence_enabled':geofence_enabled,'geofence_active_fraction':geofence_active_steps/steps,'maximum_geofence_acceleration_m_s2':float(np.max(geofence_history)) if geofence_history else 0.,
+            'range_avoidance_enabled':bool(range_avoidance_planner is not None),'range_avoidance_active_fraction':avoidance_active_steps/steps,'range_avoidance_activations':0 if range_avoidance_planner is None else range_avoidance_planner.activations,'minimum_sensed_range_m':None if range_avoidance_planner is None else minimum_sensed_range,'maximum_mapped_points':maximum_mapped_points,'maximum_mapped_surfaces':maximum_mapped_surfaces,
+            'range_avoidance_contour_waypoints':0 if range_avoidance_planner is None else range_avoidance_planner.contour_waypoints,'range_avoidance_contour_releases':0 if range_avoidance_planner is None else range_avoidance_planner.contour_releases,
+            'range_avoidance_blocked_waypoint_replans':0 if range_avoidance_planner is None else range_avoidance_planner.blocked_waypoint_replans,
+            'mean_avoidance_speed_fraction':float(np.mean(avoidance_speed_history)) if avoidance_speed_history else 1.,'minimum_avoidance_speed_fraction':float(np.min(avoidance_speed_history)) if avoidance_speed_history else 1.,
+            'mean_avoidance_safety_acceleration_m_s2':float(np.mean(avoidance_safety_history)) if avoidance_safety_history else 0.,'maximum_avoidance_safety_acceleration_m_s2':float(np.max(avoidance_safety_history)) if avoidance_safety_history else 0.,
+            'range_barrier_enabled':bool(range_avoidance_planner is not None and range_avoidance_planner.safety_barrier is not None),'range_barrier_active_fraction':range_barrier_active_steps/steps,'minimum_predicted_clearance_m':None if range_avoidance_planner is None or range_avoidance_planner.safety_barrier is None else minimum_predicted_clearance,
             'initial_yaw_command_rad_s':initial_yaw_command,
             'mean_pfl2_antigoal_index':None if not pfl2_indices else float(np.mean(pfl2_indices)),
             'pfl2_advance_enabled':bool(advance_controller is not None and neural_advance_enabled and yaw_controller=='neural'),
             'mean_advance_fraction':float(np.mean(advance_fractions)) if advance_fractions else None,
             'confidence_governor_enabled':bool(confidence_governor is not None),'mean_confidence_speed_fraction':float(np.mean(confidence_fractions)) if confidence_fractions else None,
+            'range_drift_suppression_enabled':bool(c.get('suppress_drift_when_range_avoidance_active',False)),
+            'range_drift_suppressed_fraction':range_drift_suppressed_steps/steps,
             'drift_model_enabled':bool(drift_controller is not None and drift_enabled),'drift_compensation_enabled':bool(drift_controller is not None and drift_enabled and apply_drift_correction),'drift_output_applied_to_plant':bool(apply_drift_correction),'drift_confidence_governor_enabled':bool(drift_confidence_governor is not None),'mean_drift_confidence':None if not drift_confidence_history else float(np.mean(drift_confidence_history)),'drift_oracle_mode':drift_oracle_mode,'drift_readout_mode':drift_readout_mode,
             'travel_velocity_source':str(velocity_estimator.config.get('source','engineering_velocity_estimator')) if velocity_estimator is not None else 'delayed_simulator_velocity',
             'maximum_absolute_cross_track_m':float(np.max(np.abs(cross_track_history))),
@@ -215,7 +286,8 @@ def simulate(root: Path,c: dict,plant: dict,model: EPGDelta7Candidate,orientatio
             'mean_compass_neural_weight_during_dropout':None if not dropout_compass_neural_weights else float(np.mean(dropout_compass_neural_weights)),
             'maximum_compass_neural_weight_during_dropout':None if not dropout_compass_neural_weights else float(np.max(dropout_compass_neural_weights)),
             'final_compass_resultant':last_resultant if heading_mode in {'neural_compass','hybrid_compass'} else None,'final_compass_contrast':last_contrast if heading_mode in {'neural_compass','hybrid_compass'} else None}
-    trace_columns=['time_s','x_m','y_m','z_m','vx_m_s','vy_m_s','vz_m_s','observed_x_m','observed_y_m','estimated_vx_m_s','estimated_vy_m_s','inertial_ax_m_s2','inertial_ay_m_s2','inertial_az_m_s2','yaw_rad','raw_heading_cue_rad','observed_yaw_rate_rad_s','observed_yaw_rad','gyro_heading_rad','heading_disagreement_rad','compass_neural_heading_rad','compass_neural_weight','compass_neural_gyro_disagreement_rad','goal_rad','yaw_command_rad_s','desired_speed_m_s','arrival_latched','arrival_filtered_distance_m','arrival_estimated_speed_m_s','drift_suppressed_at_arrival','arrival_hold_correction_x_m_s2','arrival_hold_correction_y_m_s2','compass_resultant','compass_contrast','heading_dropout','position_available','position_measurement_age_s','pfl2_antigoal_index','pfl2_scale','drift_input_vx_m_s','drift_input_vy_m_s','drift_input_heading_rad','drift_input_speed_m_s','drift_input_egocentric_motion_rad','decoded_travel_direction_rad','true_travel_direction_rad','estimated_egocentric_motion_rad','true_egocentric_motion_rad','travel_resultant','lateral_drift_m_s','raw_drift_correction_x_m_s2','raw_drift_correction_y_m_s2','drift_correction_x_m_s2','drift_correction_y_m_s2','drift_confidence','drift_raw_confidence','drift_velocity_confidence','drift_heading_confidence','drift_coherence_confidence','backup_correction_x_m_s2','backup_correction_y_m_s2']+[f'pfn_activity_{i}' for i in range(len(pfn_activity))]+[f'hdelta_activity_{i}' for i in range(len(hdelta_activity))]+['motor_0_n','motor_1_n','motor_2_n','motor_3_n']
+    if behavior_state is not None:result.update({'behavior_mode':behavior_state.mode,'behavior_source':behavior_state.source,'behavior_target_switches':max(0,behavior_target_switches-1),'behavior_targets_completed':behavior_state.completed_targets_total,'behavior_cycles_completed':behavior_state.completed_cycles,'behavior_blocked_target_events':blocked_target_events,'behavior_abandoned_targets':behavior_state.abandoned_targets_total})
+    trace_columns=['time_s','x_m','y_m','z_m','vx_m_s','vy_m_s','vz_m_s','observed_x_m','observed_y_m','estimated_vx_m_s','estimated_vy_m_s','inertial_ax_m_s2','inertial_ay_m_s2','inertial_az_m_s2','yaw_rad','raw_heading_cue_rad','observed_yaw_rate_rad_s','observed_yaw_rad','gyro_heading_rad','heading_disagreement_rad','compass_neural_heading_rad','compass_neural_weight','compass_neural_gyro_disagreement_rad','goal_rad','yaw_command_rad_s','desired_speed_m_s','arrival_latched','arrival_filtered_distance_m','arrival_estimated_speed_m_s','drift_suppressed_at_arrival','drift_suppressed_by_range_safety','arrival_hold_correction_x_m_s2','arrival_hold_correction_y_m_s2','compass_resultant','compass_contrast','heading_dropout','position_available','position_measurement_age_s','pfl2_antigoal_index','pfl2_scale','drift_input_vx_m_s','drift_input_vy_m_s','drift_input_heading_rad','drift_input_speed_m_s','drift_input_egocentric_motion_rad','decoded_travel_direction_rad','true_travel_direction_rad','estimated_egocentric_motion_rad','true_egocentric_motion_rad','travel_resultant','lateral_drift_m_s','raw_drift_correction_x_m_s2','raw_drift_correction_y_m_s2','drift_correction_x_m_s2','drift_correction_y_m_s2','drift_confidence','drift_raw_confidence','drift_velocity_confidence','drift_heading_confidence','drift_coherence_confidence','backup_correction_x_m_s2','backup_correction_y_m_s2','target_x_m','target_y_m','behavior_target_changed','behavior_target_index','behavior_targets_completed','behavior_cycles_completed','geofence_correction_x_m_s2','geofence_correction_y_m_s2','range_avoidance_active','minimum_sensed_range_m','avoidance_selected_relative_angle_rad','local_map_points','local_surface_segments','avoidance_speed_fraction','local_target_x_m','local_target_y_m','avoidance_safety_correction_x_m_s2','avoidance_safety_correction_y_m_s2','range_barrier_active','predicted_clearance_m','range_barrier_speed_fraction']+[f'pfn_activity_{i}' for i in range(len(pfn_activity))]+[f'hdelta_activity_{i}' for i in range(len(hdelta_activity))]+['motor_0_n','motor_1_n','motor_2_n','motor_3_n']
     trace_data=None if not trace else {'columns':trace_columns,'values':np.asarray(records)}
     return result,trace_data
 

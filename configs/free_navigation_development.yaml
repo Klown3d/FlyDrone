@@ -1,0 +1,24 @@
+base_config: configs/quadrotor_integrated_v5_hybrid_gate.yaml
+protocol_id: flydrone_free_navigation_development_v1
+output: results/simulation/free_navigation_development_v1
+manifest_key: free_navigation_development_v1
+behavior_manager_config: configs/behavior_manager.yaml
+parameter_status: exploratory_development_not_confirmatory
+claim: Development benchmark of an engineering behavior manager feeding temporary goals to the FlyWire-grounded high-level controller; it is not a model of fly planning, vision, or memory.
+duration_s: 90.0
+arrival_supervisor: {enabled: false}
+behavior_modes: [patrol, explore]
+initial_relative_headings_deg: [-103.0]
+scenarios:
+  - {name: free_nominal, seed: 20910101, crosswind_force_n: 0.0, wind_start_s: 0.0, wind_end_s: 0.0, position_noise_std_m: 0.015, sensor_delay_s: 0.08, heading_noise_std_deg: 2.0, angular_rate_noise_std_deg_s: 1.0, heading_dropout_start_s: 120.0, heading_dropout_end_s: 121.0, velocity_dropout_start_s: 120.0, velocity_dropout_end_s: 121.0, accelerometer_noise_std_m_s2: 0.10}
+  - {name: free_perturbed, seed: 20910102, crosswind_force_n: 0.65, wind_start_s: 8.0, wind_end_s: 55.0, position_noise_std_m: 0.040, sensor_delay_s: 0.18, heading_noise_std_deg: 6.0, angular_rate_noise_std_deg_s: 3.2, heading_dropout_start_s: 18.0, heading_dropout_end_s: 28.0, velocity_dropout_start_s: 34.0, velocity_dropout_end_s: 43.0, accelerometer_noise_std_m_s2: 0.22}
+conditions:
+  - {name: flywire_hybrid, circuit_condition: intact, yaw_controller: neural, heading_mode: hybrid_compass, compass_config: configs/hybrid_compass_v5_development.yaml, velocity_source: inertial_fusion, pfl2_enabled: true, advance_enabled: true, hdelta_enabled: true, lateral_velocity_kd_per_s: 0.25}
+  - {name: conventional_navigation, circuit_condition: conventional, yaw_controller: proportional, heading_mode: gyro_integrated, velocity_source: none, pfl2_enabled: false, advance_enabled: false, hdelta_enabled: false, lateral_velocity_kd_per_s: 2.0}
+development_success_heuristic:
+  patrol_minimum_targets: 4
+  explore_minimum_targets: 6
+  explore_minimum_spatial_coverage_fraction: 0.30
+  maximum_workspace_escape_fraction: 0.02
+save_all_traces: true
+

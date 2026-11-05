@@ -9,6 +9,7 @@ pfl2_advance_config: configs/pfl2_advance.yaml
 travel_direction_drift_config: configs/travel_direction_drift.yaml
 travel_velocity_sensor_config: configs/travel_velocity_sensor.yaml
 landmark_heading_sensor_config: configs/landmark_heading_sensor.yaml
+behavior_manager_config: configs/behavior_manager.yaml
 travel_direction_activity_display_scale: 1.0
 pfl3_activity_display_max_hz: 40.0
 dt_s: 0.02

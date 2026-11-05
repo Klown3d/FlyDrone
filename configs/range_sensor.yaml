@@ -1,0 +1,9 @@
+field_of_view_deg: 270.0
+ray_count: 31
+maximum_range_m: 6.0
+range_noise_std_m: 0.02
+dropout_probability: 0.0
+seed: 20261103
+parameter_status: engineering_simulated_range_sensor_not_neural
+claim: Simulated 2D ray distances to circular obstacles; not a camera, fly visual pathway, or biological sensory model.
+

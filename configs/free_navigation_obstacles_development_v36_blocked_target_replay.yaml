@@ -1,0 +1,33 @@
+base_config: configs/free_navigation_obstacles_gate_v1.yaml
+protocol_id: flydrone_obstacle_navigation_development_v36_blocked_target_replay
+output: results/simulation/free_navigation_obstacles_development_v36_blocked_target_replay
+manifest_key: free_navigation_obstacles_development_v36_blocked_target_replay
+run_once: false
+parameter_status: exploratory_development_not_confirmatory
+posthoc_of_gate: flydrone_obstacle_navigation_operational_gate_v1
+claim: Post-hoc diagnostic replay of the four nominal exploration gate failures with observed no-progress target abandonment; the frozen gate result remains authoritative.
+range_avoidance_config: configs/range_avoidance_candidate_v36_blocked_targets.yaml
+behavior_modes: [explore]
+scenarios:
+  - name: obstacle_gate_nominal_new_geometry_posthoc
+    seed: 20940101
+    vehicle_radius_m: 0.25
+    crosswind_force_n: 0.0
+    wind_start_s: 0.0
+    wind_end_s: 0.0
+    position_noise_std_m: 0.030
+    sensor_delay_s: 0.12
+    heading_noise_std_deg: 3.6
+    angular_rate_noise_std_deg_s: 1.8
+    heading_dropout_start_s: 120.0
+    heading_dropout_end_s: 121.0
+    velocity_dropout_start_s: 120.0
+    velocity_dropout_end_s: 121.0
+    accelerometer_noise_std_m_s2: 0.14
+    obstacles:
+      - {center_xy_m: [2.2, 1.5], radius_m: 0.45}
+      - {center_xy_m: [0.1, 2.6], radius_m: 0.55}
+      - {center_xy_m: [-2.4, 1.7], radius_m: 0.50}
+      - {center_xy_m: [-2.2, -1.4], radius_m: 0.55}
+      - {center_xy_m: [0.4, -2.7], radius_m: 0.45}
+      - {center_xy_m: [2.4, -1.6], radius_m: 0.50}

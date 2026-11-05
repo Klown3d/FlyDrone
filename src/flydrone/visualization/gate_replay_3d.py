@@ -299,12 +299,12 @@ class GateReplay3D(ShowBase):
         self.camera_label = self.label("", -1.48, -.38, .023)
         self.gate_stats = self.label("", .25, .84, .027)
         self.status = self.label("", -1.48, -.48, .031)
-        self.neural_label = self.label("", .25, -.48, .029)
+        self.neural_label = self.label("", .25, -.46, .023)
         self.neuron_label = self.label("", .25, -.27, .024)
         self.legend = self.label("VERDE: intacto     NARANJA: comparacion     AMARILLO: meta", -1.48, -.58, .026)
         self.label("286 morfologias completas | todos los vertices y aristas", .25, .72, .023)
         self.label("EPG/Delta7/FC2/PFL: reconstruida desde entradas guardadas\nPFN/hDeltaB: actividad registrada | sin propagacion por ramas",
-                   .25, -.62, .025)
+                   .25, -.68, .020)
         self.label("Trazas pareadas guardadas | actividad global por neurona, sin propagacion por ramas.",
                    -1.48, -.94, .026)
         self.gate_menu = DirectOptionMenu(items=list(GATES), initialitem=0,
@@ -336,6 +336,8 @@ class GateReplay3D(ShowBase):
         self.export_label = self.label("E exporta PNG, CSV y procedencia", .25, -.94, .021)
 
     def open_gate(self, label: str) -> None:
+        if hasattr(self, "gate_menu"):
+            self.gate_menu.set(list(GATES).index(label), fCommand=0)
         self.archive = GateArchive(self.root, label)
         self.null_menu["items"] = self.archive.nulls
         self.null_menu["command"] = self.open_null
@@ -353,15 +355,30 @@ class GateReplay3D(ShowBase):
         self.other_label = ("convencional" if self.archive.is_ood else
                             "oraculo diagnostico" if self.archive.is_oracle else
                             "ablacion" if self.archive.is_ablation else "nulo")
+        if self.archive.is_hybrid:
+            self.other_label = {
+                "neural_v4_reference": "compass neuronal v4",
+                "gyro_heading_control": "control heading giroscopico",
+                "conventional_navigation": "control convencional",
+            }[name]
+        if self.archive.is_free_navigation:
+            self.other_label = "control convencional"
         title = ("Oraculo post-hoc" if self.archive.is_oracle else
                  "Piloto diagnostico" if self.archive.is_ood else
+                 "Gate navegacion libre v1" if self.archive.is_free_navigation else
+                 "Gate operacional hibrido v5" if self.archive.is_hybrid else
                  "Gate integrado v4" if self.archive.is_ablation else "Gate completo")
-        self.gate_stats.setText(f"{title}: A {int(a['sum'])}/{int(a['size'])} | B {int(b['sum'])}/{int(b['size'])}\n{name} | comparacion pareada")
-        self.legend.setText(f"VERDE: intacto     NARANJA: {self.other_label}     AMARILLO: meta")
+        if self.archive.is_free_navigation:
+            totals = self.archive.episodes.groupby("controller").targets_completed.sum()
+            self.gate_stats.setText(f"{title}: A {int(totals[self.archive.intact])} metas | B {int(totals[name])} metas\n{name} | 12 casos pareados")
+        else:
+            self.gate_stats.setText(f"{title}: A {int(a['sum'])}/{int(a['size'])} | B {int(b['sum'])}/{int(b['size'])}\n{name} | comparacion pareada")
+        a_legend = "hibrido FlyWire" if self.archive.is_free_navigation else "hibrido v5" if self.archive.is_hybrid else "intacto"
+        self.legend.setText(f"VERDE: {a_legend}     NARANJA: {self.other_label}     AMARILLO: meta")
         self.variant = None
         if self.archive.is_ablation:
             self.variant = {"delta7_enabled": False} if name == "delta7_ablated" else None
-        elif not self.archive.is_ood and not self.archive.is_oracle:
+        elif not self.archive.is_ood and not self.archive.is_oracle and not self.archive.is_hybrid and not self.archive.is_free_navigation:
             seed = int(name.rsplit("_", 1)[1])
             template = self.archive.config["steering_null_condition_template"]
             builder = self.archive.null_builder
@@ -390,7 +407,7 @@ class GateReplay3D(ShowBase):
                         {"PFN", "hDeltaB"} if flight.controller == "no_hdelta" else
                         {"PFL2"} if flight.controller == "no_pfl2" else set())
             self.disabled_groups.append(disabled)
-            if self.archive.is_ood and index == 1:
+            if flight.controller == "conventional_navigation" or (self.archive.is_ood and index == 1):
                 self.activities.append({})
                 continue
             values = self.archive.steering_activity(
@@ -426,8 +443,11 @@ class GateReplay3D(ShowBase):
             self.activities.append(mapping)
         self.duration = min(float(f.frame.time_s.iloc[-1]) for f in self.flights)
         self.slider["range"] = (0, self.duration)
-        bearing = np.deg2rad(case[1])
-        self.target = np.array([np.cos(bearing), np.sin(bearing)]) * self.archive.config["target_distance_m"]
+        if self.archive.is_free_navigation:
+            self.target = self.flights[0].frame[["target_x_m", "target_y_m"]].iloc[0].to_numpy(dtype=float)
+        else:
+            bearing = np.deg2rad(case[1])
+            self.target = np.array([np.cos(bearing), np.sin(bearing)]) * self.archive.config["target_distance_m"]
         self._build_case_world()
         self.reset_replay()
 
@@ -435,8 +455,10 @@ class GateReplay3D(ShowBase):
         self.world_case.removeNode()
         self.world_case = self.scene.attachNewNode("paired saved world")
         points = np.concatenate([f.frame[["x_m", "y_m", "z_m"]].to_numpy() for f in self.flights])
-        low = np.minimum(points[:, :2].min(axis=0), self.target)
-        high = np.maximum(points[:, :2].max(axis=0), self.target)
+        targets = (np.concatenate([f.frame[["target_x_m", "target_y_m"]].to_numpy() for f in self.flights])
+                   if self.archive.is_free_navigation else self.target[None, :])
+        low = np.minimum(points[:, :2].min(axis=0), targets.min(axis=0))
+        high = np.maximum(points[:, :2].max(axis=0), targets.max(axis=0))
         center = (low + high) / 2
         extent = max(7., float(np.max(high - low)) + 3.)
         spacing = max(1., float(np.ceil(extent / 14)))
@@ -447,9 +469,11 @@ class GateReplay3D(ShowBase):
         self.lines(self.world_case, "floor", grid, (.15, .24, .34, 1), 1)
         self.world_center = center
         self.world_extent = extent
-        ring = [(self.target[0] + .3*np.cos(t), self.target[1] + .3*np.sin(t), 2.)
+        self.goal_marker = self.world_case.attachNewNode("dynamic goal marker")
+        ring = [(.3*np.cos(t), .3*np.sin(t), 2.)
                 for t in np.linspace(0, 2*np.pi, 49)]
-        self.lines(self.world_case, "goal", list(zip(ring[:-1], ring[1:])), (1., .84, .15, 1), 4)
+        self.lines(self.goal_marker, "goal", list(zip(ring[:-1], ring[1:])), (1., .84, .15, 1), 4)
+        self.goal_marker.setPos(float(self.target[0]), float(self.target[1]), 0.)
         self.drones, self.trails, self.vector_nodes = [], [], []
         arrow = [((0, 0, 0), (1.0, 0, 0)),
                  ((1.0, 0, 0), (.78, .12, 0)),
@@ -469,14 +493,24 @@ class GateReplay3D(ShowBase):
             self.trails.append(None)
             vectors = self.world_case.attachNewNode(f"vectors {flight.controller}")
             heading_vector = vectors.attachNewNode("observed heading vector")
+            neural_heading_vector = vectors.attachNewNode("neural compass heading vector")
+            gyro_heading_vector = vectors.attachNewNode("gyroscope heading vector")
             travel_vector = vectors.attachNewNode("hDeltaB travel vector")
             goal_vector = vectors.attachNewNode("goal direction vector")
             self.lines(heading_vector, "observed heading", arrow, (.10, .85, 1., 1), 4)
+            self.lines(neural_heading_vector, "neural compass heading", arrow, (.25, 1., .45, 1), 3)
+            self.lines(gyro_heading_vector, "gyroscope heading", arrow, (.72, .48, 1., 1), 3)
             self.lines(travel_vector, "decoded travel", arrow, (1., .22, .78, 1), 4)
             self.lines(goal_vector, "goal direction", arrow, (1., .84, .15, 1), 3)
+            neural_heading_vector.setScale(.86)
+            neural_heading_vector.setZ(.05)
+            gyro_heading_vector.setScale(.72)
+            gyro_heading_vector.setZ(.10)
             self.vector_nodes.append({
                 "root": vectors,
                 "heading": heading_vector,
+                "neural_heading": neural_heading_vector,
+                "gyro_heading": gyro_heading_vector,
                 "travel": travel_vector,
                 "goal": goal_vector,
             })
@@ -491,6 +525,20 @@ class GateReplay3D(ShowBase):
             vectors = self.vector_nodes[index]
             vectors["root"].setPos(float(row.x_m), float(row.y_m), float(row.z_m) + .28)
             vectors["heading"].setH(float(np.rad2deg(row.observed_yaw_rad)))
+            neural_heading = (float(row.compass_neural_heading_rad)
+                              if "compass_neural_heading_rad" in row.index else float("nan"))
+            if np.isfinite(neural_heading):
+                vectors["neural_heading"].setH(float(np.rad2deg(neural_heading)))
+                vectors["neural_heading"].show()
+            else:
+                vectors["neural_heading"].hide()
+            gyro_heading = (float(row.gyro_heading_rad)
+                            if "gyro_heading_rad" in row.index else float("nan"))
+            if np.isfinite(gyro_heading):
+                vectors["gyro_heading"].setH(float(np.rad2deg(gyro_heading)))
+                vectors["gyro_heading"].show()
+            else:
+                vectors["gyro_heading"].hide()
             goal_direction = np.arctan2(self.target[1] - row.y_m, self.target[0] - row.x_m)
             vectors["goal"].setH(float(np.rad2deg(goal_direction)))
             decoded = float(row.decoded_travel_direction_rad)
@@ -500,6 +548,13 @@ class GateReplay3D(ShowBase):
             else:
                 vectors["travel"].hide()
             rows.append(row)
+        if self.archive.is_free_navigation:
+            self.target = np.array([float(rows[0].target_x_m), float(rows[0].target_y_m)])
+            self.goal_marker.setPos(float(self.target[0]), float(self.target[1]), 0.)
+            for vectors, row in zip(self.vector_nodes, rows):
+                goal_direction = np.arctan2(float(row.target_y_m) - row.y_m,
+                                            float(row.target_x_m) - row.x_m)
+                vectors["goal"].setH(float(np.rad2deg(goal_direction)))
         self.update_world_camera()
         frame_index = self.flights[self.selected].index_at(self.elapsed)
         dirty_groups: set[str] = set()
@@ -524,13 +579,21 @@ class GateReplay3D(ShowBase):
             self._brain_vertex_data[group].modifyArray(1).modifyHandle().setData(
                 self._brain_color_buffers[group].tobytes()
             )
-        distances = [float(np.hypot(row.x_m-self.target[0], row.y_m-self.target[1])) for row in rows]
-        outcomes = ["llego" if f.episode["success"] else "no llego" for f in self.flights]
+        distances = [float(np.hypot(row.x_m-(row.target_x_m if self.archive.is_free_navigation else self.target[0]),
+                                    row.y_m-(row.target_y_m if self.archive.is_free_navigation else self.target[1]))) for row in rows]
+        outcomes = ([f"{int(f.episode['targets_completed'])} metas" for f in self.flights]
+                    if self.archive.is_free_navigation else
+                    ["llego" if f.episode["success"] else "no llego" for f in self.flights])
         case = self.cases[self.case_index]
-        self.case_label.setText(f"Caso guardado {self.case_index+1}/{len(self.cases)} | meta {case[1]:.0f} | heading {case[2]:.0f}\n{case[0]}")
-        self.status.setText(f"A intacto: {distances[0]:.2f} m | resultado final: {outcomes[0]}\nB {self.other_label}: {distances[1]:.2f} m | resultado final: {outcomes[1]}\nVectores: cyan heading observado | magenta viaje hDeltaB | amarillo meta")
+        mode_note = f" | modo {case[3]}" if self.archive.is_free_navigation else ""
+        self.case_label.setText(f"Caso guardado {self.case_index+1}/{len(self.cases)} | meta inicial {case[1]:.0f} | heading {case[2]:.0f}{mode_note}\n{case[0]}")
+        vector_legend = ("cyan fusionado | verde neuronal | violeta giroscopio | magenta viaje | amarillo meta"
+                         if self.archive.is_hybrid or self.archive.is_free_navigation else
+                         "cyan heading observado | magenta viaje hDeltaB | amarillo meta")
+        a_label = "A hibrido FlyWire" if self.archive.is_free_navigation else "A hibrido v5" if self.archive.is_hybrid else "A intacto"
+        self.status.setText(f"{a_label}: {distances[0]:.2f} m | resultado final: {outcomes[0]}\nB {self.other_label}: {distances[1]:.2f} m | resultado final: {outcomes[1]}\nVectores: {vector_legend}")
         row = rows[self.selected]
-        source = "A intacto" if self.selected == 0 else f"B {self.other_label}"
+        source = a_label if self.selected == 0 else f"B {self.other_label}"
         rate_note = "Control convencional: actividad neuronal no definida"
         if self.activities[self.selected]:
             model_rates = np.array([self.activities[self.selected][str(rid)][0][frame_index]
@@ -567,7 +630,24 @@ class GateReplay3D(ShowBase):
                 - np.arctan2(row.vy_m_s, row.vx_m_s)
             ))))
         velocity_note = "n/d" if velocity_error is None else f"{np.rad2deg(velocity_error):.1f}°"
-        self.neural_label.setText(f"Actividad: {source} | yaw {row.yaw_command_rad_s:+.2f} rad/s\n{rate_note}\nSensores: heading {'OFF' if row.heading_dropout else 'ON'} | velocidad {'ON' if row.position_available else 'OFF'}\nError heading {np.rad2deg(heading_error):.1f}° | error direccion velocidad {velocity_note}\nLlegada: {'retenida' if row.arrival_latched else 'en camino'} | motor medio {np.mean([row[f'motor_{i}_n'] for i in range(4)]):.2f} N")
+        compass_note = ""
+        if "compass_neural_weight" in row.index and np.isfinite(row.compass_neural_weight):
+            disagreement = abs(float(row.compass_neural_gyro_disagreement_rad))
+            compass_note = (f" | peso neural {float(row.compass_neural_weight):.3f} | "
+                            f"desac. {np.rad2deg(disagreement):.1f}°")
+        engineering_note = ""
+        if self.archive.is_free_navigation:
+            capture = float(np.hypot(row.arrival_hold_correction_x_m_s2, row.arrival_hold_correction_y_m_s2))
+            fence = float(np.hypot(row.geofence_correction_x_m_s2, row.geofence_correction_y_m_s2))
+            engineering_note = f" | captura {capture:.2f} | geofence {fence:.2f} m/s²"
+        self.neural_label.setText(
+            f"Actividad: {source} | yaw {row.yaw_command_rad_s:+.2f} rad/s\n"
+            f"{rate_note}\n"
+            f"Sensores H {'OFF' if row.heading_dropout else 'ON'} V {'ON' if row.position_available else 'OFF'} | "
+            f"err H {np.rad2deg(heading_error):.1f}° V {velocity_note}\n"
+            f"Llegada {'retenida' if row.arrival_latched else 'en camino'} | "
+            f"motor {np.mean([row[f'motor_{i}_n'] for i in range(4)]):.2f} N{compass_note}{engineering_note}"
+        )
         self.time_label.setText(f"t = {self.elapsed:05.2f} / {self.duration:.2f} s | {'reproduciendo' if self.playing else 'pausado'}")
         self.play_button["text"] = "Pausar" if self.playing else "Reproducir"
         self.setting_slider = True
@@ -741,7 +821,21 @@ def main() -> None:
                                "geometry": app.geometry_report,
                                "maximum_yaw_reconstruction_error_rad_s": max(app.reconstruction_errors),
                                "traces": [f.path.relative_to(root).as_posix() for f in app.flights]})
-            if args.audit_all and app.archive.is_ood:
+            if args.audit_all and app.archive.is_hybrid:
+                for name in app.archive.nulls:
+                    app.open_null(name)
+                    for case_index in range(len(app.cases)):
+                        app.case_index = case_index
+                        app.load_case()
+                        app.render_at(app.duration)
+                        checks.append({
+                            "gate": gate,
+                            "comparison": name,
+                            "case": app.cases[case_index],
+                            "maximum_yaw_reconstruction_error_rad_s": max(app.reconstruction_errors),
+                            "paired_saved_cases": len(app.cases),
+                        })
+            elif args.audit_all and app.archive.is_ood:
                 for _ in app.cases:
                     app.next_case()
                     app.render_at(app.duration)

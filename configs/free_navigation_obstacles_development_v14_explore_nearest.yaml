@@ -1,0 +1,9 @@
+base_config: configs/free_navigation_obstacles_development_v2.yaml
+protocol_id: flydrone_free_navigation_obstacles_development_v14_explore_nearest
+output: results/simulation/free_navigation_obstacles_development_v14_explore_nearest
+manifest_key: free_navigation_obstacles_development_v14_explore_nearest
+parameter_status: exploratory_development_not_confirmatory
+claim: Exact-condition exploratory check of nearest-unvisited engineering exploration targets with the v13 avoidance candidate; no biological perception, planning, or spatial-memory claim.
+behavior_manager_config: configs/behavior_manager_nearest.yaml
+behavior_modes: [explore]
+initial_relative_headings_deg: [19.0]

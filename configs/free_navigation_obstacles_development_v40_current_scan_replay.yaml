@@ -1,0 +1,8 @@
+base_config: configs/free_navigation_obstacles_development_v37_surface_replay.yaml
+protocol_id: flydrone_obstacle_navigation_development_v40_current_scan_replay
+output: results/simulation/free_navigation_obstacles_development_v40_current_scan_replay
+manifest_key: free_navigation_obstacles_development_v40_current_scan_replay
+run_once: false
+parameter_status: exploratory_development_not_confirmatory
+claim: Post-hoc diagnostic replay separating short-term planning memory from a current-scan-only closing-speed final-command projection; the frozen gate v1 result remains authoritative and no formal safety guarantee is claimed.
+range_safety_barrier_config: configs/range_safety_barrier_v40_current_scan.yaml

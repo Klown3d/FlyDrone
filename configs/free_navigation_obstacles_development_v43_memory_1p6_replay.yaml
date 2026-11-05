@@ -1,0 +1,6 @@
+base_config: configs/free_navigation_obstacles_development_v42_memory_1p2_replay.yaml
+protocol_id: flydrone_obstacle_navigation_development_v43_memory_1p6_single_case
+output: results/simulation/free_navigation_obstacles_development_v43_memory_1p6_replay
+manifest_key: free_navigation_obstacles_development_v43_memory_1p6_replay
+claim: Single-case post-hoc replay of the FlyWire -37-degree clearance failure with 1.6-second selective memory; gate v1 remains authoritative.
+range_safety_barrier_config: configs/range_safety_barrier_v43_memory_1p6.yaml

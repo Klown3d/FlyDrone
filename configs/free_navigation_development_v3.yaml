@@ -1,0 +1,16 @@
+base_config: configs/free_navigation_development_v2.yaml
+protocol_id: flydrone_free_navigation_development_v3_geofence
+output: results/simulation/free_navigation_development_v3
+manifest_key: free_navigation_development_v3
+parameter_status: exploratory_development_not_confirmatory
+claim: Development of an explicit bounded engineering geofence applied equally to neural and conventional high-level controllers; intervention fraction is reported and is not biological.
+initial_relative_headings_deg: [-151.0, 31.0]
+geofence:
+  enabled: true
+  bounds_xy_m: [[-5.5, 5.5], [-5.5, 5.5]]
+  activation_margin_m: 1.0
+  position_kp_per_s2: 1.2
+  outward_velocity_kd_per_s: 0.8
+  maximum_acceleration_m_s2: 1.5
+  sensor_source: delayed_noisy_position_and_delayed_simulated_velocity
+  biological_status: engineering_safety_layer_not_neural

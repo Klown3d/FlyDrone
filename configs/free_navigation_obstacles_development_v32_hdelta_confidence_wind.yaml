@@ -1,0 +1,8 @@
+base_config: configs/free_navigation_obstacles_development_v29_flywire_no_hdelta_wind.yaml
+protocol_id: flydrone_free_navigation_obstacles_development_v32_hdelta_confidence_wind
+output: results/simulation/free_navigation_obstacles_development_v32_hdelta_confidence_wind
+manifest_key: free_navigation_obstacles_development_v32_hdelta_confidence_wind
+claim: Paired development test of the existing engineering hDeltaB confidence governor in the two v28 FlyWire wind failures; hDeltaB remains active and no confirmatory claim is made.
+drift_confidence_config: configs/drift_confidence.yaml
+conditions:
+  - {name: flywire_hdelta_confidence, circuit_condition: intact, yaw_controller: neural, heading_mode: hybrid_compass, compass_config: configs/hybrid_compass_v5_development.yaml, velocity_source: inertial_fusion, pfl2_enabled: true, advance_enabled: true, hdelta_enabled: true, drift_confidence: true, lateral_velocity_kd_per_s: 0.25}

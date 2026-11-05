@@ -1,0 +1,7 @@
+base_config: configs/free_navigation_obstacles_development_v17_unified_omni.yaml
+protocol_id: flydrone_free_navigation_obstacles_development_v25_unified_map_clearance
+output: results/simulation/free_navigation_obstacles_development_v25_unified_map_clearance
+manifest_key: free_navigation_obstacles_development_v25_unified_map_clearance
+parameter_status: exploratory_development_not_confirmatory
+claim: Unified known-scenario development check using omnidirectional simulated engineering sensing and a 0.60 m mapped-hit lateral reserve; no biological perception, planning, or memory claim.
+range_avoidance_config: configs/range_avoidance_candidate_v24.yaml

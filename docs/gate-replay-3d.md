@@ -94,6 +94,13 @@ experimentales preservados.
 La verificación también recorre los seis casos OOD y genera dos capturas de
 esa comparación, para ocho capturas totales.
 
+El selector **Navegación libre v1** reproduce los 12 pares sellados de patrulla
+y exploración. La meta amarilla cambia con la traza, sin reiniciar el dron. El
+panel informa la magnitud instantánea de la captura de meta y del geofence;
+ambas son capas de ingeniería y no actividad neuronal. Las estadísticas del
+selector muestran 106 metas para FlyWire híbrido y 109 para el convencional,
+no una tasa de llegada heredada del benchmark de waypoint único.
+
 El selector **Ablaciones v4** compara el circuito intacto con Delta7
 ablacionada, la ruta PFN/hDeltaB desconectada y PFL2 desconectada. Sólo muestra
 casos con trazas exactamente pareadas: tres para Delta7, tres para PFN/hDeltaB y
@@ -102,8 +109,8 @@ global. La reconstrucción carga la función de steering desde el archivo congel
 de v4 y comprueba su hash antes de asignar actividad a las morfologías.
 
 Con ablaciones y oráculos, el smoke test genera doce capturas básicas. La
-auditoría completa recorre 79 combinaciones renderizadas entre redes nulas,
-casos OOD, oráculos y ablaciones.
+auditoría completa recorre **155 combinaciones renderizadas** entre redes nulas,
+casos OOD, oráculos, ablaciones, v5 y navegación libre v1.
 
 ### Prueba de eventos en ventana real
 
@@ -145,3 +152,21 @@ Las hipótesis iniciales de saturación por geometría no quedaron confirmadas.
 La vista vuelve a mostrar los 286 esqueletos completos, agrupados en siete lotes,
 con todos sus 934.479 vértices y 934.193 aristas. Las actualizaciones visuales
 están limitadas; no se alteran las trazas científicas almacenadas.
+# Gate híbrido v5
+
+La categoría `Gate híbrido v5` reproduce los 24 casos sellados y permite comparar el híbrido con:
+
+- compass neuronal v4;
+- heading giroscópico manteniendo PFL3/PFL2 y PFN/hDeltaB;
+- navegación convencional.
+
+Las 96 trazas están preservadas con hashes. El visor verifica cada archivo antes de cargarlo. Para el híbrido muestra cinco vectores:
+
+- cyan: heading fusionado usado por el control;
+- verde: heading decodificado del compass neuronal;
+- violeta: heading integrado por giroscopio;
+- magenta: dirección de viaje decodificada por hDeltaB;
+- amarillo: dirección de la meta.
+
+El panel indica el peso neuronal instantáneo y el desacuerdo neuronal–giroscópico. Un peso bajo significa que la capa de ingeniería domina la fusión; no significa que el resto del circuito neuronal esté desactivado.
+

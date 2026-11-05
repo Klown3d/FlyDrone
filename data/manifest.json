@@ -1315,5 +1315,311 @@
     "report": "results/simulation/quadrotor_integrated_v5_hybrid_gate/report.json",
     "report_sha256": "35c6c7d0ca13e1f7fddc6d4967f9deb30159837e061d80ccea0089120c439608",
     "episodes": 96
+  },
+  "free_navigation_development_v1": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_development_v1/report.json",
+    "report_sha256": "34eca8275f96fceef285abe37f318664e79b154847b4db794891c1d9d70a060d",
+    "episodes": 8
+  },
+  "free_navigation_development_v2": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_development_v2/report.json",
+    "report_sha256": "06187c67c02250a42e35903de25a9e10c2d185ea4f0b3aad5b25faceb09f19f1",
+    "episodes": 16
+  },
+  "free_navigation_development_v3": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_development_v3/report.json",
+    "report_sha256": "164bee7e66dc0f7f8a8210835fb8fae2756c55738f7cca53e00982bab1b4f0c7",
+    "episodes": 16
+  },
+  "free_navigation_gate_v1": {
+    "status": "prospective_raw_benchmark_completed",
+    "report": "results/simulation/free_navigation_gate_v1/report.json",
+    "report_sha256": "63c168f90435617c6b6ed482c250cb0c7395635a31d245509da9aba652198e75",
+    "episodes": 24
+  },
+  "free_navigation_obstacles_development_v1": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v1/report.json",
+    "report_sha256": "e7cb8c635df91809f74a6d29dd317111702c327b3d96f61201259dbdb4714c0c",
+    "episodes": 8
+  },
+  "free_navigation_obstacles_development_v2": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v2/report.json",
+    "report_sha256": "01176080b7fdabd0883ff1f3e126de0ae45815a4d02ce2687f4f09929f21c4ae",
+    "episodes": 8
+  },
+  "free_navigation_obstacles_development_v3": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v3/report.json",
+    "report_sha256": "4e0b8a824c9f4e40bda19f754082d40fdbf36c380cb728987f96834d95571dde",
+    "episodes": 8
+  },
+  "free_navigation_obstacles_development_v4": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v4/report.json",
+    "report_sha256": "1c8dc2fcfa936229e83758d1a7fdbd4a6e2af4271c43a98c7a5d251030178dd4",
+    "episodes": 8
+  },
+  "free_navigation_obstacles_development_v5": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v5/report.json",
+    "report_sha256": "9d53e074feb1aaecfe602660bc19edcaaabd7f0c9db7d92deda2d1e83d929b11",
+    "episodes": 8
+  },
+  "free_navigation_obstacles_development_v6": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v6/report.json",
+    "report_sha256": "3f4924d4d3cae73ea76cb9a30c380c5df577727ac8d1094ff7b272ae90199c95",
+    "episodes": 8
+  },
+  "free_navigation_obstacles_development_v6_collision_replay": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v6_collision_replay/report.json",
+    "report_sha256": "7cb4739aecd3c6f2465aac4b62fe909b208aab808e6fb68736aac628d16e9108",
+    "episodes": 1
+  },
+  "free_navigation_obstacles_development_v7": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v7/report.json",
+    "report_sha256": "90c940b7033c46d3b545b10049a9662f898833ca7051ccc7cdc385043113a3aa",
+    "episodes": 8
+  },
+  "free_navigation_obstacles_development_v8_patrol": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v8_patrol/report.json",
+    "report_sha256": "cd4ee7fbf8f2b91a834fb3c73b2ec967e367ec4598d91c4f54fda10c3293827e",
+    "episodes": 4
+  },
+  "free_navigation_obstacles_development_v9_patrol": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v9_patrol/report.json",
+    "report_sha256": "e735183bd4759e6fcf4ff6579067e3b4c241290016929be1e2cf172d68148cba",
+    "episodes": 4
+  },
+  "free_navigation_obstacles_development_v10_patrol": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v10_patrol/report.json",
+    "report_sha256": "016f20c2953c6690263dae863ca1066275f5c4f053c30361eb7b6dbbe755d55c",
+    "episodes": 4
+  },
+  "free_navigation_obstacles_development_v11_patrol": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v11_patrol/report.json",
+    "report_sha256": "93875768a81ba904098ee6e110e664f738ffa5f41ee55bdb5395b40d11ade8bd",
+    "episodes": 4
+  },
+  "free_navigation_obstacles_development_v12_explore": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v12_explore/report.json",
+    "report_sha256": "43831060bcfa691dce046d24d5b0f628400d0e5ea916c6ea1e65d45d52336f73",
+    "episodes": 4
+  },
+  "free_navigation_obstacles_development_v13_explore": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v13_explore/report.json",
+    "report_sha256": "ff8a18ae83c0adcc3b3ce6da1ed2516019228e47e2da3a31935554106839103a",
+    "episodes": 4
+  },
+  "free_navigation_obstacles_development_v14_explore_nearest": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v14_explore_nearest/report.json",
+    "report_sha256": "dc020ab83ef6405a0506edca25951e6a309d7736cfc0c2ddbe4a5bc9a89780c6",
+    "episodes": 4
+  },
+  "free_navigation_obstacles_development_v15_unified": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v15_unified/report.json",
+    "report_sha256": "34c5f55b84d46712b6476ad21e8e3039044f21c410eb55c7239ffcc93d16923d",
+    "episodes": 8
+  },
+  "free_navigation_obstacles_development_v16_collision_replay": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v16_collision_replay/report.json",
+    "report_sha256": "1ec48ed7df7bd23327f4bdc33b8d3efc4d76d27185ba8f13f422f576fde15150",
+    "episodes": 1
+  },
+  "free_navigation_obstacles_development_v17_unified_omni": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v17_unified_omni/report.json",
+    "report_sha256": "a4e99278d73e602170d727587498cb406b8a299e705e98f7c828ec860360e30b",
+    "episodes": 8
+  },
+  "free_navigation_obstacles_development_v18_clearance_replay": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v18_clearance_replay/report.json",
+    "report_sha256": "e45dda6b94a5ab0900161a5c131021b6a2c2c78d76e9a9d5146cbad7134d51b3",
+    "episodes": 1
+  },
+  "free_navigation_obstacles_development_v19_unified_clearance": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v19_unified_clearance/report.json",
+    "report_sha256": "658ccfc6b8750e9e33dcf410da3177a5fc50c23fe445cf1c3d9bc1b28d577b99",
+    "episodes": 8
+  },
+  "free_navigation_obstacles_development_v20_clearance_replay": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v20_clearance_replay/report.json",
+    "report_sha256": "34d3726f02f22560091c452472cd5be55581bada90b8f585cf5cd2ac0648a6e9",
+    "episodes": 1
+  },
+  "free_navigation_obstacles_development_v21_predictive_replay": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v21_predictive_replay/report.json",
+    "report_sha256": "38f0218674fcf6a7d05d00718b28e387d0838b676d5427a2f3604c3fbf7cf14a",
+    "episodes": 1
+  },
+  "free_navigation_obstacles_development_v22_unified_predictive": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v22_unified_predictive/report.json",
+    "report_sha256": "b8194f4f7e023d1971868dd47918628bd91a939e3609b324078719c0aae924d0",
+    "episodes": 8
+  },
+  "free_navigation_obstacles_development_v23_outward_replay": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v23_outward_replay/report.json",
+    "report_sha256": "2e2025e886b5dae8a9130836ac679e9de65a674c894df51101467169df8b82e5",
+    "episodes": 1
+  },
+  "free_navigation_obstacles_development_v24_map_clearance_replay": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v24_map_clearance_replay/report.json",
+    "report_sha256": "47f6837c95607dc580738e9454519bf8baec34491f68065de222e4b5a9b3c3b2",
+    "episodes": 1
+  },
+  "free_navigation_obstacles_development_v25_unified_map_clearance": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v25_unified_map_clearance/report.json",
+    "report_sha256": "aaaaab9b97db88dc81341f8b3c9b1e9c7e4f161eeaae33ff9b4976c3f359e7c0",
+    "episodes": 8
+  },
+  "free_navigation_obstacles_development_v26_barrier_replay": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v26_barrier_replay/report.json",
+    "report_sha256": "4bdec2db28336fa2cd103fb93ae620a8d8287698d0cbb490e2ab8e650326ff64",
+    "episodes": 1
+  },
+  "free_navigation_obstacles_development_v27_barrier_collision_replay": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v27_barrier_collision_replay/report.json",
+    "report_sha256": "41c68868e2081f37859d245e9995822f1f2898e16c36250d3a04419fc9395f82",
+    "episodes": 1
+  },
+  "free_navigation_obstacles_development_v28_unified_barrier": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v28_unified_barrier/report.json",
+    "report_sha256": "95c96ba91a3fabfd7566568d94e6f38d3502372905fc09f9de87043e248890b0",
+    "episodes": 8
+  },
+  "free_navigation_obstacles_development_v29_flywire_no_hdelta_wind": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v29_flywire_no_hdelta_wind/report.json",
+    "report_sha256": "697f7457585b029c65d814fcdf1f27a86579ab9e0699c49240d2861bfb714b06",
+    "episodes": 2
+  },
+  "free_navigation_obstacles_development_v30_flywire_range_priority_wind": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v30_flywire_range_priority_wind/report.json",
+    "report_sha256": "76120ef81d1abfa6bc1eb7d1e6609de6287539b9690de8ec88aa6a3b84e6ab40",
+    "episodes": 2
+  },
+  "free_navigation_obstacles_development_v31c_hdelta_gain_1p5_wind": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v31c_hdelta_gain_1p5_wind/report.json",
+    "report_sha256": "e55a38d2150ce48ca487b6dfe03fd0aa280cc334e0d22a5ded13dc4f525be488",
+    "episodes": 2
+  },
+  "free_navigation_obstacles_development_v31b_hdelta_gain_1p0_wind": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v31b_hdelta_gain_1p0_wind/report.json",
+    "report_sha256": "09443c48a00d2491c02e88a1a1ea0aff5194f4438c01162e0ddb4c168c448e87",
+    "episodes": 2
+  },
+  "free_navigation_obstacles_development_v31a_hdelta_gain_0p5_wind": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v31a_hdelta_gain_0p5_wind/report.json",
+    "report_sha256": "572d79565baef580083cb42f83a2bfe59f787ca04b3f5749730ddf30d3c158cc",
+    "episodes": 2
+  },
+  "free_navigation_obstacles_development_v32_hdelta_confidence_wind": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v32_hdelta_confidence_wind/report.json",
+    "report_sha256": "19b820ac7fd06e57ee792170d002d85c6c16cd38bbe54f251c5d066ea845d918",
+    "episodes": 2
+  },
+  "free_navigation_obstacles_development_v33_flywire_steering_only": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v33_flywire_steering_only/report.json",
+    "report_sha256": "7edc0bfd45cc2f8ee7eec25895cf1997cdb3d828a59480e8b93a2ef87d717793",
+    "episodes": 8
+  },
+  "free_navigation_obstacles_development_v34_flywire_steering_stabilized": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v34_flywire_steering_stabilized/report.json",
+    "report_sha256": "2f6d897370b84efb9869973db0a509e1ec97eda3001e24bba9c7e8b2654bc94b",
+    "episodes": 4
+  },
+  "free_navigation_obstacles_development_v35_v34_vs_conventional": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v35_v34_vs_conventional/report.json",
+    "report_sha256": "e0ff44085f25e1cc23e23c2372b9942b5c88673200f35cfac5873b5bdb8fb505",
+    "episodes": 8
+  },
+  "free_navigation_obstacles_gate_v1": {
+    "status": "prospective_raw_benchmark_completed",
+    "report": "results/simulation/free_navigation_obstacles_gate_v1/report.json",
+    "report_sha256": "cd1af43a661848d87b1ae9d12dc8fa0e4a6a793f3115fe91ed3b6a7660ed894f",
+    "episodes": 24
+  },
+  "free_navigation_obstacles_development_v36_blocked_target_replay": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v36_blocked_target_replay/report.json",
+    "report_sha256": "71d634a54ebad60f8e6fe0969f2ca6cdc5a6fc8cf10a604bbc3edbb61cf70520",
+    "episodes": 4
+  },
+  "free_navigation_obstacles_development_v37_surface_replay": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v37_surface_replay/report.json",
+    "report_sha256": "4a158fc98083fec9e3976c220b6db143aa8d63c07391a692a3b17477c8aaa8e8",
+    "episodes": 4
+  },
+  "free_navigation_obstacles_development_v38_final_command_replay": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v38_final_command_replay/report.json",
+    "report_sha256": "44d93eb2da29455e019e02e4bac2f09965077244e1d589054be1dac0da5aa076",
+    "episodes": 4
+  },
+  "free_navigation_obstacles_development_v39_closing_projection_replay": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v39_closing_projection_replay/report.json",
+    "report_sha256": "0c1b1589f8cd9bbe289b7b8c4646317cafb3491d3dad9f77692ff1d7e02371a4",
+    "episodes": 4
+  },
+  "free_navigation_obstacles_development_v40_current_scan_replay": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v40_current_scan_replay/report.json",
+    "report_sha256": "a5d95b1a21f543029a491d461f26afb6f4ec342405d9457c5d5569436b1d97d1",
+    "episodes": 4
+  },
+  "free_navigation_obstacles_development_v41_selective_memory_replay": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v41_selective_memory_replay/report.json",
+    "report_sha256": "93058a3e83290c733f4f5d0e98d715d84931861aa716da22b9f177a0a31f4f06",
+    "episodes": 4
+  },
+  "free_navigation_obstacles_development_v42_memory_1p2_replay": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v42_memory_1p2_replay/report.json",
+    "report_sha256": "b7d433e9131156ddb1bca19725ffaf8d4ef20f57eff9a23616f49be417142e2b",
+    "episodes": 1
+  },
+  "free_navigation_obstacles_development_v43_memory_1p6_replay": {
+    "status": "exploratory_development_completed",
+    "report": "results/simulation/free_navigation_obstacles_development_v43_memory_1p6_replay/report.json",
+    "report_sha256": "3117447a1b596803c36e85a997b7077d09b6a5b57b10acc30898dae25a8616fa",
+    "episodes": 1
   }
 }

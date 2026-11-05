@@ -1,0 +1,8 @@
+base_config: configs/free_navigation_obstacles_development_v31a_hdelta_gain_0p5_wind.yaml
+protocol_id: flydrone_free_navigation_obstacles_development_v31c_hdelta_gain_1p5_wind
+output: results/simulation/free_navigation_obstacles_development_v31c_hdelta_gain_1p5_wind
+manifest_key: free_navigation_obstacles_development_v31c_hdelta_gain_1p5_wind
+claim: Development sensitivity test of continuous hDeltaB correction at 1.5 per second in the paired v28 FlyWire wind failures; not confirmatory.
+travel_direction_drift_config: configs/travel_direction_drift_gain_1p5.yaml
+conditions:
+  - {name: flywire_hdelta_gain_1p5, circuit_condition: intact, yaw_controller: neural, heading_mode: hybrid_compass, compass_config: configs/hybrid_compass_v5_development.yaml, velocity_source: inertial_fusion, pfl2_enabled: true, advance_enabled: true, hdelta_enabled: true, lateral_velocity_kd_per_s: 0.25}

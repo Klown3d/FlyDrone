@@ -1,0 +1,8 @@
+base_config: configs/free_navigation_obstacles_development_v37_surface_replay.yaml
+protocol_id: flydrone_obstacle_navigation_development_v41_selective_memory_replay
+output: results/simulation/free_navigation_obstacles_development_v41_selective_memory_replay
+manifest_key: free_navigation_obstacles_development_v41_selective_memory_replay
+run_once: false
+parameter_status: exploratory_development_not_confirmatory
+claim: Post-hoc diagnostic replay of visibility-checked 0.8-second safety memory between v39 full memory and rejected v40 current-only constraints; gate v1 remains authoritative and no formal safety guarantee is claimed.
+range_safety_barrier_config: configs/range_safety_barrier_v41_selective_memory.yaml

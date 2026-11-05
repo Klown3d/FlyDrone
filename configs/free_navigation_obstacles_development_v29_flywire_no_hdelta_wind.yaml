@@ -1,0 +1,30 @@
+base_config: configs/free_navigation_obstacles_development_v28_unified_barrier.yaml
+protocol_id: flydrone_free_navigation_obstacles_development_v29_flywire_no_hdelta_wind
+output: results/simulation/free_navigation_obstacles_development_v29_flywire_no_hdelta_wind
+manifest_key: free_navigation_obstacles_development_v29_flywire_no_hdelta_wind
+parameter_status: exploratory_development_not_confirmatory
+claim: Paired development ablation of hDeltaB compensation in the two FlyWire wind failures from v28; it is diagnostic and not a performance claim.
+conditions:
+  - {name: flywire_no_hdelta, circuit_condition: intact, yaw_controller: neural, heading_mode: hybrid_compass, compass_config: configs/hybrid_compass_v5_development.yaml, velocity_source: inertial_fusion, pfl2_enabled: true, advance_enabled: true, hdelta_enabled: false, lateral_velocity_kd_per_s: 0.25}
+scenarios:
+  - name: obstacle_course_v2_b_wind
+    seed: 20930202
+    vehicle_radius_m: 0.25
+    crosswind_force_n: 0.30
+    wind_start_s: 10.0
+    wind_end_s: 65.0
+    position_noise_std_m: 0.035
+    sensor_delay_s: 0.15
+    heading_noise_std_deg: 4.5
+    angular_rate_noise_std_deg_s: 2.4
+    heading_dropout_start_s: 28.0
+    heading_dropout_end_s: 35.0
+    velocity_dropout_start_s: 48.0
+    velocity_dropout_end_s: 55.0
+    accelerometer_noise_std_m_s2: 0.18
+    obstacles:
+      - {center_xy_m: [1.6, 0.9], radius_m: 0.55}
+      - {center_xy_m: [1.0, 2.4], radius_m: 0.50}
+      - {center_xy_m: [-2.8, 0.8], radius_m: 0.55}
+      - {center_xy_m: [-1.0, -2.4], radius_m: 0.50}
+      - {center_xy_m: [2.8, -0.8], radius_m: 0.55}

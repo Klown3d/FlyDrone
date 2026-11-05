@@ -1,0 +1,7 @@
+base_config: configs/free_navigation_obstacles_development_v20_clearance_replay.yaml
+protocol_id: flydrone_free_navigation_obstacles_development_v24_map_clearance_replay
+output: results/simulation/free_navigation_obstacles_development_v24_map_clearance_replay
+manifest_key: free_navigation_obstacles_development_v24_map_clearance_replay
+parameter_status: exploratory_development_not_confirmatory
+claim: Exact-condition exploratory replay of the v17 clearance failure with a larger engineering mapped-hit lateral reserve; no biological perception claim.
+range_avoidance_config: configs/range_avoidance_candidate_v24.yaml

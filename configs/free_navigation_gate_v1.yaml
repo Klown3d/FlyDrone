@@ -1,0 +1,29 @@
+base_config: configs/free_navigation_development_v3.yaml
+protocol_id: flydrone_free_navigation_operational_gate_v1
+lock_file: configs/free_navigation_gate_v1.lock.json
+preregistration_doc: docs/research/free-navigation-gate-v1-preregistration.md
+output: results/simulation/free_navigation_gate_v1
+manifest_key: free_navigation_gate_v1
+run_once: true
+parameter_status: prospectively_frozen_free_navigation_gate
+claim: Prospective operational gate for continuous simulated patrol and exploration. Temporary-goal planning, goal capture, geofence, sensor fusion, and low-level stabilization are explicit engineering layers; this is not a claim of biological planning, vision, memory, or neural superiority.
+initial_relative_headings_deg: [-119.0, 73.0]
+scenarios:
+  - {name: free_gate_nominal, seed: 20920101, crosswind_force_n: 0.0, wind_start_s: 0.0, wind_end_s: 0.0, position_noise_std_m: 0.018, sensor_delay_s: 0.09, heading_noise_std_deg: 2.4, angular_rate_noise_std_deg_s: 1.2, heading_dropout_start_s: 120.0, heading_dropout_end_s: 121.0, velocity_dropout_start_s: 120.0, velocity_dropout_end_s: 121.0, accelerometer_noise_std_m_s2: 0.11}
+  - {name: free_gate_positive, seed: 20920102, crosswind_force_n: 0.72, wind_start_s: 6.0, wind_end_s: 62.0, position_noise_std_m: 0.043, sensor_delay_s: 0.19, heading_noise_std_deg: 6.4, angular_rate_noise_std_deg_s: 3.4, heading_dropout_start_s: 20.0, heading_dropout_end_s: 32.0, velocity_dropout_start_s: 40.0, velocity_dropout_end_s: 50.0, accelerometer_noise_std_m_s2: 0.23}
+  - {name: free_gate_negative, seed: 20920103, crosswind_force_n: -0.68, wind_start_s: 12.0, wind_end_s: 65.0, position_noise_std_m: 0.041, sensor_delay_s: 0.17, heading_noise_std_deg: 6.1, angular_rate_noise_std_deg_s: 3.1, heading_dropout_start_s: 34.0, heading_dropout_end_s: 46.0, velocity_dropout_start_s: 18.0, velocity_dropout_end_s: 29.0, accelerometer_noise_std_m_s2: 0.22}
+operational_gate:
+  minimum_total_hybrid_targets: 90
+  minimum_targets_each_episode: 5
+  minimum_median_patrol_targets: 7.0
+  minimum_median_explore_targets: 7.0
+  maximum_total_target_deficit_vs_conventional: 6
+  maximum_workspace_escape_fraction: 0.02
+  maximum_geofence_active_fraction: 0.25
+  maximum_goal_capture_active_fraction: 0.20
+  minimum_neural_yaw_active_fraction: 0.99
+  minimum_hdelta_active_fraction: 0.90
+  maximum_engineering_heading_dominant_fraction: 0.18
+  maximum_collisions: 0
+  maximum_motor_saturation_fraction: 0.0
+

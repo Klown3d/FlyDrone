@@ -1,0 +1,8 @@
+base_config: configs/free_navigation_obstacles_development_v33_flywire_steering_only.yaml
+protocol_id: flydrone_free_navigation_obstacles_development_v34_flywire_steering_stabilized
+output: results/simulation/free_navigation_obstacles_development_v34_flywire_steering_stabilized
+manifest_key: free_navigation_obstacles_development_v34_flywire_steering_stabilized
+parameter_status: exploratory_development_not_confirmatory
+claim: Unified FlyWire-only development check of EPG-Delta7-PFL3/PFL2 steering and advance with PFN-hDeltaB output ablated and the same engineering lateral damping used by the conventional stabilizer; not confirmatory.
+conditions:
+  - {name: flywire_obstacle_steering_stabilized, circuit_condition: intact, yaw_controller: neural, heading_mode: hybrid_compass, compass_config: configs/hybrid_compass_v5_development.yaml, velocity_source: inertial_fusion, pfl2_enabled: true, advance_enabled: true, hdelta_enabled: false, lateral_velocity_kd_per_s: 2.0}

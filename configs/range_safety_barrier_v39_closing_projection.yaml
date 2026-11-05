@@ -1,0 +1,9 @@
+prediction_horizon_s: 0.80
+inflated_clearance_m: 0.40
+activation_clearance_m: 0.70
+maximum_correction_m_s2: 1.20
+minimum_speed_fraction: 0.0
+final_command_filter_enabled: true
+closing_speed_projection_enabled: true
+parameter_status: engineering_predictive_range_barrier_not_neural
+claim: Post-composition engineering projection suppresses acceleration toward nearby adjacent-ray surfaces and adds bounded braking from observed closing speed; it is not biological perception, neural control, or a formal safety guarantee.

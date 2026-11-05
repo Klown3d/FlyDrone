@@ -1,0 +1,8 @@
+base_config: configs/free_navigation_obstacles_development_v37_surface_replay.yaml
+protocol_id: flydrone_obstacle_navigation_development_v38_final_command_replay
+output: results/simulation/free_navigation_obstacles_development_v38_final_command_replay
+manifest_key: free_navigation_obstacles_development_v38_final_command_replay
+run_once: false
+parameter_status: exploratory_development_not_confirmatory
+claim: Post-hoc diagnostic replay adding an engineering final-command constant-acceleration chord check to v37 surfaces; the frozen gate v1 result remains authoritative and this is not a formal safety guarantee.
+range_safety_barrier_config: configs/range_safety_barrier_v38_final_command.yaml

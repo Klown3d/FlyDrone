@@ -1,0 +1,59 @@
+base_config: configs/free_navigation_development_v3.yaml
+protocol_id: flydrone_free_navigation_obstacles_development_v1
+output: results/simulation/free_navigation_obstacles_development_v1
+manifest_key: free_navigation_obstacles_development_v1
+parameter_status: exploratory_development_not_confirmatory
+claim: Development benchmark for an engineering raycast, short-lived local hit map, and temporary avoidance goals feeding the FlyWire-grounded high-level controller; no biological vision or planning claim.
+range_sensor_config: configs/range_sensor.yaml
+range_avoidance_config: configs/range_avoidance.yaml
+initial_relative_headings_deg: [-83.0]
+scenarios:
+  - name: obstacle_course_a
+    seed: 20930101
+    vehicle_radius_m: 0.25
+    crosswind_force_n: 0.0
+    wind_start_s: 0.0
+    wind_end_s: 0.0
+    position_noise_std_m: 0.025
+    sensor_delay_s: 0.10
+    heading_noise_std_deg: 3.0
+    angular_rate_noise_std_deg_s: 1.5
+    heading_dropout_start_s: 120.0
+    heading_dropout_end_s: 121.0
+    velocity_dropout_start_s: 120.0
+    velocity_dropout_end_s: 121.0
+    accelerometer_noise_std_m_s2: 0.12
+    obstacles:
+      - {center_xy_m: [1.75, 1.0], radius_m: 0.55}
+      - {center_xy_m: [0.5, 2.5], radius_m: 0.55}
+      - {center_xy_m: [-3.0, 0.5], radius_m: 0.55}
+      - {center_xy_m: [-0.5, -2.5], radius_m: 0.55}
+      - {center_xy_m: [3.0, -0.5], radius_m: 0.55}
+  - name: obstacle_course_b_wind
+    seed: 20930102
+    vehicle_radius_m: 0.25
+    crosswind_force_n: 0.35
+    wind_start_s: 10.0
+    wind_end_s: 65.0
+    position_noise_std_m: 0.035
+    sensor_delay_s: 0.15
+    heading_noise_std_deg: 4.5
+    angular_rate_noise_std_deg_s: 2.4
+    heading_dropout_start_s: 28.0
+    heading_dropout_end_s: 35.0
+    velocity_dropout_start_s: 48.0
+    velocity_dropout_end_s: 55.0
+    accelerometer_noise_std_m_s2: 0.18
+    obstacles:
+      - {center_xy_m: [1.6, 0.9], radius_m: 0.60}
+      - {center_xy_m: [0.2, 2.4], radius_m: 0.50}
+      - {center_xy_m: [-2.8, 0.8], radius_m: 0.60}
+      - {center_xy_m: [-0.8, -2.4], radius_m: 0.55}
+      - {center_xy_m: [2.8, -0.8], radius_m: 0.60}
+development_success_heuristic:
+  patrol_minimum_targets: 4
+  explore_minimum_targets: 5
+  explore_minimum_spatial_coverage_fraction: 0.25
+  maximum_workspace_escape_fraction: 0.02
+  minimum_obstacle_clearance_m: 0.0
+save_all_traces: true

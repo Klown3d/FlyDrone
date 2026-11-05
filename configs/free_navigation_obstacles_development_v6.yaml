@@ -1,0 +1,7 @@
+base_config: configs/free_navigation_obstacles_development_v2.yaml
+protocol_id: flydrone_free_navigation_obstacles_development_v6_emergency_rejection
+output: results/simulation/free_navigation_obstacles_development_v6
+manifest_key: free_navigation_obstacles_development_v6
+parameter_status: exploratory_development_not_confirmatory
+claim: Post-v5 development test adding bounded engineering range rejection against crosswind drift; it is not a prospective gate and makes no biological vision, planning, or memory claim.
+initial_relative_headings_deg: [19.0]

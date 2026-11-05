@@ -1,0 +1,7 @@
+prediction_horizon_s: 0.80
+inflated_clearance_m: 0.40
+activation_clearance_m: 0.70
+maximum_correction_m_s2: 1.20
+minimum_speed_fraction: 0.0
+parameter_status: engineering_predictive_range_barrier_not_neural
+claim: Predicts swept clearance against range-hit points and continuous surface segments inferred only from adjacent sensor rays; it is an engineering safety layer, not biological perception or neural control.

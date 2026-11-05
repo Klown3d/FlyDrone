@@ -1,0 +1,9 @@
+base_config: configs/free_navigation_obstacles_development_v34_flywire_steering_stabilized.yaml
+protocol_id: flydrone_free_navigation_obstacles_development_v35_v34_vs_conventional
+output: results/simulation/free_navigation_obstacles_development_v35_v34_vs_conventional
+manifest_key: free_navigation_obstacles_development_v35_v34_vs_conventional
+parameter_status: exploratory_development_not_confirmatory
+claim: Paired known-scenario development comparison of the v34 FlyWire-grounded steering/advance candidate and a conventional navigation baseline under identical sensing, safety, stabilization, scenarios, and seeds; not confirmatory and not a superiority claim.
+conditions:
+  - {name: flywire_v34, circuit_condition: intact, yaw_controller: neural, heading_mode: hybrid_compass, compass_config: configs/hybrid_compass_v5_development.yaml, velocity_source: inertial_fusion, pfl2_enabled: true, advance_enabled: true, hdelta_enabled: false, lateral_velocity_kd_per_s: 2.0}
+  - {name: conventional_navigation, circuit_condition: conventional, yaw_controller: proportional, heading_mode: gyro_integrated, velocity_source: none, pfl2_enabled: false, advance_enabled: false, hdelta_enabled: false, lateral_velocity_kd_per_s: 2.0}

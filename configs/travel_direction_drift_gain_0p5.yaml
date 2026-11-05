@@ -1,0 +1,7 @@
+model_config: configs/travel_direction_model.yaml
+correction_gain_per_s: 0.5
+minimum_speed_m_s: 0.03
+input_velocity: delayed_noisy_world_velocity_converted_to_body_angle
+output_use: decoded_allocentric_direction_times_measured_speed
+parameter_status: engineering_development_not_biological
+

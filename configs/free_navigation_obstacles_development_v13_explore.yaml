@@ -1,0 +1,8 @@
+base_config: configs/free_navigation_obstacles_development_v2.yaml
+protocol_id: flydrone_free_navigation_obstacles_development_v13_explore_speed
+output: results/simulation/free_navigation_obstacles_development_v13_explore
+manifest_key: free_navigation_obstacles_development_v13_explore
+parameter_status: exploratory_development_not_confirmatory
+claim: Exact-condition exploratory exploration-mode safety and throughput check with a 0.75 engineering avoidance speed cap; no biological perception or planning claim.
+behavior_modes: [explore]
+initial_relative_headings_deg: [19.0]

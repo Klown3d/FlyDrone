@@ -42,3 +42,27 @@ def test_gate_pairs_by_case_and_rejects_changed_preserved_trace(tmp_path):
     flight.path.write_bytes(b"changed")
     with pytest.raises(ValueError, match="hash mismatch"):
         archive.load("null_1", archive.paired_cases("null_1")[0])
+
+
+def test_v5_hybrid_gate_exposes_all_24_preserved_pairs():
+    root = Path(__file__).resolve().parents[1]
+    archive = GateArchive(root, "Gate híbrido v5")
+    assert archive.intact == "full_hybrid_v5"
+    assert archive.nulls == [
+        "neural_v4_reference", "gyro_heading_control", "conventional_navigation"
+    ]
+    for controller in archive.nulls:
+        cases = archive.paired_cases(controller)
+        assert len(cases) == 24
+        assert len(archive.load(controller, cases[0]).frame) == 2500
+
+
+def test_free_navigation_gate_exposes_dynamic_goal_pairs():
+    root = Path(__file__).resolve().parents[1]
+    archive = GateArchive(root, "Navegación libre v1")
+    cases = archive.paired_cases("conventional_navigation")
+    assert len(cases) == 12
+    assert {case[3] for case in cases} == {"patrol", "explore"}
+    flight = archive.load("flywire_hybrid", cases[0])
+    assert {"target_x_m", "target_y_m", "geofence_correction_x_m_s2"} <= set(flight.frame)
+    assert flight.frame[["target_x_m", "target_y_m"]].drop_duplicates().shape[0] > 1

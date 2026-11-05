@@ -1,0 +1,26 @@
+base_config: configs/free_navigation_development.yaml
+protocol_id: flydrone_free_navigation_development_v2_capture
+output: results/simulation/free_navigation_development_v2
+manifest_key: free_navigation_development_v2
+parameter_status: exploratory_development_not_confirmatory
+claim: Development of an explicit engineering goal-capture layer for dynamic temporary goals; neural high-level control remains active but capture correction is not biological.
+initial_relative_headings_deg: [-47.0, 127.0]
+arrival_supervisor:
+  enabled: true
+  position_filter_tau_s: 0.30
+  velocity_filter_tau_s: 0.40
+  entry_radius_m: 0.20
+  exit_radius_m: 0.28
+  stop_speed_m_s: 0.18
+  confirm_s: 0.40
+  departure_confirm_s: 0.40
+  recovery_enabled: true
+  suppress_drift_when_arrived: true
+  hold_position_kp_per_s2: 0.0
+  hold_velocity_kd_per_s: 0.15
+  maximum_hold_acceleration_m_s2: 0.10
+  capture_radius_m: 1.25
+  capture_position_kp_per_s2: 0.85
+  capture_velocity_kd_per_s: 0.35
+  maximum_capture_acceleration_m_s2: 0.85
+  biological_status: engineering_dynamic_goal_capture_not_neural

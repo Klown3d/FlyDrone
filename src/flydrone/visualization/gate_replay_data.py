@@ -24,6 +24,8 @@ GATES = {
     "Piloto OOD": "ood_pilot",
     "Diagnostico OOD": "ood_failure_oracles",
     "Ablaciones v4": "ablations",
+    "Gate híbrido v5": "hybrid_v5",
+    "Navegación libre v1": "free_navigation_v1",
 }
 CASE_KEYS = ["scenario", "target_bearing_deg", "initial_relative_heading_deg"]
 
@@ -50,8 +52,12 @@ class GateArchive:
         self.is_ood = self.slug == "ood_pilot"
         self.is_oracle = self.slug == "ood_failure_oracles"
         self.is_ablation = self.slug == "ablations"
+        self.is_hybrid = self.slug == "hybrid_v5"
+        self.is_free_navigation = self.slug == "free_navigation_v1"
         config_name = ("quadrotor_integrated_v4_ood_failure_oracles.yaml" if self.is_oracle else
                        "quadrotor_integrated_v4_ood_pilot.yaml" if self.is_ood else
+                       "free_navigation_gate_v1.yaml" if self.is_free_navigation else
+                       "quadrotor_integrated_v5_hybrid_gate.yaml" if self.is_hybrid else
                        "quadrotor_integrated_v4_prospective.yaml" if self.is_ablation else
                        f"quadrotor_integrated_v4_{self.slug}_null_prospective.yaml")
         self.config = load_config(
@@ -60,6 +66,8 @@ class GateArchive:
         self.folder = root / self.config["output"]
         archive_name = ("integrated_v4_ood_failure_oracles" if self.is_oracle else
                         "integrated_v4_ood_pilot" if self.is_ood else
+                        "free_navigation_gate_v1" if self.is_free_navigation else
+                        "integrated_v5_hybrid_gate" if self.is_hybrid else
                         "integrated_v4" if self.is_ablation else
                         f"integrated_v4_{self.slug}_null")
         preservation = root / "archive" / archive_name / "preservation-manifest.json"
@@ -70,6 +78,8 @@ class GateArchive:
         self._verify(self.folder / "episodes.csv")
         self.episodes = pd.read_csv(self.folder / "episodes.csv")
         self.intact = ("observed_failure_replication" if self.is_oracle else
+                       "flywire_hybrid" if self.is_free_navigation else
+                       "full_hybrid_v5" if self.is_hybrid else
                        "full_flywire_v4" if self.is_ood or self.is_ablation else
                        self.config["steering_null_intact_condition"]["name"])
         if self.is_oracle:
@@ -83,19 +93,32 @@ class GateArchive:
             available = set(self.episodes.controller.unique())
             self.nulls = [name for name in ("delta7_ablated", "no_hdelta", "no_pfl2")
                           if name in available]
+        elif self.is_hybrid:
+            available = set(self.episodes.controller.unique())
+            self.nulls = [name for name in (
+                "neural_v4_reference", "gyro_heading_control", "conventional_navigation"
+            ) if name in available]
+        elif self.is_free_navigation:
+            self.nulls = ["conventional_navigation"]
         else:
             self.nulls = sorted(name for name in self.episodes.controller.unique() if name != self.intact)
         self._rows: dict[tuple, tuple[dict, Path]] = {}
         for (controller, scenario), group in self.episodes.groupby(["controller", "scenario"], sort=False):
             for index, (_, row) in enumerate(group.iterrows()):
-                path = self.folder / "traces" / f"{controller}__{scenario}__{index:02d}.npz"
+                if self.is_free_navigation:
+                    mode = str(row["behavior_mode"])
+                    headings = list(self.config["initial_relative_headings_deg"])
+                    heading_index = headings.index(float(row["initial_relative_heading_deg"]))
+                    path = self.folder / "traces" / f"{controller}__{mode}__{scenario}__{heading_index:02d}.npz"
+                else:
+                    path = self.folder / "traces" / f"{controller}__{scenario}__{index:02d}.npz"
                 if path.is_file():
                     self._rows[(controller, *self.case_key(row))] = (row.to_dict(), path)
 
-    @staticmethod
-    def case_key(row) -> tuple:
-        return (str(row["scenario"]), round(float(row["target_bearing_deg"]), 8),
+    def case_key(self, row) -> tuple:
+        base = (str(row["scenario"]), round(float(row["target_bearing_deg"]), 8),
                 round(float(row["initial_relative_heading_deg"]), 8))
+        return (*base, str(row["behavior_mode"])) if self.is_free_navigation else base
 
     def _verify(self, path: Path) -> None:
         relative = path.relative_to(self.root).as_posix()
@@ -112,9 +135,17 @@ class GateArchive:
             expected = lock["files_sha256"]
         else:
             expected = {}
-        prefixes = ("src/flydrone/neural/", "data/processed/", "configs/")
+        prefixes = ("src/flydrone/neural/", "data/processed/")
+        reconstruction_configs = {
+            "configs/orientation_candidate_v1.yaml",
+            "configs/epg_delta7_audit.yaml",
+            "configs/pfl2_steering.yaml",
+            "configs/pfl2_model.yaml",
+            "configs/travel_direction_drift.yaml",
+            "configs/travel_direction_model.yaml",
+        }
         for relative, digest in expected.items():
-            if relative.startswith(prefixes):
+            if relative.startswith(prefixes) or relative in reconstruction_configs:
                 path = self.root / relative
                 if not path.is_file() or file_hash(path) != digest:
                     if relative == "src/flydrone/neural/steering_connectome_nulls.py" and not self.is_ood:

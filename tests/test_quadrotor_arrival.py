@@ -76,6 +76,35 @@ def test_position_hold_is_zero_before_arrival_and_bounded_after_arrival() -> Non
     assert np.linalg.norm(correction) <= 0.25 + 1e-12
 
 
+def test_dynamic_target_resets_latch_but_retains_filtered_state() -> None:
+    config = configuration()
+    config["stop_speed_m_s"] = 10.0
+    supervisor = QuadrotorArrivalSupervisor(config, np.array([1.0, 0.0]))
+    for _ in range(21):
+        supervisor.update(np.array([1.0, 0.0]), 0.02)
+    assert supervisor.arrived and supervisor.filtered_position is not None
+    filtered = supervisor.filtered_position.copy()
+    supervisor.set_target(np.array([2.0, 0.0]))
+    assert not supervisor.arrived
+    assert np.allclose(supervisor.filtered_position, filtered)
+    assert np.allclose(supervisor.target, [2.0, 0.0])
+
+
+def test_prearrival_capture_correction_is_opt_in_and_bounded() -> None:
+    config = configuration()
+    config.update({"capture_radius_m": 1.0, "capture_position_kp_per_s2": 1.0,
+                   "capture_velocity_kd_per_s": 0.0,
+                   "maximum_capture_acceleration_m_s2": 0.3})
+    supervisor = QuadrotorArrivalSupervisor(config, np.array([1.0, 0.0]))
+    supervisor.update(np.array([0.2, 0.0]), 0.02)
+    correction = supervisor.holding_correction()
+    assert not supervisor.arrived
+    assert correction[0] > 0.0
+    assert np.linalg.norm(correction) <= 0.3 + 1e-12
+    supervisor.set_target(np.array([3.0, 0.0]))
+    assert np.allclose(supervisor.holding_correction(), 0.0)
+
+
 def test_pfl2_wrapper_propagates_delta7_ablation_to_pfl3_readout() -> None:
     orientation = yaml.safe_load((ROOT / "configs/orientation_candidate_v1.yaml").read_text())
     model = EPGDelta7Candidate(ROOT, ROOT / orientation["candidate_config"])

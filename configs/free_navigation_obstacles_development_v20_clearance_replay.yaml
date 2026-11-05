@@ -1,0 +1,33 @@
+base_config: configs/free_navigation_obstacles_development_v17_unified_omni.yaml
+protocol_id: flydrone_free_navigation_obstacles_development_v20_clearance_replay
+output: results/simulation/free_navigation_obstacles_development_v20_clearance_replay
+manifest_key: free_navigation_obstacles_development_v20_clearance_replay
+parameter_status: exploratory_development_not_confirmatory
+claim: Exact-condition exploratory replay of the sole v17 clearance failure with stronger localized engineering rejection; no biological perception claim.
+range_avoidance_config: configs/range_avoidance_candidate_v20.yaml
+behavior_modes: [explore]
+initial_relative_headings_deg: [19.0]
+conditions:
+  - {name: flywire_hybrid, circuit_condition: intact, yaw_controller: neural, heading_mode: hybrid_compass, compass_config: configs/hybrid_compass_v5_development.yaml, velocity_source: inertial_fusion, pfl2_enabled: true, advance_enabled: true, hdelta_enabled: true, lateral_velocity_kd_per_s: 0.25}
+scenarios:
+  - name: obstacle_course_v2_a
+    seed: 20930201
+    vehicle_radius_m: 0.25
+    crosswind_force_n: 0.0
+    wind_start_s: 0.0
+    wind_end_s: 0.0
+    position_noise_std_m: 0.025
+    sensor_delay_s: 0.10
+    heading_noise_std_deg: 3.0
+    angular_rate_noise_std_deg_s: 1.5
+    heading_dropout_start_s: 120.0
+    heading_dropout_end_s: 121.0
+    velocity_dropout_start_s: 120.0
+    velocity_dropout_end_s: 121.0
+    accelerometer_noise_std_m_s2: 0.12
+    obstacles:
+      - {center_xy_m: [1.75, 1.0], radius_m: 0.55}
+      - {center_xy_m: [1.0, 2.5], radius_m: 0.55}
+      - {center_xy_m: [-3.0, 0.5], radius_m: 0.55}
+      - {center_xy_m: [-1.0, -2.5], radius_m: 0.55}
+      - {center_xy_m: [3.0, -0.5], radius_m: 0.55}
